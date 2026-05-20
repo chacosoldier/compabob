@@ -23,7 +23,14 @@ cd compabob
 ./setup.sh
 ```
 
-Then run `claude`. You need the [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code), `git`, `bash`, `python3` (3.10+), and a paid Claude plan. Optional: [Obsidian](https://obsidian.md) to browse the knowledge base as a graph. Never used a terminal? Use the walkthrough below instead.
+Then run `claude`. You need the [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code), `git`, `bash`, `python3` (3.10+), and a paid Claude plan. Optional but recommended: [VS Code](https://code.visualstudio.com) with the Claude Code extension (see [Recommended setup](#recommended-setup) below). Optional: [Obsidian](https://obsidian.md) to browse the knowledge base as a graph. Never used a terminal? Use the walkthrough below instead.
+
+## Recommended setup
+
+Compabob runs fine in a plain terminal, but two upgrades make daily use noticeably better. Both are optional.
+
+- **VS Code with the Claude Code extension.** A cleaner UI than a raw terminal, and it lets you run several sessions side by side, one per task, instead of working one at a time. Install [VS Code](https://code.visualstudio.com), then add the Claude Code extension from the Extensions marketplace.
+- **A Claude Max plan.** Compabob works on Claude Pro. But long sessions, and especially several running at once, use up Pro's limits quickly. Max costs more and removes that ceiling. If you use the assistant every day, it is worth it.
 
 ## Full walkthrough (no terminal experience needed)
 
@@ -180,6 +187,10 @@ The core runs with zero external services. Modules add capability when you want 
 | `whatsapp` | Roadmap | WhatsApp channel — not built (account-ban risk); use Telegram instead |
 
 See [modules/README.md](modules/README.md) to enable one.
+
+## Feedback
+
+Found a bug or a rough edge? [Open an issue](https://github.com/chacosoldier/compabob/issues). For questions, setup help, or general discussion, use [GitHub Discussions](https://github.com/chacosoldier/compabob/discussions). Improvements are welcome as pull requests, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Lineage
 
