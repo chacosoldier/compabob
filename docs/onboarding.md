@@ -19,10 +19,12 @@ by design: the structure is generic so your version does not have to be.
 ## Setup
 
 ```bash
-git clone <repo-url> compabob
+git clone https://github.com/chacosoldier/compabob.git
 cd compabob
 ./setup.sh
 ```
+
+New to the terminal? The [README walkthrough](../README.md#full-walkthrough-no-terminal-experience-needed) covers installing everything from scratch.
 
 `setup.sh` asks for your assistant's name, your name, role, and language, and
 which **persona** best fits your work (consultant, engineer, sales, founder, or

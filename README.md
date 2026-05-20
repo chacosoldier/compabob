@@ -15,30 +15,91 @@ This is **scaffolding, not a finished assistant.** The value compounds as you pe
 
 ## Quickstart
 
-### Prerequisites
-
-- macOS or Linux. On Windows, use [WSL](https://learn.microsoft.com/windows/wsl/install): the kit is bash- and `python3`-based and WSL runs it natively. Native Windows (PowerShell/cmd) is not supported.
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code): `npm install -g @anthropic-ai/claude-code`
-- `git`, `bash`, `python3` (3.10+)
-- Optional: [Obsidian](https://obsidian.md) to browse the knowledge base as a graph
-
-### Setup
+Comfortable with a terminal? Three commands:
 
 ```bash
-git clone <this-repo-url> compabob
+git clone https://github.com/chacosoldier/compabob.git
 cd compabob
 ./setup.sh
 ```
 
-`setup.sh` asks a few questions (what to name your assistant, your name, role, language, and which persona fits your work), creates your personal `vault/`, `memory/`, and `config/` from the shipped seeds, and offers to set up integrations. Then:
+Then run `claude`. You need the [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code), `git`, `bash`, `python3` (3.10+), and a paid Claude plan. Optional: [Obsidian](https://obsidian.md) to browse the knowledge base as a graph. Never used a terminal? Use the walkthrough below instead.
+
+## Full walkthrough (no terminal experience needed)
+
+If you have never opened a terminal, follow this. It takes about 15 minutes, most of it waiting for installers. You copy and paste a few commands. That is all.
+
+**Before you start:** you need a **Claude account on a paid plan** (Claude Pro or Max), or API credits. Compabob runs on your own Claude subscription and has no cost of its own. Sign up at [claude.ai](https://claude.ai) if you have not.
+
+These steps are for a **Mac**. Linux and Windows are at the end.
+
+### 1. Open the Terminal
+
+Press `Cmd + Space`, type `Terminal`, press `Enter`. A window with a text prompt opens. Every step below is the same: paste the command, press `Enter`, wait for it to finish.
+
+### 2. Install Homebrew
+
+Homebrew installs the other tools for you. Paste this one line and press Enter:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+It asks for your Mac password (as you type it, nothing appears on screen, that is normal) and takes a few minutes. When it finishes it prints a short "Next steps" block with two lines to run. Paste and run those two lines too: they add Homebrew to your path.
+
+### 3. Install git, Node, and Python
+
+```bash
+brew install git node python
+```
+
+The three tools Compabob is built on. One command, a few minutes.
+
+### 4. Install Claude Code
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+This is the assistant itself. If anything goes wrong here, the official install guide is at [docs.anthropic.com/en/docs/claude-code](https://docs.anthropic.com/en/docs/claude-code).
+
+### 5. Download Compabob
+
+```bash
+git clone https://github.com/chacosoldier/compabob.git
+cd compabob
+```
+
+From here on, every command runs inside this `compabob` folder. If you open a fresh terminal later, run `cd compabob` first.
+
+### 6. Run setup
+
+```bash
+./setup.sh
+```
+
+It asks a few friendly questions: what to name your assistant, your name, your role, your language, and which kind of work you do. Answer them. It takes about a minute.
+
+### 7. Start your assistant
 
 ```bash
 claude
 ```
 
-Your assistant introduces itself by the name you chose and is ready to work.
+The very first time, it opens your browser to sign in to your Claude account. Sign in, return to the terminal, and your assistant introduces itself by the name you chose. You are done.
 
-### Updating
+Try asking it to take notes from a meeting, or type `/morning-brief`.
+
+### If something looks wrong
+
+Run `bash scripts/init.sh`. It checks your setup and tells you, in plain language, what (if anything) is missing. A "warning" is an optional item, not a breakage.
+
+### Linux and Windows
+
+- **Linux**: skip Homebrew. Install the tools with your package manager, for example `sudo apt install git nodejs npm python3`, then do steps 4 to 7.
+- **Windows**: install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
+
+## Updating
 
 ```bash
 ./update.sh
@@ -46,7 +107,7 @@ Your assistant introduces itself by the name you chose and is ready to work.
 
 Pulls the latest version of the kit. Your `vault/`, `memory/`, and `config/` are git-ignored and are never touched by an update, so you can personalize the kit freely and still stay current. See the [customization guide](docs/customization-guide.md) for how that works.
 
-### First hour
+## First hour
 
 Do not configure everything at once. Get one loop working end to end:
 
