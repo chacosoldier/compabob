@@ -180,6 +180,7 @@ Skills are slash-command workflows. Type the command; the assistant runs the pro
 | `/add-agent` | Scaffold a new specialized agent interactively |
 | `/system-audit` | Health-check the assistant's own setup |
 | `/visual-explainer` | Turn a system, plan, or dataset into a self-contained HTML page |
+| `/document-export` | Create a PDF, Excel, or Word file from your content |
 
 ## Modules (opt-in)
 
