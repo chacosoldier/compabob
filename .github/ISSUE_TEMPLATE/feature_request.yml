@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an addition or change to the kit.
+title: "[idea] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The kit is opinionated and single-user by design. The best requests
+        generalize something useful, not add scope for its own sake.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What is awkward, missing, or repetitive today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What would you add or change, and how would someone use it?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+      description: Workarounds, or other ways to solve the same problem.
+    validations:
+      required: false
