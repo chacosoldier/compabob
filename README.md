@@ -190,6 +190,7 @@ The core runs with zero external services. Modules add capability when you want 
 | `proactive` | Available | Scheduled automation: a morning brief and weekly review on a timer |
 | `telegram` | Available | A Telegram bot: inbound messages drafted for your approval, never auto-sent |
 | `integrations` | Available | MCP tools: browser automation, web search, Gmail, Calendar, utilities |
+| `linkedin-outreach` | Available | Drafts one LinkedIn connection-invitation card a day from a queue, for your review and manual send |
 | `memory-search` | Roadmap | Semantic search over your memory and vault (needs a local embedding model) |
 | `extra-agents` | Roadmap | An agent gallery: designer, evaluator, sales coach, project manager |
 | `whatsapp` | Roadmap | WhatsApp channel — not built (account-ban risk); use Telegram instead |
