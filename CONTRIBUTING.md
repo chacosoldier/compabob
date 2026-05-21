@@ -42,4 +42,8 @@ Before opening a PR:
 
 ## Code of conduct
 
-Be decent. Assume good faith. That is the whole policy.
+Be decent. Assume good faith. Critique ideas, not people. The full policy is in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Security
+
+Found a security issue? Do not open a public issue. Follow [.github/SECURITY.md](.github/SECURITY.md) to report it privately.

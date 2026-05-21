@@ -1,0 +1,59 @@
+name: Bug report
+description: Something in the kit does not work as described.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Before filing, confirm the issue is in the kit itself,
+        not in your own edits to it. If you are unsure, that is fine, say so below.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, and what went wrong?
+      placeholder: I ran ./setup.sh and it exited with...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What should have happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands or actions, in order.
+      placeholder: |
+        1. git clone ...
+        2. ./setup.sh
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15.1 / Ubuntu 24.04 / Windows 11
+    validations:
+      required: true
+  - type: input
+    id: kit-version
+    attributes:
+      label: Kit version
+      description: Run `git rev-parse --short HEAD` inside the compabob folder.
+      placeholder: 1a6bca4
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output or logs
+      description: Paste any error text. Remove anything personal before pasting.
+      render: shell
+    validations:
+      required: false
