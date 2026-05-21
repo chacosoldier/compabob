@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #161b22;
+    padding: 40px;
+    width: 960px;
+  }
+  .window {
+    background: #0d1117;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    border: 1px solid #30363d;
+  }
+  .titlebar {
+    background: #21262d;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+    border-bottom: 1px solid #30363d;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .red { background: #ff5f56; }
+  .yellow { background: #ffbd2e; }
+  .green { background: #27c93f; }
+  .title {
+    flex: 1;
+    text-align: center;
+    font-family: -apple-system, "Segoe UI", sans-serif;
+    font-size: 13px;
+    color: #8b949e;
+    margin-right: 52px;
+  }
+  pre {
+    font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    font-size: 14.5px;
+    line-height: 1.62;
+    color: #c9d1d9;
+    padding: 22px 26px 26px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .b   { color: #e6edf3; font-weight: 700; }
+  .ok  { color: #3fb950; font-weight: 700; }
+  .dim { color: #6e7681; }
+  .in  { color: #ffffff; font-weight: 600; }
+  .prompt { color: #3fb950; font-weight: 700; }
+  .cmd { color: #e6edf3; }
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+    <span class="title">compabob — setup</span>
+  </div>
+<pre><span class="prompt">~/compabob ❯</span> <span class="cmd">./setup.sh</span>
+
+<span class="b">Compabob — setup</span>
+Creates your personal workspace and fills in your details. About a minute.
+
+  <span class="ok">ok</span>   python3 found
+  <span class="ok">ok</span>   git found
+  <span class="ok">ok</span>   claude CLI found
+
+<span class="b">Tell me about you and your assistant:</span>
+What should the assistant be called <span class="dim">[Aide]</span>: <span class="in">Maya</span>
+Your name <span class="dim">[philippwenger]</span>: <span class="in">Sam Rivera</span>
+Your role / job title <span class="dim">[Knowledge Worker]</span>: <span class="in">Product Manager</span>
+Your main working language <span class="dim">[English]</span>: <span class="in">English</span>
+
+<span class="b">Which best describes your work?</span>
+  1) generalist   2) consultant   3) engineer   4) sales   5) founder
+Pick 1-5 (or the name) <span class="dim">[1]</span>: <span class="in">1</span>
+In a sentence or two, what do you work on: <span class="in">Roadmap and discovery for a B2B analytics product</span>
+
+  <span class="ok">ok</span>   created vault
+  <span class="ok">ok</span>   created memory
+  <span class="ok">ok</span>   created config/user.config.yaml
+  <span class="ok">ok</span>   created .claude/settings.local.json
+  <span class="ok">ok</span>   personalized 7 file(s)
+  <span class="ok">ok</span>   seeded role-and-priorities.md from the generalist persona
+  <span class="ok">ok</span>   recorded persona "generalist" in config/user.config.yaml
+  <span class="ok">ok</span>   made scripts executable and created runtime directories
+
+<span class="b">Integrations (optional): web + browser tools, web search, Google Workspace.</span>
+These add MCP servers your assistant can use. You can also do this later.
+Set them up now? (y/N) <span class="dim">[n]</span>: <span class="in">n</span>
+  skipped — run  bash scripts/install-integrations.sh  any time
+
+<span class="b">Setup complete.</span>
+Your assistant is called "Maya". Persona: generalist.
+
+Next:
+  1. Start it:        claude
+  2. Refine memory:   memory/topics/role-and-priorities.md is pre-filled — edit it
+  3. Optional checks: bash scripts/init.sh
+  4. Opt-in modules:  see modules/README.md
+
+vault/, memory/, and config/ are yours and live outside git.
+Update the kit any time with ./update.sh — it never touches them.</pre>
+</div>
+</body>
+</html>

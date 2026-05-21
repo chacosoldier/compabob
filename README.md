@@ -21,6 +21,12 @@ That second-brain loop is the value you get immediately. Compabob is scaffolding
 
 **Actively maintained.** This kit is updated over time as its maintainers learn what works and as Claude Code evolves, so expect it to keep improving. You still own your copy outright: fork it, change anything, diverge as far as you like. Issues and PRs are welcome; reviews are best-effort, since the kit is maintained alongside other work.
 
+## See it
+
+![Running ./setup.sh: Compabob asks a few questions, then scaffolds your workspace in about a minute.](docs/assets/demo.png)
+
+One script. It asks who you are and what you do, scaffolds your vault, memory, and config from the shipped seeds, applies a persona preset, and you are ready to start.
+
 ## Quickstart
 
 Comfortable with a terminal? Three commands:
