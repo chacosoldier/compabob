@@ -88,7 +88,10 @@ if [ -f config/user.config.yaml ]; then
     if [ -f .mcp.json ] && python3 -c 'import json; json.load(open(".mcp.json"))' 2>/dev/null; then
       ok "integrations enabled — .mcp.json is valid JSON"
     else
-      warn "integrations enabled but .mcp.json is missing or invalid (run scripts/install-integrations.sh)"
+      # Hard fail: config and disk state contradict each other and the assistant
+      # cannot use the missing servers. Either run install-integrations.sh, or
+      # set integrations: false in config/user.config.yaml.
+      fail "integrations enabled but .mcp.json is missing or invalid (run scripts/install-integrations.sh, or set integrations: false in config/user.config.yaml)"
     fi
   fi
   if grep -qE '^[[:space:]]*telegram:[[:space:]]*true' config/user.config.yaml; then
