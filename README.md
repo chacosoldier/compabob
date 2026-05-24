@@ -1,5 +1,7 @@
 # Compabob
 
+[English](README.md) | [Español](docs/i18n/README.es.md)
+
 **A customizable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for knowledge workers.** Clone it, run `./setup.sh`, name your assistant, and in about ten minutes you have a working AI work partner: it knows your role, remembers what you tell it, routes work to specialized agents, and never sends anything without your sign-off.
 
 ## Why
