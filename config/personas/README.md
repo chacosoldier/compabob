@@ -26,6 +26,7 @@ It is applied once, at setup. If you have already edited
 | `engineer` | Shipping software and owning technical decisions. |
 | `sales` | Pipeline, deals, accounts, quota. |
 | `founder` | Running a business: strategy, fundraising, hiring, product. |
+| `researcher` | Academia and R&D: literature surveys, paper drafting, experiments. |
 
 ## Add your own
 
