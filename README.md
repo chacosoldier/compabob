@@ -129,7 +129,7 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 ./update.sh
 ```
 
-Pulls the latest version of the kit. Your `vault/`, `memory/`, and `config/` are git-ignored and are never touched by an update, so you can personalize the kit freely and still stay current. See the [customization guide](docs/customization-guide.md) for how that works.
+Pulls the latest version of the kit. Your `vault/`, `memory/`, and `config/` are git-ignored and are never touched by an update, so you can personalize the kit freely and still stay current. See the [customization guide](docs/customization-guide.md) for how that works, and the [model switching guide](docs/changing-the-model.md) for swapping Claude models.
 
 ## First hour
 
