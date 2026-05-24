@@ -133,10 +133,10 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 
 ### If something looks wrong on Linux
 
-- **WSL**: `node` is sometimes split as `nodejs` + `npm`; the symlink trick (`sudo ln -s /usr/bin/nodejs /usr/local/bin/node`) if scripts expect `node`.
+- **WSL**: `node` is sometimes split as `nodejs` + `npm`; if scripts can't find `node`, run `sudo ln -s /usr/bin/nodejs /usr/local/bin/node`.
 - **Fedora / RHEL**: `sudo dnf install git nodejs python3` (not `python`).
 - **Arch**: `sudo pacman -S git nodejs npm python` works as-is.
-- **`python3` vs `python`**: confirming `python3 --version` returns 3.10+ before running `./setup.sh`.
+- **`python3` vs `python`**: confirm `python3 --version` returns 3.10+ before running `./setup.sh`.
 - **Permissions**: if `./setup.sh` says "Permission denied," run `chmod +x setup.sh` first.
 - **Windows**: install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
 
