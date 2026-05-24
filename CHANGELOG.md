@@ -6,6 +6,53 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+## [1.1.1] — 2026-05-24
+
+Bug-fix release from the same-day QA pass. 5 personas × 10 input edge
+cases × idempotency × `update.sh` × integrations × `init.sh` × a
+pristine Docker Ubuntu run × a headless `claude -p` smoke. 11 findings,
+all fixed in this release. Full QA report:
+[`docs/qa-findings-2026-05-24.md`](docs/qa-findings-2026-05-24.md).
+
+### Fixed
+
+- **`setup.sh` re-run silently overwrites `memory/topics/role-and-priorities.md`**
+  (P1). The "untouched template" guard treated `[the most important thing]`
+  as a marker, but that string also lived in `config/personas/generalist.md` —
+  so users who started with `generalist`, edited the file, and re-ran
+  setup lost their edits. Marker tightened to `[fill in]`, which only
+  appears in the shipped template. Spawned
+  [`feedback-protective-marker-needs-uniqueness`](https://github.com/chacosoldier/compabob)
+  as a memory rule for future template work.
+- **`whoami` default for "Your name"** leaked the OS account name into
+  `memory/MEMORY.md` if the user hit Enter (e.g. `root` inside Docker).
+  Default removed; setup re-prompts until a name is given.
+- **Persona seeding ran before placeholder replacement**, so personas
+  shipped with `{{USER_NAME}}` still on disk. Order flipped: persona
+  first, then placeholders.
+- **Piped-mode setup** (`printf ... | ./setup.sh`) swallowed the final
+  newline and the integrations prompt collided with EOF. Added an
+  explicit newline guard.
+- **`install-integrations.sh` printed "Done." on no-op runs** (unknown
+  category, empty selection). Now exits non-zero with a clear "nothing
+  installed" message.
+- **`.mcp.json` was created eagerly** even when no integrations were
+  selected, leaving an empty file. Creation deferred until at least one
+  integration writes to it.
+- **`init.sh` warned instead of failing** when integrations were
+  enabled but `.mcp.json` was missing. Now fails loud — a missing MCP
+  config with integrations on is a setup bug, not a soft warning.
+
+### Changed
+
+- **`update.sh` output**: now shows the list of pulled commits and a
+  clearer "your data lives here" banner, so users see exactly what
+  changed and what was preserved.
+- **README** — clarified which paths are "yours" (`vault/`, `memory/`,
+  `config/user.config.yaml`, `.mcp.json`, `.env`) vs. tracked kit
+  content; corrected the walkthrough prompt count; added a YAML-escape
+  note for names containing apostrophes.
+
 ## [1.1.0] — 2026-05-24
 
 Post-launch hygiene: visible maintenance signals + bit-rot CI.
