@@ -1,5 +1,10 @@
 # Compabob
 
+[![CI](https://github.com/chacosoldier/compabob/actions/workflows/smoke.yml/badge.svg)](https://github.com/chacosoldier/compabob/actions/workflows/smoke.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/chacosoldier/compabob?style=social)](https://github.com/chacosoldier/compabob/stargazers)
+[![Last commit](https://img.shields.io/github/last-commit/chacosoldier/compabob)](https://github.com/chacosoldier/compabob/commits/main)
+
 **A customizable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for knowledge workers.** Clone it, run `./setup.sh`, name your assistant, and in about ten minutes you have a working AI work partner: it knows your role, remembers what you tell it, routes work to specialized agents, and never sends anything without your sign-off.
 
 ## Why
@@ -16,6 +21,13 @@ That second-brain loop is the value you get immediately. Compabob is scaffolding
 
 - **Is**: an opinionated, single-user template. Architecture, conventions, and a set of agents/hooks/skills that took real iteration to get right, packaged so you do not start from zero.
 - **Is not**: a product, a SaaS, or a no-config magic box. There is no signup, no telemetry, no upsell. It runs entirely on your machine under your own Claude Code subscription.
+
+## How this differs from the other Claude Code things you have seen
+
+- **vs. raw Claude Code.** Claude Code is the harness. Compabob is the opinionated scaffolding on top: a constitution, an agent fleet, safety hooks, a memory system, and a knowledge base, all wired together. Without that scaffolding, every new session starts from zero.
+- **vs. "awesome" lists** (curated link directories). Those tell you what exists. Compabob is a working kit you clone and run.
+- **vs. multi-agent dev-team frameworks.** Frameworks oriented at orchestrating software-engineering crews assume you are building software with AI. Compabob is built for a single knowledge worker doing their actual job: meetings, notes, research, comms, decisions.
+- **vs. building your own from scratch.** That is the alternative most people pick, and most never finish. The structure here took real iteration; you skip that part.
 
 ## Maintenance posture
 
