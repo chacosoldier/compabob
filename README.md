@@ -111,7 +111,7 @@ From here on, every command runs inside this `compabob` folder. If you open a fr
 ./setup.sh
 ```
 
-It asks a few friendly questions: what to name your assistant, your name, your role, your language, and which kind of work you do. Answer them. It takes about a minute.
+It asks about you (assistant name, your name, role, working language), then about your work (which of five persona presets best fits you, and one sentence about what you focus on), then offers an optional integrations step you can skip and run later. Seven prompts in total. About a minute.
 
 ### 7. Start your assistant
 
@@ -138,7 +138,7 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 ./update.sh
 ```
 
-Pulls the latest version of the kit. Your `vault/`, `memory/`, and `config/` are git-ignored and are never touched by an update, so you can personalize the kit freely and still stay current. See the [customization guide](docs/customization-guide.md) for how that works.
+Pulls the latest version of the kit. Your data — `vault/`, `memory/`, `config/user.config.yaml`, `.mcp.json`, and `.env` — is git-ignored and never touched by an update, so you can personalize freely and still stay current. (Kit-tracked files like `config/personas/*.md` *do* receive updates; if you change one and the kit changes the same file, `update.sh` will stash, merge, and re-apply your edit, falling back to a merge-conflict prompt only when the lines overlap.) See the [customization guide](docs/customization-guide.md) for how that works.
 
 ## First hour
 
@@ -160,7 +160,7 @@ CONSTITUTION.md      The rules every session loads. How your assistant behaves.
 hooks/               Safety guards and lifecycle automation.
 memory/              The assistant's memory (yours, created by setup, git-ignored).
 vault/               Your Obsidian knowledge base (yours, created by setup, git-ignored).
-config/              Your settings (yours, git-ignored).
+config/              Persona presets (shipped, updated by the kit) + your `user.config.yaml` (git-ignored).
 modules/             Opt-in extensions (see below).
 docs/                Architecture, onboarding, and customization guides.
 *.example/           Seeds that setup copies into vault/ and memory/.

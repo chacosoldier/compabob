@@ -1,5 +1,9 @@
 # Your configuration. setup.sh copies this to config/user.config.yaml and fills
 # the placeholders. That file is git-ignored: it is yours. Edit it freely.
+#
+# YAML note: any `"` or `\` inside a name is escaped (e.g. `O\"Brien`,
+# `path\\to\\thing`). That is standard YAML — the assistant reads the
+# unescaped value. You do not need to "fix" it.
 
 user:
   name: "{{USER_NAME}}"
