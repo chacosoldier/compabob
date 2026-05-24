@@ -10,7 +10,8 @@ say()  { printf '  %s\n' "$1"; }
 
 bold ""
 bold "Compabob — update"
-echo "Your vault/, memory/, and config/ live outside git. This update cannot touch them."
+echo "Your data (vault/, memory/, config/user.config.yaml, .mcp.json, .env) is git-ignored."
+echo "An update cannot touch those files."
 echo
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -48,7 +49,10 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
 fi
 
 if git merge --no-edit "origin/$BRANCH" >/dev/null 2>&1; then
-  say "Pulled the latest kit."
+  say "Pulled the latest kit:"
+  # Show what changed so the user does not need a separate `git log`. Capped
+  # at 10 lines so a big merge does not flood the terminal.
+  git log --no-merges --oneline "$LOCAL..HEAD" 2>/dev/null | head -10 | sed 's/^/    /'
 else
   echo
   echo "The update needs a manual merge. Run 'git status' to see which files."
