@@ -1,5 +1,7 @@
 # Compabob
 
+[English](README.md) | [Español](docs/i18n/README.es.md)
+
 **A customizable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for knowledge workers.** Clone it, run `./setup.sh`, name your assistant, and in about ten minutes you have a working AI work partner: it knows your role, remembers what you tell it, routes work to specialized agents, and never sends anything without your sign-off.
 
 ## Why
@@ -119,6 +121,7 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 
 - **Linux**: skip Homebrew. Install the tools with your package manager, for example `sudo apt install git nodejs npm python3`, then do steps 4 to 7.
 - **Windows**: install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
+- **Customizing the model**: see the [model switching guide](docs/changing-the-model.md) to swap the default Claude model or set per-agent models.
 
 ## Updating
 
