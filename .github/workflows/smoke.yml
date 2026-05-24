@@ -1,0 +1,64 @@
+name: smoke
+
+# Weekly fresh-clone smoke test. Catches kit bit-rot before users hit it:
+# any breakage in setup.sh, init.sh, or shell scripts surfaces here, not in
+# someone's first ten minutes with the kit.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Mondays 06:00 UTC — early enough that issues land before the weekly traffic peak.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Shell syntax check (bash -n on every *.sh)
+        run: |
+          set -euo pipefail
+          fail=0
+          while IFS= read -r -d '' f; do
+            if ! bash -n "$f"; then
+              echo "::error file=$f::bash syntax error"
+              fail=1
+            fi
+          done < <(find . -path ./node_modules -prune -o -type f -name '*.sh' -print0)
+          exit "$fail"
+
+      - name: Run setup.sh non-interactively (default answers)
+        run: |
+          set -euo pipefail
+          # Six blank lines = take the default for each ask() prompt + skip
+          # the optional integrations step. Setup is idempotent and never
+          # overwrites existing files, so this is safe to re-run.
+          printf '\n\n\n\n\n\n' | ./setup.sh
+
+      - name: Run init.sh (must exit 0; warnings tolerated)
+        run: |
+          set -uo pipefail
+          # init.sh exits with the number of failures. Warnings (e.g. claude
+          # CLI not installed in CI) are expected and do not count as failures.
+          bash scripts/init.sh
+          ec=$?
+          if [ "$ec" -ne 0 ]; then
+            echo "::error::init.sh reported $ec failure(s)"
+            exit "$ec"
+          fi
+
+      - name: Validate JSON catalog
+        run: |
+          python3 -c "import json; json.load(open('scripts/integrations-catalog.json'))"
+          echo "integrations-catalog.json is valid JSON"
