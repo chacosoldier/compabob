@@ -34,18 +34,23 @@ if text.startswith("---"):
         body = parts[2].lstrip("\n")
 body = body.replace("<WHAT_YOU_WORK_ON>", what)
 
-# seed role-and-priorities.md only if it still looks like the untouched template
+# Seed role-and-priorities.md only if it still looks like the untouched template.
+# The marker MUST be unique to memory.example/topics/role-and-priorities.md AND
+# absent from every config/personas/*.md replacement, otherwise a re-run with a
+# different persona will silently overwrite the user's edits.
+# `Core responsibilities: [fill in].` qualifies: grep confirms it appears in the
+# original template only. Do not loosen this without re-grepping all personas.
 rp = pathlib.Path("memory/topics/role-and-priorities.md")
-markers = ("[fill in]", "[the most important thing]", "{{USER_NAME}}")
+UNTOUCHED_MARKER = "Core responsibilities: [fill in]."
 seeded = False
 if rp.exists():
     current = rp.read_text(encoding="utf-8")
-    if any(m in current for m in markers):
+    if UNTOUCHED_MARKER in current:
         rp.write_text(body, encoding="utf-8")
         print(f"  \033[0;32mok\033[0m   seeded role-and-priorities.md from the {pid} persona")
         seeded = True
     else:
-        print("  \033[0;32mok\033[0m   role-and-priorities.md already edited — kept your version")
+        print("  \033[0;32mok\033[0m   role-and-priorities.md already personalized — kept your version")
 else:
     print("  \033[1;33mwarn\033[0m memory/topics/role-and-priorities.md not found — skipped")
 
