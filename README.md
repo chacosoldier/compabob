@@ -187,6 +187,7 @@ Skills are slash-command workflows. Type the command; the assistant runs the pro
 | `/system-audit` | Health-check the assistant's own setup |
 | `/visual-explainer` | Turn a system, plan, or dataset into a self-contained HTML page |
 | `/document-export` | Create a PDF, Excel, or Word file from your content |
+| `/weekly-review` | End-of-week review: done, slipped, decisions, commitments, next week's top 3 |
 
 ## Modules (opt-in)
 
