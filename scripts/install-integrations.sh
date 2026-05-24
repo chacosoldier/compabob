@@ -40,12 +40,6 @@ bold ""
 bold "Compabob — integrations"
 echo
 
-# --- ensure .mcp.json exists ----------------------------------------------
-if [ ! -f "$MCP_FILE" ]; then
-  if [ -f "$MCP_SEED" ]; then cp "$MCP_SEED" "$MCP_FILE"; else printf '{\n  "mcpServers": {}\n}\n' > "$MCP_FILE"; fi
-  ok "created $MCP_FILE"
-fi
-
 # --- choose categories -----------------------------------------------------
 CHOSEN=()
 if [ "$#" -gt 0 ]; then
@@ -68,6 +62,12 @@ fi
 if [ "${#CHOSEN[@]}" -eq 0 ]; then
   warn "nothing chosen — no changes made"
   exit 0
+fi
+
+# --- ensure .mcp.json exists (only now that we know we'll touch it) -------
+if [ ! -f "$MCP_FILE" ]; then
+  if [ -f "$MCP_SEED" ]; then cp "$MCP_SEED" "$MCP_FILE"; else printf '{\n  "mcpServers": {}\n}\n' > "$MCP_FILE"; fi
+  ok "created $MCP_FILE"
 fi
 
 # --- preflight: runtimes (warn only, never block) -------------------------
@@ -114,6 +114,15 @@ with open(mcp_path, "w") as f:
 for name in added:   print(f"  {GREEN}ok{NC}   added MCP server: {name}")
 for name in skipped: print(f"  {GREEN}ok{NC}   already present, kept: {name}")
 for cid in unknown:  print(f"  {YELLOW}warn{NC} unknown category (ignored): {cid}")
+
+# If nothing was added, skipped, OR queued for guided setup (e.g. every
+# requested category was unknown), nothing actually happened. Fail loud so the
+# user notices instead of seeing a misleading "Done.". Note: `google` only
+# guides, so a google-only selection still counts as a real action.
+if not added and not skipped and not guided:
+    print()
+    print(f"  {YELLOW}warn{NC} nothing was installed — valid categories are: web | utility | search | google")
+    sys.exit(1)
 
 if guided:
     print()
