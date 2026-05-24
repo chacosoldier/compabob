@@ -25,17 +25,26 @@ command -v claude  >/dev/null 2>&1 && ok "claude CLI found" \
 echo
 
 # --- 2. Prompt -------------------------------------------------------------
+# In piped / scripted mode we add a newline after `read` so warnings emitted
+# right after a prompt do not visually collide with the prompt line.
 ask() {  # ask VARNAME "Question" "default"
   local __var="$1" __q="$2" __def="${3:-}" __ans=""
   if [ -n "$__def" ]; then printf '%s [%s]: ' "$__q" "$__def"; else printf '%s: ' "$__q"; fi
   read -r __ans || true
+  [ -t 0 ] || echo
   [ -z "$__ans" ] && __ans="$__def"
   eval "$__var=\$__ans"
 }
 
 bold "Tell me about you and your assistant:"
 ask ASSISTANT_NAME   "What should the assistant be called" "Aide"
-ask USER_NAME        "Your name"                           "$(whoami)"
+# No `whoami` default: it leaks the OS account name (root, ubuntu, runner, ...)
+# into personalized files for users who just press Enter. Empty is handled below.
+ask USER_NAME        "Your name (used in your assistant's memory)" ""
+if [ -z "$USER_NAME" ]; then
+  warn "no name given — using '_YOUR_NAME_HERE_' as a placeholder; edit memory/MEMORY.md to fix"
+  USER_NAME="_YOUR_NAME_HERE_"
+fi
 ask USER_ROLE        "Your role / job title"               "Knowledge Worker"
 ask PRIMARY_LANGUAGE "Your main working language"          "English"
 echo
@@ -71,7 +80,16 @@ seed "memory.example"                       "memory"
 seed "config/user.config.yaml.template"     "config/user.config.yaml"
 seed ".claude/settings.local.json.template" ".claude/settings.local.json"
 
-# --- 4. Fill your details into the files just created (all git-ignored) ----
+# --- 4. Apply the persona preset ------------------------------------------
+# Persona runs BEFORE the placeholder pass so that any {{USER_NAME}}-style
+# tokens a user typed into the "what you work on" prompt resolve correctly in
+# the seeded role-and-priorities.md (persona files don't use those tokens
+# themselves, so this swap is otherwise a no-op for them).
+# shellcheck source=scripts/lib/personas.sh
+source scripts/lib/personas.sh
+apply_persona "$PERSONA" "$WORK_ON" || warn "persona step skipped — role-and-priorities.md left as the template"
+
+# --- 5. Fill your details into the files just created (all git-ignored) ----
 if [ ${#CREATED[@]} -gt 0 ]; then
   ASSISTANT_NAME="$ASSISTANT_NAME" USER_NAME="$USER_NAME" USER_ROLE="$USER_ROLE" \
   PRIMARY_LANGUAGE="$PRIMARY_LANGUAGE" \
@@ -115,11 +133,6 @@ else
   warn "nothing new created — your existing files were kept (your data is safe)"
 fi
 
-# --- 5. Apply the persona preset ------------------------------------------
-# shellcheck source=scripts/lib/personas.sh
-source scripts/lib/personas.sh
-apply_persona "$PERSONA" "$WORK_ON" || warn "persona step skipped — role-and-priorities.md left as the template"
-
 # --- 6. Permissions and runtime dirs --------------------------------------
 chmod +x setup.sh update.sh scripts/*.sh scripts/lib/*.sh hooks/*.sh hooks/*.py \
          hooks/prompt-injection-defender/*.py modules/*/*.sh 2>/dev/null || true
@@ -147,5 +160,5 @@ echo "  2. Refine memory:   memory/topics/role-and-priorities.md is pre-filled �
 echo "  3. Optional checks: bash scripts/init.sh"
 echo "  4. Opt-in modules:  see modules/README.md"
 echo
-echo "vault/, memory/, and config/ are yours and live outside git."
-echo "Update the kit any time with ./update.sh — it never touches them."
+echo "Your data (vault/, memory/, config/user.config.yaml, .mcp.json, .env) is git-ignored."
+echo "Update the kit any time with ./update.sh — it never touches those files."
