@@ -41,15 +41,16 @@ ask PRIMARY_LANGUAGE "Your main working language"          "English"
 echo
 
 bold "Which best describes your work?"
-echo "  1) generalist   2) consultant   3) engineer   4) sales   5) founder"
-ask PERSONA_PICK "Pick 1-5 (or the name)" "1"
+echo "  1) generalist   2) consultant   3) engineer   4) sales   5) founder   6) researcher"
+ask PERSONA_PICK "Pick 1-6 (or the name)" "1"
 case "$PERSONA_PICK" in
-  1|generalist) PERSONA=generalist;;
-  2|consultant) PERSONA=consultant;;
-  3|engineer)   PERSONA=engineer;;
-  4|sales)      PERSONA=sales;;
-  5|founder)    PERSONA=founder;;
-  *)            warn "did not recognize \"$PERSONA_PICK\" — using generalist"; PERSONA=generalist;;
+  1|generalist)  PERSONA=generalist;;
+  2|consultant)  PERSONA=consultant;;
+  3|engineer)    PERSONA=engineer;;
+  4|sales)       PERSONA=sales;;
+  5|founder)     PERSONA=founder;;
+  6|researcher)  PERSONA=researcher;;
+  *)             warn "did not recognize \"$PERSONA_PICK\" — using generalist"; PERSONA=generalist;;
 esac
 ask WORK_ON "In a sentence or two, what do you work on" ""
 echo
