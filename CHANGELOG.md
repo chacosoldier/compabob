@@ -6,6 +6,10 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-05-24
+
+Post-launch hygiene: visible maintenance signals + bit-rot CI.
+
 ### Added
 
 - `.github/workflows/smoke.yml` — weekly fresh-clone CI smoke test
@@ -18,6 +22,9 @@ All notable changes to Compabob are recorded here. Format follows
 - README section "How this differs from the other Claude Code things
   you have seen" — short comparison vs. raw Claude Code, awesome lists,
   multi-agent dev-team frameworks, and DIY.
+- `CHANGELOG.md` itself (this file).
+- Community seeding: 5 `good first issue` tickets (#7–#11), a pinned
+  roadmap issue (#12), and a Show-and-tell Discussion thread (#13).
 
 ### Fixed
 
@@ -83,5 +90,6 @@ Initial public release at [github.com/chacosoldier/compabob](https://github.com/
 - `docs/architecture.md`, `docs/onboarding.md`, `docs/customization-guide.md`,
   `docs/how-to-improve-memory.md`.
 
-[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/chacosoldier/compabob/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/chacosoldier/compabob/releases/tag/v1.0.0
