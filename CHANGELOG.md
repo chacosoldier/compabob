@@ -6,6 +6,45 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+### Added
+
+- **`/chart-tufte` skill** — self-grade rubric for any quantitative chart,
+  grounded in Edward Tufte's *Visual Display of Quantitative Information*.
+  Nine criteria, ten genres, seven remedies, plus a 114-line
+  `references/vdqi-catalogue.md` with named failures (NYT MPG 14.8, TIME
+  barrel 59.4) and named exemplars (Minard, Marey, Snow, Playfair). Designed
+  to run as the final pass inside `/visual-explainer` whenever the output is
+  a chart.
+- **`/mcp-debug` skill** — health-check, trace, or audit your configured MCP
+  servers when tools fail silently. Three modes: `status` (per-server
+  reachability), `trace <tool>` (likely failure mode for one tool), `audit`
+  (recommendations for unused / high-error / duplicate servers). Reads
+  `~/.claude.json` and `./.mcp.json`; redacts secrets in every output.
+- **`/memory-debt` skill** — review and apply memory updates that earlier
+  sessions proposed but never wrote. Scans `vault/Daily/`, `vault/Reflections/`,
+  and `vault/Journal/` for `- [ ]` proposals from `/reflect`, classifies each
+  as PENDING / STALE / OBSOLETE / APPLIED, then in `apply` mode walks through
+  approvals one by one. Closes the loop between `/reflect` (proposes) and
+  `memory/`.
+- **Tool-scope-guard hook** (`hooks/hook-tool-scope-guard.sh` +
+  `tool_scope_check.py` + `tool_scopes.yaml`) — a context-scoped PreToolUse
+  guard. Reasoning stays unconstrained; only the outward action surface
+  (sends, mutations, external writes) is bounded per execution context.
+  Pre-wired contexts: `interactive` (allow-all), `pulse` (overnight headless,
+  no sends), `morning-briefing` (read inboxes, write vault), `email-triage`
+  (label only, no send), `news-digest` (fetch + write only). Context is
+  selected via `$CLAUDE_CONTEXT` env var or `/tmp/claude-context-<session>`
+  file. Fail-open by design; blocks are logged to
+  `data/performance/tool-scope-blocks.jsonl`. Opt-in: add the hook entry to
+  `.claude/settings.json` under `PreToolUse` to activate.
+
+### Documented
+
+- **Choosing the Claude model** — new README section explains how to swap
+  the default model per session (`/model` or `--model`), per project
+  (`.claude/settings.json` → `"model"`), or globally (`ANTHROPIC_MODEL` env
+  var), with a pointer to the Anthropic model list. Closes #9.
+
 ## [1.1.1] — 2026-05-24
 
 Bug-fix release from the same-day QA pass. 5 personas × 10 input edge
