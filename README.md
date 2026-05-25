@@ -158,6 +158,18 @@ Do not configure everything at once. Get one loop working end to end:
 
 That second-brain loop is the core value. Once it feels useful, expand from there using the [customization guide](docs/customization-guide.md).
 
+## Choosing the Claude model
+
+Compabob does not pin a model. It uses whatever Claude Code is configured to use — by default that is Sonnet, which is the right balance for most work.
+
+Three ways to change it:
+
+- **Per session** — type `/model` inside Claude Code and pick from the list, or start the CLI with a flag: `claude --model sonnet`.
+- **Per project** — add a `"model"` field to `.claude/settings.json` (alongside `outputStyle`). Aliases `"sonnet"`, `"opus"`, `"haiku"` are accepted, or paste a full model ID such as `"claude-sonnet-4-6"`.
+- **Globally** — set the `ANTHROPIC_MODEL` environment variable.
+
+Current model IDs are listed in the [Anthropic docs](https://docs.anthropic.com/en/docs/about-claude/models). If a model is retired, the CLI falls back to the closest current one and prints a warning.
+
 ## What is inside
 
 ```
@@ -208,6 +220,9 @@ Skills are slash-command workflows. Type the command; the assistant runs the pro
 | `/visual-explainer` | Turn a system, plan, or dataset into a self-contained HTML page |
 | `/document-export` | Create a PDF, Excel, or Word file from your content |
 | `/weekly-review` | End-of-week review: done, slipped, decisions, commitments, next week's top 3 |
+| `/chart-tufte` | Self-grade any chart against Tufte's *Visual Display of Quantitative Information* before showing it |
+| `/mcp-debug` | Health-check, trace, or audit your MCP servers when tools fail silently |
+| `/memory-debt` | Resolve memory updates that earlier sessions proposed but never wrote |
 
 ## Modules (opt-in)
 

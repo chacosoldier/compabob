@@ -1,0 +1,140 @@
+# tool_scopes.yaml — bound the action surface per execution context.
+#
+# Reasoning is unconstrained; only outward actions (sends, mutations, writes
+# to shared systems) are bounded per context. Edit this file at admin time
+# instead of changing hook code at runtime.
+#
+# Context detection (checked in order):
+#   1. $CLAUDE_CONTEXT env var       — set by cron / orchestrator before launch
+#   2. /tmp/claude-context-<session> — written by skills at session start
+#   3. Default: "interactive"        — fail-open; preserves unguarded behavior
+#
+# Policy types:
+#   allow_all   — unrestricted (interactive default).
+#   allowlist   — only tools matching an allowed_tools pattern pass.
+#
+# Tool patterns support fnmatch globs (e.g. `mcp__gmail__*`).
+# `blocked_tools` is checked BEFORE `allowed_tools` (explicit deny wins).
+#
+# Tweak the contexts below to match the cron jobs and headless tasks you
+# actually run. The examples are realistic starting points for a personal
+# assistant kit: an overnight pulse, a morning briefing, an email triage,
+# and a news digest.
+
+default_behavior: allow  # fail-open if context unknown or YAML unreadable
+
+contexts:
+
+  # ── Interactive ─────────────────────────────────────────────────────────────
+  interactive:
+    description: "Full interactive session with the user — no restrictions."
+    policy: allow_all
+
+  # ── Overnight pulse / headless task processing ──────────────────────────────
+  pulse:
+    description: >
+      Headless overnight processing. Broad read access and vault writes for
+      staging. No outbound sends. No calendar or external state mutations.
+    policy: allowlist
+    allowed_tools:
+      # Core filesystem
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      # Sub-agents (each child inherits CLAUDE_CONTEXT).
+      - Agent
+      - Task
+      # Time
+      - mcp__time__get_current_time
+      - mcp__time__convert_time
+      # Mail — read-only
+      - mcp__*__search_threads
+      - mcp__*__get_thread
+      - mcp__*__list_labels
+      - mcp__*__list_drafts
+      # Calendar — read-only
+      - mcp__*__list_events
+      - mcp__*__get_event
+      - mcp__*__list_calendars
+      - mcp__*__suggest_time
+      # Web research
+      - WebFetch
+      - WebSearch
+    blocked_tools:
+      # No outbound mail under any circumstances.
+      - mcp__*__create_draft
+      - mcp__*__send_*
+      - mcp__*__label_*
+      - mcp__*__unlabel_*
+      # No calendar mutations.
+      - mcp__*__create_event
+      - mcp__*__update_event
+      - mcp__*__delete_event
+      - mcp__*__respond_to_event
+
+  # ── Morning briefing ────────────────────────────────────────────────────────
+  morning-briefing:
+    description: >
+      Read inboxes + calendar, write a briefing into the vault. No sends,
+      no calendar mutations, no external outbound.
+    policy: allowlist
+    allowed_tools:
+      - Read
+      - Write
+      - Edit
+      - Glob
+      - Grep
+      - Bash
+      - Agent
+      - mcp__time__get_current_time
+      - mcp__*__search_threads
+      - mcp__*__get_thread
+      - mcp__*__list_labels
+      - mcp__*__list_events
+      - mcp__*__get_event
+      - mcp__*__list_calendars
+    blocked_tools:
+      - mcp__*__create_draft
+      - mcp__*__send_*
+      - mcp__*__create_event
+      - mcp__*__update_event
+      - mcp__*__delete_event
+      - mcp__*__respond_to_event
+
+  # ── Email triage ────────────────────────────────────────────────────────────
+  email-triage:
+    description: >
+      Read, label, classify mail. Drafts allowed only via a separate review
+      flow — this context never sends.
+    policy: allowlist
+    allowed_tools:
+      - Read
+      - Write
+      - Bash
+      - mcp__*__search_threads
+      - mcp__*__get_thread
+      - mcp__*__list_labels
+      - mcp__*__label_message
+      - mcp__*__label_thread
+      - mcp__*__unlabel_message
+      - mcp__*__unlabel_thread
+    blocked_tools:
+      - mcp__*__create_draft
+      - mcp__*__send_*
+
+  # ── News digest ─────────────────────────────────────────────────────────────
+  news-digest:
+    description: >
+      Fetch + summarise the news, write a digest to the vault. No outbound.
+    policy: allowlist
+    allowed_tools:
+      - Read
+      - Write
+      - Edit
+      - Bash
+      - WebFetch
+      - WebSearch
+      - mcp__time__get_current_time
