@@ -1,5 +1,7 @@
 # Compabob
 
+[English](README.md) | [Español](docs/i18n/README.es.md)
+
 [![CI](https://github.com/chacosoldier/compabob/actions/workflows/smoke.yml/badge.svg)](https://github.com/chacosoldier/compabob/actions/workflows/smoke.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/chacosoldier/compabob?style=social)](https://github.com/chacosoldier/compabob/stargazers)
