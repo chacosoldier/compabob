@@ -21,6 +21,8 @@ logs/
 .tmp/
 reports/
 modules/*/generated/
+# Your ICP rubric (copied from icp.example.json) is your market definition, not the kit's
+modules/lead-pipeline/icp.json
 
 # Python
 __pycache__/
