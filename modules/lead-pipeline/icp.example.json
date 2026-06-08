@@ -1,0 +1,21 @@
+{
+  "_comment": "Your Ideal Customer Profile, as a scoring rubric. Copy this file to icp.json and edit it for your market. Every points value is yours to tune; higher total = better fit. The numbers below are a starting point, not gospel.",
+
+  "target_countries": ["DE", "BR"],
+  "country_points": 20,
+
+  "title_keywords": ["head", "vp", "director", "owner", "founder", "ceo", "managing", "growth", "revenue", "sales"],
+  "title_points": 30,
+
+  "has_domain_points": 15,
+  "has_email_points": 20,
+
+  "_size_comment": "Optional. Name a numeric column from your lead CSV (e.g. 'employees' or 'headcount'); rows whose value falls in [size_min, size_max] earn size_points. Remove these four keys if you have no size data.",
+  "size_field": "employees",
+  "size_min": 10,
+  "size_max": 500,
+  "size_points": 15,
+
+  "_tiers_comment": "Score thresholds for the A/B/C label. A row scores its tier if its fit_score is at least the threshold.",
+  "tiers": { "A": 70, "B": 45, "C": 0 }
+}

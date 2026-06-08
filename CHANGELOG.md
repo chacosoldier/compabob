@@ -8,6 +8,23 @@ All notable changes to Compabob are recorded here. Format follows
 
 ### Added
 
+- **`crm-merge` module + `/merge-contacts` skill** — folds Google Contacts (Takeout
+  vCards), a LinkedIn data export (Connections + messages), and your vault
+  `People/` notes into one local source of truth: a SQLite DB, a JSON file, and a
+  self-contained offline HTML browser. Identity resolution uses union-find on
+  three keys (verified email, LinkedIn slug, normalized name) with a common-name
+  collision guard, so duplicates collapse without over-merging generic names.
+  Relationship strength (LinkedIn message count) ranks records. No credentials,
+  all stdlib, idempotent. Outputs are git-ignored.
+- **`lead-pipeline` module + `/build-list` skill** — turns a raw candidate list
+  into a ranked, CRM-aware outbound list through staged steps that write one CSV
+  per stage (discover → clean → **dedup-against-CRM** → enrich → score → top-N).
+  The deterministic stages (`clean`, `dedup`, `score`) run as a stdlib script;
+  discovery and enrichment run as assistant steps over optional MCP servers (exa
+  free tier minimum; an enrichment provider optional). Dedup tags each lead
+  `proceed` (cold), `warm` (you already know someone at the account, route the
+  intro), or `skip` (already a known contact), so you never enrich or cold-email
+  a relationship. ICP scoring is a tunable JSON rubric (`icp.example.json`).
 - **`/chart-tufte` skill** — self-grade rubric for any quantitative chart,
   grounded in Edward Tufte's *Visual Display of Quantitative Information*.
   Nine criteria, ten genres, seven remedies, plus a 114-line

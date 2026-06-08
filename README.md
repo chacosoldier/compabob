@@ -225,6 +225,8 @@ Skills are slash-command workflows. Type the command; the assistant runs the pro
 | `/chart-tufte` | Self-grade any chart against Tufte's *Visual Display of Quantitative Information* before showing it |
 | `/mcp-debug` | Health-check, trace, or audit your MCP servers when tools fail silently |
 | `/memory-debt` | Resolve memory updates that earlier sessions proposed but never wrote |
+| `/merge-contacts` | Fold your Google + LinkedIn + vault contacts into one local CRM, deduped |
+| `/build-list` | Build a ranked outbound list: discover, dedup against your CRM, enrich, score |
 
 ## Modules (opt-in)
 
@@ -236,6 +238,8 @@ The core runs with zero external services. Modules add capability when you want 
 | `telegram` | Available | A Telegram bot: inbound messages drafted for your approval, never auto-sent |
 | `integrations` | Available | MCP tools: browser automation, web search, Gmail, Calendar, utilities |
 | `linkedin-outreach` | Available | Drafts one LinkedIn connection-invitation card a day from a queue, for your review and manual send |
+| `crm-merge` | Available | Folds Google + LinkedIn + vault contacts into one local CRM (SQLite + offline HTML browser), deduped across sources. No creds |
+| `lead-pipeline` | Available | Builds a ranked outbound list: discover, clean, dedup against your CRM, enrich, score. One CSV per stage |
 | `memory-search` | Available | Real index over `memory/` and `vault/` so retrieval ranks by relevance (FTS5 by default; semantic via Ollama if installed) |
 | `extra-agents` | Roadmap | An agent gallery: designer, evaluator, sales coach, project manager |
 | `whatsapp` | Roadmap | WhatsApp channel — not built (account-ban risk); use Telegram instead |
