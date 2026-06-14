@@ -8,6 +8,15 @@ All notable changes to Compabob are recorded here. Format follows
 
 ### Added
 
+- **`transcribe` module (highly encouraged)** — one-hotkey local call recording +
+  transcription. A toggle script drives `ffmpeg` to capture audio and
+  `mlx-whisper` to transcribe it on-device: first run records, second run stops,
+  transcribes, copies the text to your clipboard, and files a markdown transcript
+  (with frontmatter) into `vault/raw/meetings/` for your notes pipeline. Defaults
+  to an aggregate device so both sides of a call are captured. No cloud service,
+  no API key, audio never leaves the machine. Device names are overridable via
+  `TRANSCRIBE_DEVICE_*` env vars (`record.py devices` lists yours); optional
+  Hammerspoon/Raycast hotkey binding documented. Opt-in via `transcribe: true`.
 - **`crm-merge` module + `/merge-contacts` skill** — folds Google Contacts (Takeout
   vCards), a LinkedIn data export (Connections + messages), and your vault
   `People/` notes into one local source of truth: a SQLite DB, a JSON file, and a

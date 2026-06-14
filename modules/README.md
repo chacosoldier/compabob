@@ -11,6 +11,7 @@ The core kit runs with zero external services. Modules add capability when you w
 | [`crm-merge/`](crm-merge/) | **Available** | Folds Google Contacts + LinkedIn export + vault notes into one local CRM (SQLite + JSON + offline HTML browser), deduping people across sources. No creds. Run by hand or via the `/merge-contacts` skill. |
 | [`lead-pipeline/`](lead-pipeline/) | **Available** | Builds a ranked outbound list: discover, clean, **dedup against your CRM**, enrich, score. One CSV per stage. Run by hand or via the `/build-list` skill. exa MCP optional for discovery. |
 | [`memory-search/`](memory-search/) | **Available** | A search index over memory and the vault: ranked keyword search out of the box, semantic (search by meaning) with Ollama. Built by the `/index-memory` skill. |
+| [`transcribe/`](transcribe/) | **Available — highly encouraged** | One-hotkey local call recording + transcription (mlx-whisper). Captures both sides, copies the text to your clipboard, and files a markdown transcript into `vault/raw/meetings/`. No cloud, no API key, audio never leaves your machine. |
 | [`extra-agents/`](extra-agents/) | Roadmap | A gallery of additional agents (designer, evaluator, sales coach, project manager) to copy into `.claude/agents/`. |
 | [`whatsapp/`](whatsapp/) | Roadmap | A WhatsApp channel. Not built: unofficial bridges risk an account ban. Use the Telegram module instead. |
 | [`team/`](team/) | Deferred | Multi-user team mode: shared, department, and personal tiers. See its README for why it is not in this release. |

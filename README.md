@@ -241,6 +241,7 @@ The core runs with zero external services. Modules add capability when you want 
 | `crm-merge` | Available | Folds Google + LinkedIn + vault contacts into one local CRM (SQLite + offline HTML browser), deduped across sources. No creds |
 | `lead-pipeline` | Available | Builds a ranked outbound list: discover, clean, dedup against your CRM, enrich, score. One CSV per stage |
 | `memory-search` | Available | Real index over `memory/` and `vault/` so retrieval ranks by relevance (FTS5 by default; semantic via Ollama if installed) |
+| `transcribe` | Available — **highly encouraged** | One-hotkey local call recording + transcription (mlx-whisper). Captures both sides, copies to clipboard, files a transcript into `vault/raw/meetings/`. No cloud, no key, audio stays on your machine |
 | `extra-agents` | Roadmap | An agent gallery: designer, evaluator, sales coach, project manager |
 | `whatsapp` | Roadmap | WhatsApp channel — not built (account-ban risk); use Telegram instead |
 
