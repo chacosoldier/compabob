@@ -1,0 +1,20 @@
+# dictation glossary — copy to glossary.yaml (gitignored) and make it yours.
+# See modules/dictation/README.md "Glossary format" for the full contract.
+#
+#   terms:        canonical spellings the model should PREFER for similar-
+#                 sounding words (your name, company, product, jargon).
+#   corrections:  explicit wrong -> right mappings (the strongest signal).
+#                 learn.py appends here automatically as it observes you;
+#                 entries you add by hand use `source: seed`.
+version: 0
+
+terms: []
+  # - Acme Corp
+  # - Kubernetes
+  # - PostgreSQL
+
+corrections: []
+  # - wrong: [sequel, sea quel]   # one or more observed mis-transcriptions (lowercased)
+  #   right: SQL
+  #   source: seed                # "seed" (hand-added) | "learned" (by learn.py)
+  #   occurrences: 0

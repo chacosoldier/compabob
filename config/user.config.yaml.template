@@ -28,6 +28,7 @@ modules:
   linkedin_outreach: false  # daily LinkedIn outreach drafting (queue-driven, draft-first)
   memory_search: false   # semantic search over memory and the vault
   transcribe: false      # local call recording + transcription (highly encouraged)
+  dictation: false       # dictation cleanup proxy + self-growing glossary
   extra_agents: false    # the extra-agents gallery
   team: false            # multi-user team mode
 
