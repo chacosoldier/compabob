@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compabob — persona preset helper. Sourced by setup.sh; not run directly.
+# Compabob: persona preset helper. Sourced by setup.sh (after scripts/lib/common.sh); not run directly.
 #
 # apply_persona <persona-id> <free-text "what you work on">
 #   - seeds memory/topics/role-and-priorities.md from config/personas/<id>.md,
@@ -13,7 +13,7 @@ apply_persona() {
   local persona_file="config/personas/$pid.md"
 
   if [ ! -f "$persona_file" ]; then
-    printf '  \033[1;33mwarn\033[0m persona "%s" not found — skipping persona setup\n' "$pid"
+    warn "persona \"$pid\" not found, skipping persona setup"
     return 0
   fi
 

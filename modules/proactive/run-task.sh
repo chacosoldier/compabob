@@ -6,6 +6,11 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
+
+# launchd and cron run with a minimal PATH; put common tool dirs on it so the
+# claude and python3 binaries are found when this runs unattended.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+
 TASK="${1:-}"
 if [ -z "$TASK" ]; then
   echo "usage: run-task.sh <task-name>" >&2

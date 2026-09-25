@@ -12,16 +12,27 @@ ok()   { printf "  ${GREEN}ok${NC}    %s\n" "$1"; }
 warn() { printf "  ${YELLOW}warn${NC}  %s\n" "$1"; WARN=$((WARN+1)); }
 fail() { printf "  ${RED}fail${NC}  %s\n" "$1"; FAIL=$((FAIL+1)); }
 
-printf "\n${BOLD}Compabob — init check${NC}\n"
+printf "\n${BOLD}Compabob: init check${NC}\n"
 printf "%s\n\n" "$(date '+%Y-%m-%d %H:%M')"
 
 # 1. Tooling
-command -v python3 >/dev/null 2>&1 && ok "python3 ($(python3 --version 2>&1))" || fail "python3 not found"
-command -v claude  >/dev/null 2>&1 && ok "claude CLI found" || warn "claude CLI not found (npm install -g @anthropic-ai/claude-code)"
+if command -v python3 >/dev/null 2>&1; then
+  if python3 -c 'import sys; sys.exit(sys.version_info < (3, 10))' 2>/dev/null; then
+    ok "python3 ($(python3 --version 2>&1))"
+  else
+    warn "$(python3 --version 2>&1) is older than 3.10; some modules need 3.10+ (brew install python)"
+  fi
+else
+  fail "python3 not found"
+fi
+command -v claude  >/dev/null 2>&1 && ok "claude CLI found" || warn "claude CLI not found (install: curl -fsSL https://claude.ai/install.sh | bash)"
 
 # 2. Setup has run — your personal files exist
 if [ -d vault ] && [ -d memory ] && [ -f config/user.config.yaml ]; then
-  ok "setup has run (vault/, memory/, config present)"
+  ok "setup has run (vault/, memory/, config/user.config.yaml present)"
+  if MISSING_CFG=$(bash scripts/migrate-config.sh --check 2>/dev/null); then :; else
+    warn "$MISSING_CFG. Run: bash scripts/migrate-config.sh"
+  fi
 else
   fail "setup has not run — run ./setup.sh"
 fi
@@ -66,7 +77,7 @@ PY
 fi
 
 # 6. Agents and skills
-AGENTS=$(find .claude/agents -maxdepth 1 -name '*.md' 2>/dev/null | wc -l | tr -d ' ')
+AGENTS=$(find .claude/agents -maxdepth 1 -name '*.md' ! -name '_*' ! -name 'error-handling.md' 2>/dev/null | wc -l | tr -d ' ')
 SKILLS=$(find .claude/skills -maxdepth 2 -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')
 [ "$AGENTS" -gt 0 ] && ok "$AGENTS agent file(s)" || fail "no agents in .claude/agents/"
 [ "$SKILLS" -gt 0 ] && ok "$SKILLS skill(s)" || warn "no skills in .claude/skills/"

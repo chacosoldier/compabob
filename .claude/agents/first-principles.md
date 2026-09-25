@@ -2,7 +2,7 @@
 name: first-principles
 description: Rigorous abstract reasoning. Use to reason a problem from scratch, decompose a concept to its fundamentals, calibrate a prediction, run scenario analysis under deep uncertainty, or synthesize opposing views. For thinking about which framework even applies, not applying a known one to a decision.
 tools: Read, Glob, Grep, WebFetch, WebSearch
-model: sonnet
+model: inherit
 ---
 
 # First Principles

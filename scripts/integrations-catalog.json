@@ -1,5 +1,5 @@
 {
-  "_comment": "Source of truth for the integration picker used by scripts/install-integrations.sh. Versions are pinned on purpose: bump them here deliberately, never use @latest, so a clone is reproducible and an upstream release cannot break a stranger's first run. Versions verified against npm and PyPI on 2026-05-20.",
+  "_comment": "Source of truth for the integration picker used by scripts/install-integrations.sh. Versions are pinned on purpose: bump them here deliberately, never use @latest, so a clone is reproducible and an upstream release cannot break a stranger's first run. Versions verified against npm and PyPI on 2026-09-25.",
   "categories": [
     {
       "id": "web",
@@ -9,27 +9,23 @@
       "servers": {
         "playwright": {
           "command": "npx",
-          "args": ["-y", "@playwright/mcp@0.0.75"]
+          "args": ["-y", "@playwright/mcp@0.0.82"]
         },
         "scrapling-fetch": {
           "command": "uvx",
-          "args": ["scrapling-fetch-mcp@0.2.2"]
+          "args": ["scrapling-fetch-mcp@0.2.4"]
         }
       }
     },
     {
       "id": "utility",
-      "label": "Utility (time, fetch)",
+      "label": "Utility (time and timezone math)",
       "requires_keys": false,
       "needs": ["uvx"],
       "servers": {
         "time": {
           "command": "uvx",
-          "args": ["mcp-server-time@2026.1.26"]
-        },
-        "fetch": {
-          "command": "uvx",
-          "args": ["mcp-server-fetch@2025.4.7"]
+          "args": ["mcp-server-time@2026.8.18"]
         }
       }
     },
@@ -43,17 +39,10 @@
       "servers": {
         "exa": {
           "command": "npx",
-          "args": ["-y", "exa-mcp-server@3.2.1"],
+          "args": ["-y", "exa-mcp-server@3.4.1"],
           "env": { "EXA_API_KEY": "${EXA_API_KEY}" }
         }
       }
-    },
-    {
-      "id": "google",
-      "label": "Google Workspace (Gmail, Calendar, needs OAuth)",
-      "requires_keys": true,
-      "doc_anchor": "google-workspace",
-      "servers": {}
     }
   ]
 }

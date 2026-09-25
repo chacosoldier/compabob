@@ -6,7 +6,7 @@ This kit is built to be changed. "Contributing" here means two things: making it
 
 The kit assumes you will edit it. Nothing here is sacred.
 
-- **Agents**: edit any file in `.claude/agents/`. Add a new one with the `/add-agent` skill, or copy `.claude/agents/_agent-template.md`.
+- **Agents**: edit any file in `.claude/agents/`. Add a new one with the `/add-agent` skill, or copy `.claude/agents/_agent-template.md.template`.
 - **Skills**: each directory in `.claude/skills/` is one slash command. Copy an existing one to make a new workflow.
 - **Hooks**: `hooks/` holds safety guards and lifecycle scripts. They are wired in `.claude/settings.json`. Add, remove, or disable any of them.
 - **Constitution**: `CONSTITUTION.md` is the behavior contract. Change it to match how you actually work.

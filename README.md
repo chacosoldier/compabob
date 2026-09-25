@@ -7,7 +7,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/chacosoldier/compabob?style=social)](https://github.com/chacosoldier/compabob/stargazers)
 [![Last commit](https://img.shields.io/github/last-commit/chacosoldier/compabob)](https://github.com/chacosoldier/compabob/commits/main)
 
-**A customizable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) setup for knowledge workers.** Clone it, run `./setup.sh`, name your assistant, and in about ten minutes you have a working AI work partner: it knows your role, remembers what you tell it, routes work to specialized agents, and never sends anything without your sign-off.
+**A customizable [Claude Code](https://code.claude.com/docs) setup for knowledge workers.** Clone it, run `./setup.sh`, name your assistant, and in about ten minutes you have a working AI work partner: it knows your role, remembers what you tell it, routes work to specialized agents, and never sends anything without your sign-off.
 
 ## Why
 
@@ -51,7 +51,7 @@ cd compabob
 ./setup.sh
 ```
 
-Then run `claude`. You need the [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code), `git`, `bash`, `python3` (3.10+), and a paid Claude plan. Optional but recommended: [VS Code](https://code.visualstudio.com) with the Claude Code extension (see [Recommended setup](#recommended-setup) below). Optional: [Obsidian](https://obsidian.md) to browse the knowledge base as a graph. Never used a terminal? Use the walkthrough below instead.
+Then run `claude`. You need the [Claude Code CLI](https://code.claude.com/docs), `git`, `bash`, `python3` (3.10+), and a paid Claude plan. Optional but recommended: [VS Code](https://code.visualstudio.com) with the Claude Code extension (see [Recommended setup](#recommended-setup) below). Optional: [Obsidian](https://obsidian.md) to browse the knowledge base as a graph. Never used a terminal? Use the walkthrough below instead.
 
 ## Recommended setup
 
@@ -82,21 +82,21 @@ Homebrew installs the other tools for you. Paste this one line and press Enter:
 
 It asks for your Mac password (as you type it, nothing appears on screen, that is normal) and takes a few minutes. When it finishes it prints a short "Next steps" block with two lines to run. Paste and run those two lines too: they add Homebrew to your path.
 
-### 3. Install git, Node, and Python
+### 3. Install git, Python, and Node
 
 ```bash
-brew install git node python
+brew install git python node
 ```
 
-The three tools Compabob is built on. One command, a few minutes.
+git and Python run the kit. Node runs some of the optional integrations. One command, a few minutes.
 
 ### 4. Install Claude Code
 
 ```bash
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-This is the assistant itself. If anything goes wrong here, the official install guide is at [docs.anthropic.com/en/docs/claude-code](https://docs.anthropic.com/en/docs/claude-code).
+This is the assistant itself, installed with Anthropic's native installer, which keeps itself up to date. If you prefer npm, `npm install -g @anthropic-ai/claude-code` also works (it needs Node 22 or newer). If anything goes wrong here, the official install guide is at [code.claude.com/docs](https://code.claude.com/docs/en/setup).
 
 ### 5. Download Compabob
 
@@ -113,7 +113,7 @@ From here on, every command runs inside this `compabob` folder. If you open a fr
 ./setup.sh
 ```
 
-It asks about you (assistant name, your name, role, working language), then about your work (which of five persona presets best fits you, and one sentence about what you focus on), then offers an optional integrations step you can skip and run later. Seven prompts in total. About a minute.
+It asks about you (assistant name, your name, role, working language), then about your work (which of six persona presets best fits you, and one sentence about what you focus on), then offers an optional integrations step you can skip and run later. Seven prompts in total. About a minute.
 
 ### 7. Start your assistant
 
@@ -131,7 +131,7 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 
 ### Linux and Windows
 
-- **Linux**: skip Homebrew. Install the tools with your package manager, for example `sudo apt install git nodejs npm python3`, then do steps 4 to 7.
+- **Linux**: skip Homebrew. Install the tools with your package manager, for example `sudo apt install git python3 curl` (add `nodejs npm` if you want the optional integrations), then do steps 4 to 7.
 
 ### If something looks wrong on Linux
 
@@ -140,7 +140,10 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 - **Arch**: `sudo pacman -S git nodejs npm python` works as-is.
 - **`python3` vs `python`**: confirm `python3 --version` returns 3.10+ before running `./setup.sh`.
 - **Permissions**: if `./setup.sh` says "Permission denied," run `chmod +x setup.sh` first.
-- **Windows**: install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
+
+### Windows
+
+- Install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
 
 ## Updating
 
@@ -162,15 +165,17 @@ That second-brain loop is the core value. Once it feels useful, expand from ther
 
 ## Choosing the Claude model
 
-Compabob does not pin a model. It uses whatever Claude Code is configured to use — by default that is Sonnet, which is the right balance for most work.
+Compabob follows whatever model Claude Code is set to. Every agent uses `model: inherit`, so when you switch models, the agents switch with you. Claude Code's default today is Opus 5.5 on every paid plan.
 
 Three ways to change it:
 
-- **Per session** — type `/model` inside Claude Code and pick from the list, or start the CLI with a flag: `claude --model sonnet`.
-- **Per project** — add a `"model"` field to `.claude/settings.json` (alongside `outputStyle`). Aliases `"sonnet"`, `"opus"`, `"haiku"` are accepted, or paste a full model ID such as `"claude-sonnet-4-6"`.
-- **Globally** — set the `ANTHROPIC_MODEL` environment variable.
+- **Per session**: type `/model` inside Claude Code and pick from the list, or start the CLI with a flag: `claude --model sonnet`.
+- **Per project**: add a `"model"` field to `.claude/settings.json` (alongside `outputStyle`). Aliases such as `"sonnet"`, `"opus"`, `"haiku"` are accepted, or paste a full model ID such as `"claude-sonnet-5"`.
+- **Globally**: set the `ANTHROPIC_MODEL` environment variable.
 
-Current model IDs are listed in the [Anthropic docs](https://docs.anthropic.com/en/docs/about-claude/models). If a model is retired, the CLI falls back to the closest current one and prints a warning.
+**On a Pro plan**, the larger model uses up your limits faster, and agents that inherit it do too. If you hit limits, pin the agents to a smaller model: change `model: inherit` to `model: sonnet` in the frontmatter of the files in `.claude/agents/`. The scheduled modules (`proactive`, `telegram`, `linkedin-outreach`) already run on Sonnet to keep unattended runs cheap.
+
+Current model IDs are listed in the [model overview](https://platform.claude.com/docs/en/models/overview).
 
 ## What is inside
 
@@ -236,16 +241,15 @@ The core runs with zero external services. Modules add capability when you want 
 |--------|--------|--------------|
 | `proactive` | Available | Scheduled automation: a morning brief and weekly review on a timer |
 | `telegram` | Available | A Telegram bot: inbound messages drafted for your approval, never auto-sent |
-| `integrations` | Available | MCP tools: browser automation, web search, Gmail, Calendar, utilities |
+| `integrations` | Available | MCP tools: browser automation, web search, utilities. Gmail and Calendar via Claude's own connectors |
 | `linkedin-outreach` | Available | Drafts one LinkedIn connection-invitation card a day from a queue, for your review and manual send |
 | `crm-merge` | Available | Folds Google + LinkedIn + vault contacts into one local CRM (SQLite + offline HTML browser), deduped across sources. No creds |
 | `lead-pipeline` | Available | Builds a ranked outbound list: discover, clean, dedup against your CRM, enrich, score. One CSV per stage |
 | `memory-search` | Available | Real index over `memory/` and `vault/` so retrieval ranks by relevance (FTS5 by default; semantic via Ollama if installed) |
 | `transcribe` | Available — **highly encouraged** | One-hotkey local call recording + transcription (mlx-whisper). Captures both sides, copies to clipboard, files a transcript into `vault/raw/meetings/`. No cloud, no key, audio stays on your machine |
-| `extra-agents` | Roadmap | An agent gallery: designer, evaluator, sales coach, project manager |
-| `whatsapp` | Roadmap | WhatsApp channel — not built (account-ban risk); use Telegram instead |
+| `dictation` | Available | Cleanup endpoint for your dictation app: fixes punctuation and fillers, and a glossary that learns the words it keeps getting wrong |
 
-See [modules/README.md](modules/README.md) to enable one.
+See [modules/README.md](modules/README.md) to enable one, and for what is deliberately not built yet (an agent gallery, team mode, WhatsApp).
 
 ## Feedback
 
@@ -253,7 +257,7 @@ Found a bug or a rough edge? [Open an issue](https://github.com/chacosoldier/com
 
 ## Lineage
 
-This kit is distilled from a personal Claude Code setup the author refined over a year of daily use: the constitution, the agent fleet, the safety hooks, the memory system. The personal-life domains were stripped out and the patterns generalized into a clean starting point, and the result is what you are reading. Credit to the [Claude Code](https://docs.anthropic.com/en/docs/claude-code) team for the harness this builds on.
+This kit is distilled from a personal Claude Code setup the author refined over a year of daily use: the constitution, the agent fleet, the safety hooks, the memory system. The personal-life domains were stripped out and the patterns generalized into a clean starting point, and the result is what you are reading. Credit to the [Claude Code](https://code.claude.com/docs) team for the harness this builds on.
 
 ## Author
 

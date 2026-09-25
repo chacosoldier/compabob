@@ -18,7 +18,8 @@ Prerequisites (all local, no API keys):
     - BlackHole 2ch installed              (brew install blackhole-2ch)
     - A Multi-Output / Aggregate device    (macOS Audio MIDI Setup)
     - ffmpeg                               (brew install ffmpeg)
-    - mlx-whisper                          (pip3 install mlx-whisper)
+    - mlx-whisper in modules/transcribe/.venv (see README; this script re-runs
+      itself with that venv's python when it exists)
 
 Device names vary per machine. Run `record.py devices` to see yours, then
 override any of these via environment variable if they differ from the defaults:
@@ -292,5 +293,17 @@ def main():
             start_recording(args.device, args.model, args.title, inbox)
 
 
+def _reexec_in_module_venv():
+    """Re-run with modules/transcribe/.venv's python if it exists and we are not it.
+
+    mlx-whisper lives in that venv (Homebrew Python refuses a global pip install),
+    so a hotkey or a bare `python3 record.py` still finds it.
+    """
+    venv_py = Path(__file__).resolve().parent / ".venv" / "bin" / "python"
+    if venv_py.exists() and Path(sys.prefix).resolve() != venv_py.parent.parent.resolve():
+        os.execv(str(venv_py), [str(venv_py), str(Path(__file__).resolve()), *sys.argv[1:]])
+
+
 if __name__ == "__main__":
+    _reexec_in_module_venv()
     main()

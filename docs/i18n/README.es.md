@@ -37,4 +37,4 @@ cd compabob
 ./setup.sh
 ```
 
-> Esta es una traducción parcial (las primeras seis secciones) del [README en inglés](../../README.md). Para la guía completa, incluyendo el tutorial paso a paso, las skills, los módulos y el resto, sigue el documento original. Traducción inicial aportada por [@MD-Mushfiqur123](https://github.com/MD-Mushfiqur123) en [#17](https://github.com/chacosoldier/compabob/pull/17).
+> Esta es una traducción parcial de la introducción del [README en inglés](../../README.md); la sección de comparación ("How this differs") no está traducida. Para la guía completa, incluyendo el tutorial paso a paso, las skills, los módulos y el resto, sigue el documento original. Traducción inicial aportada por [@MD-Mushfiqur123](https://github.com/MD-Mushfiqur123) en [#17](https://github.com/chacosoldier/compabob/pull/17).

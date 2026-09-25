@@ -33,7 +33,7 @@ module *is* that endpoint:
 ## Prerequisites
 
 ```bash
-pip3 install pyyaml                      # the only dependency
+python3 -m venv modules/dictation/.venv && modules/dictation/.venv/bin/pip install pyyaml   # the only dependency
 ```
 
 A local dictation app that supports an OpenAI-compatible post-processing

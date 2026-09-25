@@ -2,7 +2,7 @@
 name: agent-name
 description: One or two sentences. State WHEN to use this agent, not just what it is. The main session routes by matching a request against this text, so name the triggers, domains, and verbs that should land here. Note what this agent is NOT for, to keep routing clean.
 tools: Read, Glob, Grep
-model: sonnet
+model: inherit
 ---
 
 # Agent Name

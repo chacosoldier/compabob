@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Compabob — integration installer.
+# Compabob: integration installer.
 #
 # Adds MCP servers to .mcp.json from scripts/integrations-catalog.json.
-# Keyless integrations (web, utility) are configured fully. Keyed ones (search,
-# google) are configured as far as possible and the remaining key/OAuth step is
+# Keyless integrations (web, utility) are configured fully. The keyed one
+# (search) is configured as far as possible and the remaining key step is
 # printed for you to finish. Nothing is downloaded here: MCP servers fetch
 # themselves the first time Claude Code uses them.
 #
@@ -21,13 +21,12 @@ MCP_FILE=".mcp.json"
 MCP_SEED=".mcp.json.example"
 CONFIG="config/user.config.yaml"
 
-bold() { printf '\033[1m%s\033[0m\n' "$1"; }
-ok()   { printf '  \033[0;32mok\033[0m   %s\n' "$1"; }
-warn() { printf '  \033[1;33mwarn\033[0m %s\n' "$1"; }
+# shellcheck source=scripts/lib/common.sh
+source scripts/lib/common.sh
 
 if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
-  bold "Compabob — integration installer"
-  echo "Adds MCP servers to .mcp.json. Categories: web, utility, search, google."
+  bold "Compabob: integration installer"
+  echo "Adds MCP servers to .mcp.json. Categories: web, utility, search."
   echo "  install-integrations.sh web utility   configure those categories"
   echo "  install-integrations.sh               interactive picker"
   exit 0
@@ -37,7 +36,7 @@ fi
 command -v python3 >/dev/null 2>&1 || { echo "python3 is required" >&2; exit 1; }
 
 bold ""
-bold "Compabob — integrations"
+bold "Compabob: integrations"
 echo
 
 # --- choose categories -----------------------------------------------------
@@ -53,21 +52,14 @@ else
     case "$ans" in [Yy]*) CHOSEN+=("$1");; esac
   }
   ask_cat web     "Playwright + scrapling-fetch (no key)"
-  ask_cat utility "time + fetch (no key)"
+  ask_cat utility "time and timezone math (no key)"
   ask_cat search  "exa web search (needs an API key)"
-  ask_cat google  "Gmail + Calendar (needs OAuth)"
   echo
 fi
 
 if [ "${#CHOSEN[@]}" -eq 0 ]; then
   warn "nothing chosen — no changes made"
   exit 0
-fi
-
-# --- ensure .mcp.json exists (only now that we know we'll touch it) -------
-if [ ! -f "$MCP_FILE" ]; then
-  if [ -f "$MCP_SEED" ]; then cp "$MCP_SEED" "$MCP_FILE"; else printf '{\n  "mcpServers": {}\n}\n' > "$MCP_FILE"; fi
-  ok "created $MCP_FILE"
 fi
 
 # --- preflight: runtimes (warn only, never block) -------------------------
@@ -78,16 +70,24 @@ command -v uvx >/dev/null 2>&1 && ok "uvx found" \
 echo
 
 # --- merge .mcp.json + report (Python does the JSON work) -----------------
-python3 - "$CATALOG" "$MCP_FILE" "$CONFIG" "${CHOSEN[@]}" <<'PYEOF'
-import json, sys
+# .mcp.json is created only when at least one server is actually added, so an
+# unknown category or an all-skipped run never leaves an empty file behind.
+python3 - "$CATALOG" "$MCP_FILE" "$MCP_SEED" "${CHOSEN[@]}" <<'PYEOF'
+import json, os, sys
 
-catalog_path, mcp_path, config_path, *chosen = sys.argv[1:]
+catalog_path, mcp_path, seed_path, *chosen = sys.argv[1:]
 GREEN, YELLOW, BOLD, NC = "\033[0;32m", "\033[1;33m", "\033[1m", "\033[0m"
 
 catalog = json.load(open(catalog_path))
 cats = {c["id"]: c for c in catalog["categories"]}
 
-mcp = json.load(open(mcp_path))
+existed = os.path.exists(mcp_path)
+if existed:
+    mcp = json.load(open(mcp_path))
+elif os.path.exists(seed_path):
+    mcp = json.load(open(seed_path))
+else:
+    mcp = {}
 mcp.setdefault("mcpServers", {})
 
 added, skipped, guided, unknown = [], [], [], []
@@ -107,9 +107,12 @@ for cid in chosen:
 
 # idempotent write: deterministic output, so a re-run with the same choices
 # produces a byte-identical file.
-with open(mcp_path, "w") as f:
-    json.dump(mcp, f, indent=2)
-    f.write("\n")
+if added:
+    with open(mcp_path, "w") as f:
+        json.dump(mcp, f, indent=2)
+        f.write("\n")
+    if not existed:
+        print(f"  {GREEN}ok{NC}   created {mcp_path}")
 
 for name in added:   print(f"  {GREEN}ok{NC}   added MCP server: {name}")
 for name in skipped: print(f"  {GREEN}ok{NC}   already present, kept: {name}")
@@ -117,11 +120,10 @@ for cid in unknown:  print(f"  {YELLOW}warn{NC} unknown category (ignored): {cid
 
 # If nothing was added, skipped, OR queued for guided setup (e.g. every
 # requested category was unknown), nothing actually happened. Fail loud so the
-# user notices instead of seeing a misleading "Done.". Note: `google` only
-# guides, so a google-only selection still counts as a real action.
+# user notices instead of seeing a misleading "Done.".
 if not added and not skipped and not guided:
     print()
-    print(f"  {YELLOW}warn{NC} nothing was installed — valid categories are: web | utility | search | google")
+    print(f"  {YELLOW}warn{NC} nothing was installed. Valid categories are: web | utility | search")
     sys.exit(1)
 
 if guided:
@@ -132,26 +134,15 @@ if guided:
         print(f"    Walkthrough: modules/integrations/README.md#{cat.get('doc_anchor','')}")
         if cat.get("env_hint"):
             print(f"    Provide {cat['env_hint']} (see .env.example).")
-
-# flip integrations: false -> true in the user config, if it exists
-try:
-    lines = open(config_path).read().splitlines()
-    out, flipped = [], False
-    for ln in lines:
-        if (not flipped and ln.lstrip().startswith("integrations:")
-                and "false" in ln):
-            out.append(ln.replace("false", "true", 1)); flipped = True
-        else:
-            out.append(ln)
-    if flipped:
-        open(config_path, "w").write("\n".join(out) + "\n")
-        print()
-        print(f"  {GREEN}ok{NC}   set integrations: true in {config_path}")
-except FileNotFoundError:
-    pass
 PYEOF
+
+if set_config_flag integrations true "$CONFIG"; then
+  echo
+  ok "set integrations: true in $CONFIG"
+fi
 
 echo
 bold "Done."
-echo "Review .mcp.json, then inside a Claude Code session run:  claude mcp list"
+echo "Review .mcp.json, then in a terminal in this folder run:  claude mcp list"
+echo "(Servers show as pending until you start claude here and approve the project's MCP servers.)"
 echo "Re-run any time to add more:  bash scripts/install-integrations.sh"

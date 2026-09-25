@@ -2,7 +2,7 @@
 name: crm-relationships
 description: Contacts, pipeline, and relationship tracking. Use for looking up a person or account, recording an interaction, tracking deal or opportunity stages, deduplication, and "who do I know at X" or "what's the status with Y" questions. Works from vault files by default; uses a CRM integration if one is enabled.
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: sonnet
+model: inherit
 ---
 
 # CRM & Relationships

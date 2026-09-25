@@ -47,7 +47,7 @@ EOF
     echo "  generated $plist"
   }
   make_plist morning-brief 7 0
-  make_plist weekly-review 17 0 6   # Weekday 6 = Friday
+  make_plist weekly-review 17 0 5   # launchd Weekday: 0 or 7 = Sunday, so 5 = Friday
   echo
   echo "To activate, run:"
   echo "  cp $GEN_DIR/*.plist ~/Library/LaunchAgents/"

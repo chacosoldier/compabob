@@ -2,7 +2,7 @@
 name: daily-copilot
 description: The everyday work partner. Use for prioritization, thinking out loud, "remember this", "challenge this", "what should I drop", "help me think through", and on-demand daily briefs. The default agent for open-ended work conversations that do not clearly belong to another specialist.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch
-model: sonnet
+model: inherit
 ---
 
 # Daily Copilot

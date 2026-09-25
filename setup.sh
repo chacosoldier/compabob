@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Compabob — one-time setup.
-# Creates your personal files (vault/, memory/, config/) from the shipped *.example
+# Creates your personal files (vault/, memory/, config/user.config.yaml) from the shipped *.example
 # seeds and fills in your details. Those files live outside git, so a kit update can
 # never touch them. Safe to re-run: it never overwrites files you already have.
 set -euo pipefail
@@ -8,9 +8,8 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
-bold() { printf '\033[1m%s\033[0m\n' "$1"; }
-ok()   { printf '  \033[0;32mok\033[0m   %s\n' "$1"; }
-warn() { printf '  \033[1;33mwarn\033[0m %s\n' "$1"; }
+# shellcheck source=scripts/lib/common.sh
+source scripts/lib/common.sh
 
 bold ""
 bold "Compabob — setup"
@@ -21,7 +20,7 @@ echo
 command -v python3 >/dev/null 2>&1 && ok "python3 found" || warn "python3 not found — install Python 3.10+"
 command -v git     >/dev/null 2>&1 && ok "git found"     || warn "git not found"
 command -v claude  >/dev/null 2>&1 && ok "claude CLI found" \
-  || warn "claude CLI not found — install: npm install -g @anthropic-ai/claude-code"
+  || warn "claude CLI not found. Install: curl -fsSL https://claude.ai/install.sh | bash"
 echo
 
 # --- 2. Prompt -------------------------------------------------------------

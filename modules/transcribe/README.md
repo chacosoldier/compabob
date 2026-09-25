@@ -32,8 +32,13 @@ not just what you say.
 ```bash
 brew install blackhole-2ch     # virtual audio device (captures system audio)
 brew install ffmpeg            # recording
-pip3 install mlx-whisper       # local transcription (Apple Silicon)
+python3 -m venv modules/transcribe/.venv && modules/transcribe/.venv/bin/pip install mlx-whisper
 ```
+
+The last line installs mlx-whisper (local transcription, Apple Silicon) into a
+venv next to the module; a plain `pip3 install` fails on Homebrew Python
+(PEP 668). `record.py` switches to that venv on its own, so you keep running it
+with any `python3`.
 
 Then, once, in **Audio MIDI Setup** (macOS):
 
@@ -79,6 +84,10 @@ The transcript lands in `vault/raw/meetings/` (override with `--out`) and is
 already on your clipboard, so you can paste it straight into a note or a chat
 with your assistant.
 
+`vault/raw/meetings/` is an inbox: nothing processes it automatically. Ask your
+assistant to "file the latest call transcript" and the `second-brain` agent
+turns it into a meeting note with decisions and follow-ups.
+
 ## Optional: bind it to a hotkey
 
 Running a command twice is the whole interface, which makes it a natural fit for
@@ -88,9 +97,9 @@ starts and stops because the script toggles:
 ```lua
 -- ~/.hammerspoon/init.lua
 hs.hotkey.bind({"ctrl", "shift"}, "R", function()
-  hs.task.new("/usr/bin/python3",
+  hs.task.new("/usr/bin/env",
     nil,
-    {os.getenv("HOME") .. "/compabob/modules/transcribe/record.py"}
+    {"python3", os.getenv("HOME") .. "/compabob/modules/transcribe/record.py"}
   ):start()
 end)
 ```

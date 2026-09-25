@@ -27,11 +27,11 @@ cd compabob
 New to the terminal? The [README walkthrough](../README.md#full-walkthrough-no-terminal-experience-needed) covers installing everything from scratch.
 
 `setup.sh` asks for your assistant's name, your name, role, and language, and
-which **persona** best fits your work (consultant, engineer, sales, founder, or
-generalist). The persona pre-fills `memory/topics/role-and-priorities.md` with
+which **persona** best fits your work (consultant, engineer, sales, founder,
+researcher, or generalist). The persona pre-fills `memory/topics/role-and-priorities.md` with
 role-appropriate starter content so the assistant has something real to reason
 about on day one. It then creates your personal `vault/`, `memory/`, and
-`config/` from the shipped seeds.
+`config/user.config.yaml` from the shipped seeds.
 
 At the end it offers to set up integrations. You can skip that and do it later.
 
@@ -100,8 +100,9 @@ Also in the first week:
 ## When you outgrow the core
 
 - **Add an agent** for a part of your work the core does not cover: run `/add-agent`.
-- **Connect external tools** (browser automation, web search, Gmail, Calendar):
-  run `bash scripts/install-integrations.sh`. See
+- **Connect external tools** (browser automation, web search): run
+  `bash scripts/install-integrations.sh`. For Gmail and Calendar, enable
+  Claude's own connectors. See
   [modules/integrations/README.md](../modules/integrations/README.md).
 - **Turn on scheduled briefs**: enable the [`proactive`](../modules/README.md) module.
 - **Chat with the assistant from your phone**: enable the

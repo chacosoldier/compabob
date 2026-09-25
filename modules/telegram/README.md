@@ -63,8 +63,8 @@ opt-in on purpose. After activating, set `telegram: true` in
 bash modules/telegram/send.sh <chat_id> draft-<chat>-<timestamp>.md
 ```
 
-If you ask the assistant in a session to send a Telegram reply, the `comms-guard`
-hook blocks the send until you explicitly approve it. That is intended.
+The assistant cannot send for you: the `comms-guard` hook blocks any `send.sh`
+call made from a session. Sending is always the command above, run by you.
 
 ## Cost note
 

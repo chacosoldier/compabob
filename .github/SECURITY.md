@@ -4,7 +4,7 @@ Compabob runs entirely on your own machine, under your own Claude Code subscript
 
 ## Supported version
 
-Only the latest `main` is supported. The kit is a rolling template, not a versioned product. If you found an issue, check it still reproduces on the current `main` before reporting.
+Releases are tagged (see the CHANGELOG), but only the latest `main` is supported: fixes land there, not on old tags. If you found an issue, check it still reproduces on the current `main` before reporting.
 
 ## Reporting a vulnerability
 

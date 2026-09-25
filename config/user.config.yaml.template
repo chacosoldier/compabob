@@ -1,8 +1,10 @@
 # Your configuration. setup.sh copies this to config/user.config.yaml and fills
 # the placeholders. That file is git-ignored: it is yours. Edit it freely.
+# ./update.sh adds any new module flags a kit update introduces (it never
+# changes a value you set); run  bash scripts/migrate-config.sh  to do it by hand.
 #
 # YAML note: any `"` or `\` inside a name is escaped (e.g. `O\"Brien`,
-# `path\\to\\thing`). That is standard YAML — the assistant reads the
+# `path\\to\\thing`). That is standard YAML; the assistant reads the
 # unescaped value. You do not need to "fix" it.
 
 user:
@@ -16,21 +18,18 @@ assistant:
 # The persona preset picked at setup. It only seeds role-and-priorities.md and
 # records your choice here; every agent stays available. See config/personas/.
 persona:
-  preset: ""             # generalist | consultant | engineer | sales | founder
+  preset: ""             # generalist | consultant | engineer | sales | founder | researcher
 
 # Opt-in modules. To enable one, set it to true and follow modules/<name>/README.md.
 # Setting a flag here does not install anything on its own; each module has its
 # own enable step.
 modules:
   proactive: false       # scheduled automation (morning brief, weekly review)
-  telegram: false        # Telegram bot — inbound messages drafted for your approval
-  integrations: false    # MCP integrations (web, Google Workspace, search, utility)
+  telegram: false        # Telegram bot: inbound messages drafted for your approval
+  integrations: false    # MCP integrations (web + browser, search, utility)
   linkedin_outreach: false  # daily LinkedIn outreach drafting (queue-driven, draft-first)
-  memory_search: false   # semantic search over memory and the vault
+  crm_merge: false       # one local CRM from Google + LinkedIn + vault contacts
+  lead_pipeline: false   # ranked outbound lists, deduped against your CRM
+  memory_search: false   # search index over memory and the vault (keyword; hybrid with Ollama)
   transcribe: false      # local call recording + transcription (highly encouraged)
   dictation: false       # dictation cleanup proxy + self-growing glossary
-  extra_agents: false    # the extra-agents gallery
-  team: false            # multi-user team mode
-
-preferences:
-  timezone: ""           # e.g. "Europe/Berlin"; leave blank to use the system zone
