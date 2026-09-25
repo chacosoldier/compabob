@@ -15,8 +15,9 @@ Produce one standalone HTML file that explains something clearly. Good for archi
    - All CSS inline in a `<style>` block. No external stylesheets, no CDN links, no network dependencies. The file must open correctly offline by double-clicking it.
    - Readable typography, generous spacing, a restrained palette.
    - Content-first: the explanation carries the page, decoration supports it.
-4. **Save** to `reports/` (create the directory if needed) as `YYYY-MM-DD-<slug>.html`.
-5. **Tell the user** the path so they can open it.
+4. **Grade any chart.** If the page holds a quantitative chart (bar, line, scatter, area), run `/chart-tufte` on it and fix what it flags before saving.
+5. **Save** to `reports/` (create the directory if needed) as `YYYY-MM-DD-<slug>.html`.
+6. **Tell the user** the path so they can open it.
 
 ## Principles
 

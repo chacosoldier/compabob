@@ -1,6 +1,6 @@
 ---
 name: post-call
-description: Capture a debrief right after a meeting or call: what was decided, what was committed, and what changed. Use for "/post-call", "debrief the call with X", or "I just got off a call with Y".
+description: "Capture a debrief right after a meeting or call: what was decided, what was committed, and what changed. Use for \"/post-call\", \"debrief the call with X\", or \"I just got off a call with Y\"."
 ---
 
 # Post-Call Debrief

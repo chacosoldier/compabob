@@ -11,7 +11,7 @@
 set -uo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 TEMPLATE="config/user.config.yaml.template"
 CONFIG="config/user.config.yaml"

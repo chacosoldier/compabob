@@ -1,6 +1,6 @@
 ---
 name: meeting-prep
-description: Prepare for an upcoming meeting, who is attending, the history, open items, and the decision the meeting needs to reach. Use for "/meeting-prep", "prep me for my meeting with X", or "what do I need to know before the call with Y".
+description: "Prepare for an upcoming meeting: who is attending, the history, open items, and the decision the meeting needs to reach. Use for /meeting-prep, \"prep me for my meeting with X\", or \"what do I need to know before the call with Y\". To capture what happened after the meeting, use /post-call."
 ---
 
 # Meeting Prep

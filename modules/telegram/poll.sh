@@ -11,7 +11,7 @@ set -uo pipefail
 
 MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$MODULE_DIR/../.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 # launchd and cron run with a minimal PATH; put common tool dirs on it so the
 # claude and python3 binaries are found when this runs unattended.

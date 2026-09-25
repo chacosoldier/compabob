@@ -4,7 +4,7 @@
 set -u
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; BOLD='\033[1m'; NC='\033[0m'
 WARN=0; FAIL=0

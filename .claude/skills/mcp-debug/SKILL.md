@@ -1,6 +1,6 @@
 ---
 name: mcp-debug
-description: "MCP server health check, tool tracing, and audit. Use when MCP tools fail silently, to check server status, or for periodic system audits. Trigger: /mcp-debug [status|trace|audit]"
+description: "MCP server health check, tool tracing, and audit. Use when an MCP tool fails silently or errors, to check server status, or to audit the configured servers: /mcp-debug [status|trace|audit]. MCP servers only; the health of the whole setup is /system-audit."
 ---
 
 # MCP Debugger

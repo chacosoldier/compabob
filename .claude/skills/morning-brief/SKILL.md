@@ -1,6 +1,6 @@
 ---
 name: morning-brief
-description: Assemble a start-of-day briefing, priorities, what is due, what is owed, today's meetings, and anything overdue. Use for "/morning-brief", "what's on my plate", "brief me", or at the start of the first session of the day.
+description: "Start-of-day briefing: priorities, what is due, what is owed, today's meetings, and anything overdue. Use for /morning-brief, \"brief me\", or at the start of the first session of the day. For the full list of open tasks, use /tasks."
 ---
 
 # Morning Brief

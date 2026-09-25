@@ -1,6 +1,6 @@
 ---
 name: reflect
-description: End-of-session reflection, extract what was learned and what should change, and propose memory updates. Use for "/reflect", "what did we learn", or at the close of a substantial work session.
+description: "End-of-session reflection: what was learned, what should change, and proposed memory updates, recorded as unchecked items in today's daily note. Use for /reflect, \"what did we learn\", or at the close of a substantial work session. It proposes; /memory-debt applies what is still open later. To save where the work stands for next time, use /handover."
 ---
 
 # Reflect
@@ -14,8 +14,15 @@ Turn a session into durable improvement. Distinct from `/handover` (which persis
    - **What worked**: an approach worth repeating.
    - **What broke**: an error, a wrong assumption, a dead end. Note the root cause, not just the symptom.
    - **What to change**: a concrete adjustment to how the assistant or the workflow operates.
-3. **Propose memory writes.** For anything that meets the constitution's memory bar (a repeated lookup, a behavioral correction, a costly debugging lesson), draft a `memory/topics/<slug>.md` entry and the one-line `MEMORY.md` index pointer. Show them; do not write without approval.
-4. **Write the diary entry** (optional) to `vault/Daily/YYYY-MM-DD.md` under a `## Reflection` heading.
+3. **Propose memory writes.** For anything that meets the constitution's memory bar (a repeated lookup, a behavioral correction, a costly debugging lesson), draft a `memory/topics/<slug>.md` entry and the one-line `MEMORY.md` index pointer. Show them; do not write without approval. Write the approved ones now.
+4. **Record the rest, always.** Append to `vault/Daily/YYYY-MM-DD.md` (create it if needed) a `## Reflection` section with the three buckets, then every proposal that was not written yet as an unchecked item, so it is never lost:
+
+   ```markdown
+   ## Suggested Memory Updates
+   - [ ] <what to remember, one line> (target: memory/topics/<slug>.md)
+   ```
+
+   Approved and written proposals go in as `- [x]`. `/memory-debt` scans exactly this section later and applies what is still open.
 
 ## Output
 

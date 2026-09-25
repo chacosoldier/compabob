@@ -1,6 +1,6 @@
 ---
 name: memory-debt
-description: Review and apply pending memory updates that earlier sessions proposed but never wrote. Use `/memory-debt` to see what is pending, `/memory-debt apply` to resolve it interactively.
+description: "Review and apply memory updates that /reflect proposed but nobody wrote yet (the unchecked items under Suggested Memory Updates in vault/Daily/). Use /memory-debt to see what is pending, /memory-debt apply to resolve it item by item. It does not do the reflecting; that is /reflect."
 ---
 
 # Memory Debt Resolution
@@ -19,11 +19,8 @@ Check args:
 
 ### 1. Scan reflection sources
 
-Read in this order, stopping when at least one returns content:
-
-1. `vault/Daily/*.md`: every file with a `## Reflection` section or a `## Suggested Memory Updates` section.
-2. `vault/Reflections/*.md`: older convention.
-3. `vault/Journal/*.md`: alternate convention.
+1. `vault/Daily/*.md`: every file with a `## Suggested Memory Updates` section. This is where `/reflect` records its proposals.
+2. If they exist, `vault/Reflections/*.md` and `vault/Journal/*.md` (conventions some users bring from other setups).
 
 For each file, extract:
 - "Suggested Memory Updates" entries (each starts with `- [ ]` or `- [x]`).

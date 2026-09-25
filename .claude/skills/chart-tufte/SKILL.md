@@ -1,6 +1,6 @@
 ---
 name: chart-tufte
-description: Self-grade rubric for any quantitative chart, grounded in Edward Tufte's *Visual Display of Quantitative Information*. Run as a final pass inside `visual-explainer` (or any chart-emitting workflow) before showing the chart to the user. Strips chartjunk, checks lie factor, picks the right genre, names the failure modes from VDQI's catalogue.
+description: "Post-build grader for a rendered quantitative chart, grounded in Edward Tufte's The Visual Display of Quantitative Information: strips chartjunk, checks the lie factor, picks the right genre, and names failures from the VDQI catalogue. Not a chart builder. Runs as the last step of /visual-explainer when the page has a chart, or on demand (\"grade this chart\", \"is this chart honest\")."
 ---
 
 # Chart Tufte
@@ -11,7 +11,7 @@ A chart is good when it shows the data, helps the viewer reason about it, and do
 
 ## When to invoke
 
-- **Automatically**: as the final step inside `visual-explainer` whenever the output is a *quantitative* chart (bar, line, scatter, area, dot, range-frame). Skip for diagrams (architecture, sequence, flow); those are different beasts.
+- **After building**: as the last step of `/visual-explainer` whenever the page holds a *quantitative* chart (bar, line, scatter, area, dot, range-frame); that skill's steps call for it. Skip for diagrams (architecture, sequence, flow); those are different beasts.
 - **Explicitly**: `/chart-tufte <chart-spec>` to score a chart produced elsewhere.
 
 ## The rubric (run before emitting)
@@ -86,10 +86,10 @@ If the verdict is not `ship`, revise the chart and re-grade before emitting.
 
 ## Integration with `visual-explainer`
 
-Two integration points:
+`/visual-explainer` calls this skill after it builds the page (its "Grade any chart" step). Two things to do there:
 
-1. **At plan time**: when `visual-explainer`'s aesthetic step picks a visual palette, ALSO pick a Tufte genre (C1-C10). Record both. Never combine the *aesthetic* with the *genre*.
-2. **At emit time**: run this rubric over the rendered HTML/SVG before opening it in the browser. If any score < 5, revise. Block on `verdict != ship`.
+1. **Check the genre**: name the Tufte genre (C1-C10) the chart should be, and whether the built chart matches it. The visual palette is a separate choice; never let styling pick the genre.
+2. **Grade the rendered chart**: run this rubric over the rendered HTML/SVG before the page is saved. If any score is below 5, revise. Do not save on `verdict != ship`.
 
 ## VDQI page references (for citations)
 

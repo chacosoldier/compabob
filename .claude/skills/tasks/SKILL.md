@@ -1,6 +1,6 @@
 ---
 name: tasks
-description: Show a single aggregated task view pulled from across the vault and the brief queue. Use for "/tasks", "what are my open tasks", "what's overdue", or "/tasks done [id]" to complete one.
+description: "One aggregated view of open tasks from across the vault and the brief queue. Use for /tasks, \"what's on my plate\", \"what are my open tasks\", \"what's overdue\", or \"/tasks done [id]\" to complete one. For the start-of-day briefing with meetings and priorities, use /morning-brief."
 ---
 
 # Tasks

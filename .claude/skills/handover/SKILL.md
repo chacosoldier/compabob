@@ -1,6 +1,6 @@
 ---
 name: handover
-description: Write a handover note before ending a working session so the next session picks up with full context. Use for "/handover", "wrap up", or "write a handover before I stop".
+description: "Write a handover note before ending a working session so the next session picks up where this one stopped. Use for /handover, \"wrap up\", or \"write a handover before I stop\". It saves state; extracting lessons learned is /reflect."
 ---
 
 # Handover

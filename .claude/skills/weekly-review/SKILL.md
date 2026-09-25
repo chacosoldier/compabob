@@ -1,6 +1,6 @@
 ---
 name: weekly-review
-description: End-of-week review: what got done, what slipped, decisions made, and next week's top 3 priorities. Use for "/weekly-review", "end-of-week review", "what happened this week", or on the last working day of the week.
+description: "End-of-week review: what got done, what slipped, decisions made, and next week's top 3 priorities. Use for \"/weekly-review\", \"end-of-week review\", \"what happened this week\", or on the last working day of the week."
 ---
 
 # Weekly Review
