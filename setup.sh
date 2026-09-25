@@ -21,7 +21,7 @@ echo
 command -v python3 >/dev/null 2>&1 && ok "python3 found" || warn "python3 not found — install Python 3.10+"
 command -v git     >/dev/null 2>&1 && ok "git found"     || warn "git not found"
 command -v claude  >/dev/null 2>&1 && ok "claude CLI found" \
-  || warn "claude CLI not found — install: npm install -g @anthropic-ai/claude-code"
+  || warn "claude CLI not found. Install: curl -fsSL https://claude.ai/install.sh | bash"
 echo
 
 # --- 2. Prompt -------------------------------------------------------------

@@ -2,7 +2,7 @@
 name: analyst
 description: Metrics, KPIs, and data-backed analysis. Use for pipeline and revenue figures, dashboards, forecasts, trend and cohort analysis, variance investigation, and any question that needs numbers decomposed and compared rather than guessed.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch, WebSearch
-model: sonnet
+model: inherit
 ---
 
 # Analyst

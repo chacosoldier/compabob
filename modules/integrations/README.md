@@ -16,18 +16,20 @@ It asks which categories you want, then configures them. `setup.sh` also offers
 to run it at the end of first-time setup. Re-run it any time to add more; it
 never removes or overwrites a server you already have.
 
-## The four categories
+## The three categories
 
 | Category | Servers | Key needed? |
 |----------|---------|-------------|
 | `web` | Playwright (browser automation), scrapling-fetch (stealth web fetch) | No |
-| `utility` | time (timezone and date math), fetch (basic web fetch) | No |
-| `search` | exa (semantic web search) | Yes — an API key |
-| `google` | Gmail, Google Calendar | Yes — OAuth |
+| `utility` | time (timezone and date math) | No |
+| `search` | exa (semantic web search) | Yes, an API key |
+
+Plain web fetching needs no server: Claude Code's built-in WebFetch covers it.
+Gmail and Calendar are not in the installer; see [Google Workspace](#google-workspace).
 
 **Keyless** categories (`web`, `utility`) are configured completely by the
-installer: it writes the `.mcp.json` entry and you are done. **Keyed** categories
-(`search`, `google`) are configured as far as the installer can, then it points
+installer: it writes the `.mcp.json` entry and you are done. The **keyed**
+category (`search`) is configured as far as the installer can, then it points
 you here to finish the credential step.
 
 Nothing is downloaded during install. An MCP server fetches itself, at the
@@ -57,41 +59,33 @@ install the runtime the server just works.
 
 ## Google Workspace
 
-Gmail and Calendar are the most involved integration, because Google requires
-an OAuth client. Budget 15-20 minutes the first time.
+The simplest path for Gmail and Google Calendar is Anthropic's own connectors,
+not a self-hosted MCP server. Enable them at [claude.ai](https://claude.ai) under
+Settings, then Connectors. Claude Code sessions signed in with the same account
+pick them up, with no OAuth client of your own to maintain.
 
-1. In the [Google Cloud Console](https://console.cloud.google.com), create a
-   project, enable the Gmail API and the Google Calendar API, and create an
-   **OAuth 2.0 Client ID** (application type: Desktop app).
-2. Pick a Google Workspace MCP server. The MCP ecosystem moves quickly, so
-   rather than pin one here, search the [MCP server directory](https://modelcontextprotocol.io)
-   for a current, well-maintained Gmail / Google Workspace server and follow its
-   own setup instructions.
-3. That server will ask for your OAuth client credentials and run a one-time
-   browser consent flow. Put any secrets in `.env` (git-ignored), never in a
-   committed file.
-4. Add the server to `.mcp.json` under `mcpServers`, following the format the
-   other entries use.
-
-Because this one is provider-specific and changes often, it is deliberately a
-guided manual step rather than an automated install.
+Two limits: connectors ask you to re-authorize in the browser from time to time,
+and they are not available to headless runs (the `proactive` module), so a
+scheduled brief works from your local files instead.
 
 ## Verify
 
-Inside a Claude Code session in the kit directory:
+In a terminal, in the kit directory:
 
-```text
+```bash
 claude mcp list
 ```
 
-It lists the servers Claude Code loaded from `.mcp.json`. A keyless server
-should appear; a keyed one appears once its credential is in place.
+It lists the servers from `.mcp.json`. Until you start `claude` in this folder
+and approve the project's MCP servers, they show as pending. Inside a session,
+`/mcp` shows the same list with live status. A keyed server connects once its
+credential is in place.
 
 ## How agents use integrations
 
 The core agents check for a relevant integration and use it when present:
-`comms-meetings` will use Gmail and Calendar, `analyst` and `second-brain` will
-use web search and fetch. Without an integration they work from local files and
+`comms-meetings` will use Gmail and Calendar connectors, `analyst` and
+`second-brain` will use web search. Without an integration they work from local files and
 say which live source is missing. Enabling one is purely additive.
 
 ## Disable

@@ -2,7 +2,7 @@
 name: comms-meetings
 description: Email triage, meeting preparation, daily and weekly briefings, communication drafting, and follow-up tracking. Use for "what's in my inbox", "prep me for my meeting with X", "draft a reply to Y", "what am I waiting on", and "who owes me a response".
 tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch
-model: sonnet
+model: inherit
 ---
 
 # Comms & Meetings

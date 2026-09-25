@@ -32,7 +32,7 @@ The shipped seeds (`vault.example/`, `memory.example/`, `config/user.config.yaml
 
 Each file in `.claude/agents/` is one agent.
 
-**To add one:** run the `/add-agent` skill, or copy `.claude/agents/_agent-template.md`. Then register it in `CONSTITUTION.md` (routing rules) and `.claude/agents/_orchestrator-reference.md`.
+**To add one:** run the `/add-agent` skill, or copy `.claude/agents/_agent-template.md.template`. Then add its routing line to `CONSTITUTION.md` (Agent Architecture & Routing). `_orchestrator-reference.md` is not a registry: it describes how the main session coordinates agents, not which ones exist.
 
 **To edit one:** just edit its file. The `description` is the most important line: it decides what routes to the agent. Write it as "use for X, Y, Z" and name what it is *not* for.
 
@@ -71,7 +71,7 @@ The core agents work from files. To give one a live data source, the pattern is 
 
 This is also how an MCP server would slot in: the agent calls it, the agent's description and instructions tell it when. Keep tool descriptions specific, schemas strict, and the tool count per agent low.
 
-For ready-made MCP servers, the kit ships an installer: `bash scripts/install-integrations.sh` wires browser automation, web search, Gmail, Calendar, and utility servers into `.mcp.json` for you. See [`modules/integrations/README.md`](../modules/integrations/README.md). Use the installer for those; use the CLI-client pattern above when you need a bespoke connector.
+For ready-made MCP servers, the kit ships an installer: `bash scripts/install-integrations.sh` wires browser automation, web search, and utility servers into `.mcp.json` for you. Gmail and Calendar come from Claude's own connectors, see the module README. See [`modules/integrations/README.md`](../modules/integrations/README.md). Use the installer for those; use the CLI-client pattern above when you need a bespoke connector.
 
 ## Personas
 

@@ -2,7 +2,7 @@
 name: strategy-advisor
 description: Strategic sparring partner. Use when bringing a plan, idea, or decision for critique, or for pre-mortems, steelmans, second-order analysis, and "should I do X". Challenges assumptions and surfaces what is being missed. Advice only; does not execute, write files, or send anything.
 tools: Read, Glob, Grep, WebFetch, WebSearch
-model: sonnet
+model: inherit
 ---
 
 # Strategy Advisor

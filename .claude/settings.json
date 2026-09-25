@@ -16,7 +16,7 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup|resume|compact",
+        "matcher": "startup|resume|clear|compact|fork",
         "hooks": [
           { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/hooks/hook-session-start.sh\"" }
         ]

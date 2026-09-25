@@ -13,10 +13,10 @@ Create a new agent so the assistant grows with the user's work. This is the main
    - **Name** — kebab-case, e.g. `recruiting` or `product-research`.
    - **Purpose and triggers** — what it owns, and the phrases or domains that should route to it. This becomes the `description`, which is what actually drives routing.
    - **Tools** — the minimum it needs (4 to 6). Advice-only agents get read tools only: `Read, Glob, Grep, WebFetch, WebSearch`.
-   - **Model** — `sonnet` is the default; `opus` for genuinely hard reasoning.
+   - **Model**: `inherit` is the default (the agent follows the session's model); pin `sonnet` for a cheap, high-volume agent or `opus` for one that always needs hard reasoning.
 2. **Check for overlap.** Read the existing agents in `.claude/agents/`. If the new agent overlaps an existing one, say so and suggest either editing the existing agent or sharpening both descriptions so routing stays clean.
-3. **Scaffold.** Copy `.claude/agents/_agent-template.md` to `.claude/agents/<name>.md` and fill it in: frontmatter, Purpose, When to use / when not to, Output format, Safety.
-4. **Register it.** Add a one-line row for the new agent to `.claude/agents/_orchestrator-reference.md` and to the routing section of `CONSTITUTION.md`.
+3. **Scaffold.** Copy `.claude/agents/_agent-template.md.template` to `.claude/agents/<name>.md` and fill it in: frontmatter, Purpose, When to use / when not to, Output format, Safety.
+4. **Register it.** Add a one-line routing rule for the new agent to the Agent Architecture & Routing section of `CONSTITUTION.md`. (`_orchestrator-reference.md` describes coordination patterns; it is not a list of agents.)
 5. **Test routing.** Suggest two or three prompts that should land on the new agent, and one that should *not* (to confirm it does not over-trigger).
 
 ## Principles

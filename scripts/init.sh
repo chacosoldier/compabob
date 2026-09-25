@@ -17,7 +17,7 @@ printf "%s\n\n" "$(date '+%Y-%m-%d %H:%M')"
 
 # 1. Tooling
 command -v python3 >/dev/null 2>&1 && ok "python3 ($(python3 --version 2>&1))" || fail "python3 not found"
-command -v claude  >/dev/null 2>&1 && ok "claude CLI found" || warn "claude CLI not found (npm install -g @anthropic-ai/claude-code)"
+command -v claude  >/dev/null 2>&1 && ok "claude CLI found" || warn "claude CLI not found (install: curl -fsSL https://claude.ai/install.sh | bash)"
 
 # 2. Setup has run — your personal files exist
 if [ -d vault ] && [ -d memory ] && [ -f config/user.config.yaml ]; then

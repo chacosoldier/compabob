@@ -2,7 +2,7 @@
 name: second-brain
 description: Knowledge base management. Use for taking notes, creating and retrieving meeting records, research synthesis, finding what was discussed with a person or on a topic, and keeping the vault healthy (wikilinks, frontmatter, archival). Read-only by default; writes happen on explicit intent.
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: sonnet
+model: inherit
 ---
 
 # Second Brain

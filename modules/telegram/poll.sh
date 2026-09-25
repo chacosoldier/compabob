@@ -13,6 +13,10 @@ MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$MODULE_DIR/../.." && pwd)"
 cd "$PROJECT_DIR"
 
+# launchd and cron run with a minimal PATH; put common tool dirs on it so the
+# claude and python3 binaries are found when this runs unattended.
+export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+
 # --- secrets ---------------------------------------------------------------
 [ -f .env ] && { set -a; . ./.env; set +a; }
 TOKEN="${TELEGRAM_BOT_TOKEN:-}"

@@ -100,8 +100,9 @@ Also in the first week:
 ## When you outgrow the core
 
 - **Add an agent** for a part of your work the core does not cover: run `/add-agent`.
-- **Connect external tools** (browser automation, web search, Gmail, Calendar):
-  run `bash scripts/install-integrations.sh`. See
+- **Connect external tools** (browser automation, web search): run
+  `bash scripts/install-integrations.sh`. For Gmail and Calendar, enable
+  Claude's own connectors. See
   [modules/integrations/README.md](../modules/integrations/README.md).
 - **Turn on scheduled briefs**: enable the [`proactive`](../modules/README.md) module.
 - **Chat with the assistant from your phone**: enable the
