@@ -6,8 +6,36 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-25
+
+Maintenance release: the modules and skills that shipped since 1.1.1, fixes
+for bugs found in a full audit, the Claude Code changes since June, and a
+smaller kit. Safe to pull with `./update.sh`: your `vault/`, `memory/`,
+`config/user.config.yaml`, `.mcp.json`, and `.env` are untouched, and any new
+config flags are added for you.
+
+**If you edited kit files**, `update.sh` may ask you to merge the ones this
+release also changed: every agent in `.claude/agents/`, `.claude/settings.json`,
+`CLAUDE.md`, the `add-agent`, `mcp-debug`, and `memory-debt` skills, `setup.sh`,
+`update.sh`, everything in `scripts/` and `docs/`, and the proactive, telegram,
+transcribe, dictation, and integrations modules. `git diff --stat v1.1.1 v1.2.0`
+lists them all. Personas and the other skills are unchanged.
+
 ### Added
 
+- **`dictation` module**: a cleanup endpoint your dictation app (e.g. Handy)
+  posts to. It fixes punctuation and fillers, and rewrites words it keeps
+  getting wrong using a glossary that grows itself from recurring corrections.
+  OpenAI-compatible upstream (Groq by default, Ollama for fully local).
+- **`/weekly-review` skill**: end-of-week review of what got done, what
+  slipped, decisions, commitments, and next week's top three (#16).
+- **`researcher` persona preset** for academia and R&D (#19).
+- **Spanish README intro** at `docs/i18n/README.es.md` (#23).
+- **Linux and WSL troubleshooting** section in the README (#14).
+- **`scripts/migrate-config.sh`**: adds config keys a kit update introduces,
+  inside the right block, with a `.bak`; never changes a value you set.
+  `update.sh` runs it, and `scripts/init.sh` warns when keys are missing.
+- **`scripts/lib/common.sh`**: shared output helpers and `set_config_flag`.
 - **`transcribe` module (highly encouraged)** — one-hotkey local call recording +
   transcription. A toggle script drives `ffmpeg` to capture audio and
   `mlx-whisper` to transcribe it on-device: first run records, second run stops,
@@ -53,12 +81,59 @@ All notable changes to Compabob are recorded here. Format follows
   approvals one by one. Closes the loop between `/reflect` (proposes) and
   `memory/`.
 
-### Documented
+### Changed
 
-- **Choosing the Claude model** — new README section explains how to swap
-  the default model per session (`/model` or `--model`), per project
-  (`.claude/settings.json` → `"model"`), or globally (`ANTHROPIC_MODEL` env
-  var), with a pointer to the Anthropic model list. Closes #9.
+- **Agents follow your model.** Every agent uses `model: inherit` instead of
+  `sonnet`, so switching models in Claude Code switches the agents too. On a
+  Pro plan, see the README for pinning them back to Sonnet. Scheduled modules
+  still run on Sonnet.
+- **Install Claude Code with the native installer**
+  (`curl -fsSL https://claude.ai/install.sh | bash`); npm stays documented as a
+  fallback (Node 22+). Docs links point at code.claude.com.
+- **README model section rewritten** (closes #9): Claude Code's default is now
+  Opus 5.5 on every paid plan; how to change it per session, per project, or
+  globally.
+- **Integrations**: pins bumped (`@playwright/mcp` 0.0.82, `scrapling-fetch-mcp`
+  0.2.4, `mcp-server-time` 2026.8.18, `exa-mcp-server` 3.4.1, which needs
+  Node 20+). Gmail and Calendar now point at Claude's own connectors.
+- **SessionStart hook** also runs after `/clear` and in forked sessions.
+- **Config template**: flags for `crm_merge` and `lead_pipeline`; persona list
+  shows all six.
+- **`transcribe` and `dictation`** install their Python dependency into a
+  module venv (Homebrew Python refuses a global `pip install`); `record.py`
+  switches to its venv on its own, so hotkeys keep working.
+- **`update.sh`** says what to do on a local-only branch or detached HEAD
+  instead of blaming the network.
+- **`scripts/init.sh`** checks for Python 3.10+ and counts only real agents.
+
+### Removed
+
+- **Tool-scope guard hook** (never released): it was not wired into
+  `settings.json`, needed `jq`, and matched no context the kit sets.
+- **Stub modules** `extra-agents`, `team`, and `whatsapp`, which were README
+  files only. Their reasoning now lives in the "Not built" section of
+  `modules/README.md`; the roadmap is issue #12.
+- **`mcp-server-fetch`** from the integrations catalog (Claude Code's built-in
+  WebFetch covers it) and the empty `google` category.
+- **Dead config keys**: `preferences.timezone`, `extra_agents`, `team`. Existing
+  configs keep them; nothing reads them.
+
+### Fixed
+
+- **Weekly review ran on Saturday on macOS**: launchd counts Sunday as 0, so
+  `Weekday 6` was Saturday. Now Friday.
+- **Scheduled runs could not find `claude`** under launchd's minimal PATH
+  (`proactive`, `telegram`).
+- **The agent template registered as a real agent**. It is now
+  `.claude/agents/_agent-template.md.template`.
+- **`install-integrations.sh` left an empty `.mcp.json`** on runs that added
+  nothing.
+- **Docs claimed `config/` is git-ignored**; only `config/user.config.yaml` is.
+- **`/add-agent` and the customization guide** pointed at
+  `_orchestrator-reference.md` as an agent registry; routing lives in
+  `CONSTITUTION.md`.
+- **Telegram README** said the hook "blocks until you approve"; the hook always
+  blocks, and you send with `send.sh` yourself.
 
 ## [1.1.1] — 2026-05-24
 
@@ -191,6 +266,8 @@ Initial public release at [github.com/chacosoldier/compabob](https://github.com/
 - `docs/architecture.md`, `docs/onboarding.md`, `docs/customization-guide.md`,
   `docs/how-to-improve-memory.md`.
 
-[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/chacosoldier/compabob/compare/v1.1.1...v1.2.0
+[1.1.1]: https://github.com/chacosoldier/compabob/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/chacosoldier/compabob/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/chacosoldier/compabob/releases/tag/v1.0.0
