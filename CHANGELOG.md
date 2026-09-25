@@ -6,6 +6,70 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-09-25
+
+The style system, a test suite, and three features from the setup this kit is
+distilled from: hybrid memory search, `/council`, and a pre-mortem gate for
+high-stakes plans.
+
+**Before you update**: the new style check runs after every reply. It starts in
+`warn` mode, which only shows a one-line note; set `style_gate: block` or `off`
+in `config/user.config.yaml` (the update adds the key for you). Most kit text
+files changed in this release, because every em dash was removed from them, so
+`update.sh` will ask you to merge any kit file you edited yourself.
+`git diff --stat v1.2.0 v1.3.0` lists them.
+
+### Added
+
+- **Style check hook** (`hooks/hook-style-gate.py`, runs when a reply ends):
+  flags em dashes used as connectors and paragraphs over about 700 characters
+  in long replies. Code, blockquotes, and dialogue dashes are ignored.
+  `style_gate: warn | block | off`.
+- **`/council` skill**: two advisors and a dissenter assigned to argue the
+  other side, in parallel; the recommendation must answer each objection. For
+  decisions that are hard to reverse.
+- **Pre-mortem gate** (`hooks/hook-plan-premortem.py`): when you approve a plan
+  that is irreversible, touches many people, or commits weeks of work, it asks
+  for a pre-mortem from `strategy-advisor` first.
+- **Hybrid memory search**: keyword search always, plus search by meaning when
+  Ollama is running, merged into one ranking. Results show the heading path
+  they came from. Rebuild the index once with `/index-memory` after updating.
+- **Session-start notices**: today's scheduled brief, scheduled-run failures
+  from the last week, a `MEMORY.md` over 12KB, and config keys a kit update
+  added.
+- **Test suite**: `bash tests/run-all.sh` runs everything CI runs (syntax,
+  shellcheck, hook behaviour, frontmatter, docs versus tree). CI adds a macOS
+  job.
+
+### Changed
+
+- **Direct output style rewritten** with what the upstream setup learned about
+  brevity: cut whole categories of content, a filler test for every sentence,
+  bullet-first reports, floors for outward messages and corrections. It now
+  keeps Claude Code's built-in coding instructions (`keep-coding-instructions`).
+- **The constitution is shorter**: style rules live only in the output style,
+  the data-quality checklist only in the `analyst` agent. Adds a stopping rule:
+  keep going until the task's finish line unless you need the user.
+- **Prompt-injection defender** also scans MCP tool output (mail, browser,
+  search) and skips the kit's own files.
+- **Handover notes** older than a week are no longer loaded into every new
+  session; the assistant is told the note exists instead.
+- **Scheduled runs** tell the assistant nobody is watching, so it does not stop
+  to ask questions.
+- **Skill descriptions** name their neighbour both ways (for example
+  `/morning-brief` and `/tasks`), so the right one gets picked.
+- **`/reflect`** records unapproved memory proposals in today's daily note in
+  the format `/memory-debt` reads, so the two skills finally connect.
+- **`/chart-tufte`** is a grader that `/visual-explainer` calls after building
+  a chart.
+- **No em dashes** anywhere in the kit.
+
+### Fixed
+
+- **`comms-guard`** blocked reading `modules/telegram/send.sh`, not just
+  running it.
+- **Two skill descriptions** were invalid YAML (an unquoted colon).
+
 ## [1.2.0] - 2026-09-25
 
 Maintenance release: the modules and skills that shipped since 1.1.1, fixes
@@ -266,7 +330,8 @@ Initial public release at [github.com/chacosoldier/compabob](https://github.com/
 - `docs/architecture.md`, `docs/onboarding.md`, `docs/customization-guide.md`,
   `docs/how-to-improve-memory.md`.
 
-[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/chacosoldier/compabob/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/chacosoldier/compabob/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/chacosoldier/compabob/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/chacosoldier/compabob/compare/v1.0.0...v1.1.0
