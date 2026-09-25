@@ -42,6 +42,12 @@
         "hooks": [
           { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/hook-protect-secrets.py\"" }
         ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/hook-plan-premortem.py\"" }
+        ]
       }
     ],
     "Stop": [

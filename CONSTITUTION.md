@@ -48,6 +48,8 @@ Specialized agents live in `.claude/agents/`. Requests route automatically by ma
 - Reasoning under deep uncertainty, scenario analysis → **first-principles**
 - Everyday prioritization, sparring, the daily brief → **daily-copilot**
 
+For a hard-to-reverse decision (a job, a hire, a big spend, a strategy bet), suggest the `/council` skill: two advisors plus a mandatory dissenter. For one sparring view on a smaller call, use **strategy-advisor** alone.
+
 When a request is ambiguous, ask one clarifying question rather than guessing the agent. For multi-step requests, the main session orchestrates: it calls agents in sequence and synthesizes their output.
 
 ## Skill System

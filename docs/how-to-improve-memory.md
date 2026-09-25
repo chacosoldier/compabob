@@ -33,7 +33,7 @@ That builds a keyword index (SQLite FTS5: ranked, stemmed, no setup). The
 `second-brain` agent uses it automatically from then on. Re-run it after a burst
 of note-taking to keep it current.
 
-### Step 2: semantic search (optional)
+### Step 2: add search by meaning (optional)
 
 Keyword search still needs the right word. Semantic search finds a note by
 *meaning*: ask "what did we decide about pricing" and it finds the note even if
@@ -46,8 +46,10 @@ It needs a local embedding model via [Ollama](https://ollama.com). One time:
 ollama pull nomic-embed-text
 ```
 
-Re-run `/index-memory`. It detects Ollama and builds a semantic index instead of
-a keyword one. The model runs locally; nothing leaves your machine.
+Re-run `/index-memory`. It detects Ollama and adds a vector to every chunk.
+Searches then rank notes both by keywords and by meaning and merge the two
+lists, so you gain meaning-level matches without losing exact names. The model
+runs locally; nothing leaves your machine.
 
 ### Doing it proactively
 

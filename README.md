@@ -219,6 +219,7 @@ Skills are slash-command workflows. Type the command; the assistant runs the pro
 | `/post-call` | Capture decisions and commitments right after a call |
 | `/handover` | Write a handover note so the next session has full context |
 | `/log-decision` | Record a decision, its reasoning, and a date to review it |
+| `/council` | Put a hard-to-reverse decision to an advisor panel with a mandatory dissenter, then answer each objection |
 | `/tasks` | One aggregated view of open tasks from across the vault |
 | `/reflect` | End-of-session reflection; proposes memory updates |
 | `/index-memory` | Build the memory-search index for relevance-ranked retrieval |

@@ -52,6 +52,7 @@ Hooks run at fixed points in a session and cannot be talked out of their job by 
 - **UserPromptSubmit** → `hook-inject-now.sh` injects the current time, and tells scheduled runs that nobody is watching.
 - **PreToolUse(Bash)** → `hook-block-dangerous.py` and `hook-comms-guard.py` block destructive commands and un-approved sends.
 - **PreToolUse(Read)** → `hook-protect-secrets.py` blocks reading credential files.
+- **PreToolUse(ExitPlanMode)** → `hook-plan-premortem.py` holds a high-stakes plan (irreversible, wide blast radius, or weeks of work) until it has a pre-mortem from `strategy-advisor`.
 - **PostToolUse** → `prompt-injection-defender/` flags injected instructions in tool output, MCP tools included, and skips the kit's own files.
 - **Stop** → `hook-style-gate.py` checks each reply for em dashes and paragraph walls. `style_gate:` in `config/user.config.yaml` sets it to `warn` (default), `block`, or `off`.
 
