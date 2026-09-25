@@ -1,49 +1,38 @@
 name: smoke
 
-# Weekly fresh-clone smoke test. Catches kit bit-rot before users hit it:
-# any breakage in setup.sh, init.sh, or shell scripts surfaces here, not in
-# someone's first ten minutes with the kit.
+# Fresh-clone smoke test, on every push and PR plus weekly. Catches kit bit-rot
+# before users hit it: setup, the health check, every hook's behaviour, and
+# drift between the docs and the tree. The same checks run locally with
+#   bash tests/run-all.sh
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   schedule:
-    # Mondays 06:00 UTC — early enough that issues land before the weekly traffic peak.
+    # Mondays 06:00 UTC, early enough that issues land before the weekly traffic peak.
     - cron: "0 6 * * 1"
   workflow_dispatch:
 
 jobs:
-  smoke:
+  linux:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Shell syntax check (bash -n on every *.sh)
-        run: |
-          set -euo pipefail
-          fail=0
-          while IFS= read -r -d '' f; do
-            if ! bash -n "$f"; then
-              echo "::error file=$f::bash syntax error"
-              fail=1
-            fi
-          done < <(find . -path ./node_modules -prune -o -type f -name '*.sh' -print0)
-          exit "$fail"
+      - name: Kit checks (syntax, shellcheck, hooks, frontmatter, docs vs tree)
+        run: bash tests/run-all.sh
 
       - name: Run setup.sh non-interactively (default answers)
         run: |
           set -euo pipefail
-          # Six blank lines = take the default for each ask() prompt + skip
-          # the optional integrations step. Setup is idempotent and never
-          # overwrites existing files, so this is safe to re-run.
+          # setup.sh asks seven questions. Six newlines take the defaults for the
+          # first six; the seventh (optional integrations) reads end of input and
+          # takes its default, "no".
           printf '\n\n\n\n\n\n' | ./setup.sh
 
       - name: Run init.sh (must exit 0; warnings tolerated)
@@ -58,7 +47,34 @@ jobs:
             exit "$ec"
           fi
 
-      - name: Validate JSON catalog
+      - name: Re-running setup keeps existing files
         run: |
-          python3 -c "import json; json.load(open('scripts/integrations-catalog.json'))"
-          echo "integrations-catalog.json is valid JSON"
+          printf '\n\n\n\n\n\n' | ./setup.sh > rerun.out
+          grep -q "already exists, keeping your version" rerun.out
+
+  macos:
+    # The primary platform: macOS ships bash 3.2 as /bin/bash, and launchd
+    # plists only exist here.
+    runs-on: macos-14
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scripts parse under macOS /bin/bash (3.2)
+        run: |
+          fail=0
+          while IFS= read -r f; do /bin/bash -n "$f" || { echo "::error file=$f::bash 3.2 syntax error"; fail=1; }; done < <(git ls-files '*.sh')
+          exit "$fail"
+
+      - name: Setup and health check
+        run: |
+          printf '\n\n\n\n\n\n' | ./setup.sh
+          bash scripts/init.sh
+
+      - name: Generated launchd plists are valid
+        run: |
+          bash modules/proactive/install.sh
+          plutil -lint modules/proactive/generated/*.plist
+
+      - name: Kit checks
+        run: bash tests/run-all.sh

@@ -4,7 +4,7 @@
 # git-ignored and are NEVER touched by this (new config keys are only added).
 set -uo pipefail
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit 1
 # shellcheck source=scripts/lib/common.sh
 source scripts/lib/common.sh
 

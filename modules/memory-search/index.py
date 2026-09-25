@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""Compabob — memory-search indexer.
+"""Compabob: memory-search indexer.
 
 Builds a local search index over memory/ and vault/ so the assistant can retrieve
-notes by relevance, not just exact keyword. If Ollama is running with an embedding
-model the index is semantic (search by meaning); otherwise it falls back to
-SQLite FTS5 (fast ranked keyword search). Python standard library only.
+notes by relevance. It always builds a keyword index (SQLite FTS5: exact names,
+IDs, and terms rank well). When Ollama is running with an embedding model it also
+stores a vector per chunk, and query.py fuses both rankings (hybrid search):
+meaning-level matches without losing exact-term matches. Standard library only.
+
+Each chunk carries its heading path ("Project > Risks > Budget"), so a result
+says where in the note it came from.
 
   usage: python3 modules/memory-search/index.py [--keyword]
-         --keyword   force the keyword (FTS5) backend even if Ollama is available
+         --keyword   skip the vectors even if Ollama is available
 """
 import json
 import sqlite3
@@ -32,7 +36,7 @@ def ollama_has_embed_model() -> bool:
             tags = json.load(resp)
         return any(m.get("name", "").split(":")[0] == EMBED_MODEL
                    for m in tags.get("models", []))
-    except Exception:
+    except Exception:  # noqa: BLE001 - any Ollama failure means: no vectors
         return False
 
 
@@ -46,21 +50,31 @@ def embed(text: str) -> list:
 
 
 def chunk_file(path: Path) -> list:
-    """Split a markdown file into (heading, body) chunks at heading boundaries."""
+    """Split a markdown file into (heading path, body) chunks at heading boundaries.
+
+    The heading path is the breadcrumb of enclosing headings, e.g. "Plan > Risks".
+    Lines inside fenced code blocks are never treated as headings.
+    """
     text = path.read_text(encoding="utf-8", errors="ignore")
-    chunks, heading, buf = [], "", []
+    chunks, stack, buf, in_fence = [], [], [], False
 
     def flush():
         body = "\n".join(buf).strip()
         if body:
+            crumb = " > ".join(title for _, title in stack)
             for i in range(0, len(body), MAX_CHUNK_CHARS):
-                chunks.append((heading, body[i:i + MAX_CHUNK_CHARS]))
+                chunks.append((crumb, body[i:i + MAX_CHUNK_CHARS]))
 
     for line in text.splitlines():
-        if line.lstrip().startswith("#"):
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+        level = len(line) - len(line.lstrip("#"))
+        if not in_fence and 1 <= level <= 6 and line[level:level + 1] == " ":
             flush()
-            heading = line.lstrip("#").strip()
             buf = []
+            while stack and stack[-1][0] >= level:
+                stack.pop()
+            stack.append((level, line[level:].strip()))
         else:
             buf.append(line)
     flush()
@@ -88,38 +102,35 @@ def fts5_available() -> bool:
         return False
 
 
-def build_keyword(docs: list) -> None:
+def build(docs: list, with_vectors: bool, with_fts: bool) -> int:
+    """Write the index. Returns how many chunks got a vector."""
     DB_PATH.unlink(missing_ok=True)
     con = sqlite3.connect(DB_PATH)
     con.execute("CREATE TABLE meta(k TEXT PRIMARY KEY, v TEXT)")
-    con.execute("INSERT INTO meta VALUES('backend','keyword')")
-    con.execute("CREATE VIRTUAL TABLE chunks USING fts5("
-                "path, heading, body, tokenize='porter')")
-    con.executemany("INSERT INTO chunks(path,heading,body) VALUES(?,?,?)", docs)
+    con.execute("CREATE TABLE docs(id INTEGER PRIMARY KEY, path TEXT, heading TEXT, body TEXT)")
+    con.executemany("INSERT INTO docs(path,heading,body) VALUES(?,?,?)", docs)
+    if with_fts:
+        con.execute("CREATE VIRTUAL TABLE fts USING fts5(path, heading, body, tokenize='porter')")
+        con.execute("INSERT INTO fts(rowid,path,heading,body) SELECT id,path,heading,body FROM docs")
+    embedded = 0
+    if with_vectors:
+        con.execute("CREATE TABLE vecs(id INTEGER PRIMARY KEY, vec TEXT)")
+        rows = con.execute("SELECT id,path,heading,body FROM docs").fetchall()
+        for doc_id, path, heading, body in rows:
+            try:
+                vec = embed(f"{heading}\n{body}" if heading else body)
+            except Exception as exc:  # noqa: BLE001 - any Ollama failure means: no vectors
+                print(f"  warn: no vector for a chunk of {path} ({exc})")
+                continue
+            con.execute("INSERT INTO vecs VALUES(?,?)", (doc_id, json.dumps(vec)))
+            embedded += 1
+            print(f"  embedded {embedded}/{len(rows)}", end="\r")
+        print()
+    backend = "hybrid" if with_fts and embedded else ("semantic" if embedded else "keyword")
+    con.execute("INSERT INTO meta VALUES('backend',?)", (backend,))
     con.commit()
     con.close()
-
-
-def build_semantic(docs: list) -> None:
-    DB_PATH.unlink(missing_ok=True)
-    con = sqlite3.connect(DB_PATH)
-    con.execute("CREATE TABLE meta(k TEXT PRIMARY KEY, v TEXT)")
-    con.execute("INSERT INTO meta VALUES('backend','semantic')")
-    con.execute("CREATE TABLE chunks(path TEXT, heading TEXT, body TEXT, vec TEXT)")
-    done = 0
-    for path, heading, body in docs:
-        text = f"{heading}\n{body}" if heading else body
-        try:
-            vec = json.dumps(embed(text))
-        except Exception as exc:
-            print(f"  warn: skipped a chunk of {path} ({exc})")
-            continue
-        con.execute("INSERT INTO chunks VALUES(?,?,?,?)", (path, heading, body, vec))
-        done += 1
-        print(f"  embedded {done}/{len(docs)}", end="\r")
-    print()
-    con.commit()
-    con.close()
+    return embedded
 
 
 def mark_enabled() -> None:
@@ -139,7 +150,7 @@ def mark_enabled() -> None:
 
 
 def main() -> int:
-    force_keyword = "--keyword" in sys.argv[1:]
+    skip_vectors = "--keyword" in sys.argv[1:]
     GEN_DIR.mkdir(parents=True, exist_ok=True)
 
     docs = gather()
@@ -147,29 +158,29 @@ def main() -> int:
         print("Nothing to index. Run ./setup.sh first so memory/ and vault/ exist.")
         return 1
 
-    use_semantic = (not force_keyword) and ollama_has_embed_model()
-    if not use_semantic and not fts5_available():
+    with_vectors = (not skip_vectors) and ollama_has_embed_model()
+    with_fts = fts5_available()
+    if not with_fts and not with_vectors:
         print("This Python's SQLite has no FTS5, and Ollama is not available, so "
               "no index can be built. Install Ollama (see "
               "docs/how-to-improve-memory.md) or use a Python with FTS5.")
         return 1
 
-    if use_semantic:
-        print(f"Ollama found. Building a semantic index ({len(docs)} chunks). "
-              "First run can take a minute...")
-        build_semantic(docs)
-        backend = "semantic (search by meaning)"
+    if with_vectors:
+        print(f"Ollama found. Indexing {len(docs)} chunks with keywords and vectors. "
+              "The first run can take a minute...")
     else:
-        print(f"Building a keyword index ({len(docs)} chunks)...")
-        build_keyword(docs)
-        backend = "keyword (FTS5 ranked search)"
+        print(f"Indexing {len(docs)} chunks (keyword)...")
+    embedded = build(docs, with_vectors, with_fts)
 
     mark_enabled()
+    backend = "hybrid (keyword + meaning)" if with_fts and embedded else (
+        "semantic (meaning only; this SQLite has no FTS5)" if embedded else "keyword (FTS5 ranked search)")
     print(f"Done. Indexed {len(docs)} chunks from memory/ and vault/.")
     print(f"Backend: {backend}.")
     print(f"Index:   {DB_PATH.relative_to(PROJECT_DIR)}")
-    if not use_semantic and not force_keyword:
-        print("Tip: install Ollama for semantic search — see docs/how-to-improve-memory.md")
+    if not with_vectors and not skip_vectors:
+        print("Tip: install Ollama to add search by meaning. See docs/how-to-improve-memory.md")
     return 0
 
 

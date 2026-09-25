@@ -53,7 +53,7 @@ script runs the deterministic steps (clean, dedup, score). The cardinal rule:
 5. **Enrich the survivors only.** For rows tagged `proceed` or `warm` that lack a
    domain / email / decision-maker, enrich with whatever you have, in this order:
    - web search MCP for the company domain + LinkedIn (high hit-rate, cheap),
-   - an enrichment provider MCP (e.g. Clay) for verified emails — check remaining
+   - an enrichment provider MCP (e.g. Clay) for verified emails, check remaining
      credits first, and only for rows still missing an email,
    - public business registries for named decision-makers at small firms when
      enrichment misses.
@@ -79,6 +79,6 @@ script runs the deterministic steps (clean, dedup, score). The cardinal rule:
 - Respect data-protection law and platform terms. Flag if the user's target list
   looks like scraped personal data being repurposed for cold mail.
 - If a stage's numbers look wrong (e.g. zero `skip`/`warm` with a populated CRM),
-  inspect the stage CSV before continuing — that is why each stage is a file.
+  inspect the stage CSV before continuing. That is why each stage is a file.
 - Be honest about enrichment misses; report the hit-rate rather than fabricating
   emails.

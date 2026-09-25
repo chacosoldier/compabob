@@ -33,7 +33,7 @@ tags: [decision]
 **Why**: [the reasoning, most important factor first]
 
 **Alternatives considered**:
-- [option] — rejected because [...]
+- [option]: rejected because [...]
 
 **Expected outcome**: [what success looks like, concretely]
 

@@ -11,7 +11,7 @@ set -uo pipefail
 
 MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$MODULE_DIR/../.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 CARD="${1:-}"
 OUTCOME="${2:-}"

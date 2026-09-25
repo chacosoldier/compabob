@@ -50,12 +50,12 @@ if rp.exists():
         print(f"  \033[0;32mok\033[0m   seeded role-and-priorities.md from the {pid} persona")
         seeded = True
     else:
-        print("  \033[0;32mok\033[0m   role-and-priorities.md already personalized — kept your version")
+        print("  \033[0;32mok\033[0m   role-and-priorities.md already personalized, kept your version")
 else:
-    print("  \033[1;33mwarn\033[0m memory/topics/role-and-priorities.md not found — skipped")
+    print("  \033[1;33mwarn\033[0m memory/topics/role-and-priorities.md not found, skipped")
 
 # record the chosen preset in the config, but only when the file was actually
-# seeded — so config.preset never disagrees with what is in role-and-priorities.md
+# seeded; so config.preset never disagrees with what is in role-and-priorities.md
 if seeded:
     cfg = pathlib.Path("config/user.config.yaml")
     if cfg.exists():

@@ -46,13 +46,17 @@ The main session orchestrates multi-step work: it calls agents, passes their out
 
 ## The hook lifecycle
 
-Hooks run at fixed points in a session and cannot be talked out of their job by a clever prompt. The kit wires six:
+Hooks run at fixed points in a session and cannot be talked out of their job by a clever prompt. The kit wires these:
 
-- **SessionStart** → `hook-session-start.sh` injects the memory index and any handover note.
-- **UserPromptSubmit** → `hook-inject-now.sh` injects the current time.
+- **SessionStart** → `hook-session-start.sh` injects the memory index, a handover note under a week old, and one-line notices (today's scheduled output, recent scheduled-run failures, an oversized `MEMORY.md`, missing config keys).
+- **UserPromptSubmit** → `hook-inject-now.sh` injects the current time, and tells scheduled runs that nobody is watching.
 - **PreToolUse(Bash)** → `hook-block-dangerous.py` and `hook-comms-guard.py` block destructive commands and un-approved sends.
 - **PreToolUse(Read)** → `hook-protect-secrets.py` blocks reading credential files.
-- **PostToolUse** → `prompt-injection-defender/` flags injected instructions in tool output.
+- **PreToolUse(ExitPlanMode)** → `hook-plan-premortem.py` holds a high-stakes plan (irreversible, wide blast radius, or weeks of work) until it has a pre-mortem from `strategy-advisor`.
+- **PostToolUse** → `prompt-injection-defender/` flags injected instructions in tool output, MCP tools included, and skips the kit's own files.
+- **Stop** → `hook-style-gate.py` checks each reply for em dashes and paragraph walls. `style_gate:` in `config/user.config.yaml` sets it to `warn` (default), `block`, or `off`.
+
+Rules that can be checked by a script belong in a hook, not in more prose: a hook runs every time, while a sentence in the constitution competes with everything else in context.
 
 Hooks fail open: a hook that errors never breaks the session. The guards are defense-in-depth, not the only line of defense.
 

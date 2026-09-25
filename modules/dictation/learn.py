@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""modules/dictation/learn.py — promote recurring dictation corrections.
+"""modules/dictation/learn.py: promote recurring dictation corrections.
 
 What it does, once a day (a launchd/cron job) or on demand:
   1. Read data/dictation/calls.jsonl. For each successful row, token-diff
@@ -181,7 +181,7 @@ def write_glossary(path: Path, data: dict) -> None:
         "corrections": data.get("corrections", []),
     }
     header = (
-        "# dictation glossary — see modules/dictation/README.md 'Glossary format'.\n"
+        "# dictation glossary: see modules/dictation/README.md 'Glossary format'.\n"
         "# GITIGNORED: your own names/jargon. learn.py appends to `corrections`;\n"
         "# you seed `terms` by hand. Hand-editable anytime.\n"
     )

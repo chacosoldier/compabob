@@ -25,8 +25,8 @@ Account lead at Brightline Studio, the external agency on the [[Website Relaunch
 
 ## Interactions
 
-- **2026-01-15** — [[2026-01-15-website-relaunch-kickoff|Kickoff meeting]]. Walked through scope and the two-phase timeline. Sam to send the statement of work by 2026-01-20.
-- **2026-01-08** — Intro call. Brightline pitched the relaunch approach. Strong on design, lighter on analytics.
+- **2026-01-15**: [[2026-01-15-website-relaunch-kickoff|Kickoff meeting]]. Walked through scope and the two-phase timeline. Sam to send the statement of work by 2026-01-20.
+- **2026-01-08**: Intro call. Brightline pitched the relaunch approach. Strong on design, lighter on analytics.
 
 ## Open items
 

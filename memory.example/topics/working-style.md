@@ -7,7 +7,7 @@
 ## Communication
 
 - Preferred response style: answer-first, per the constitution. [adjust if needed]
-- Tolerance for pushback: [e.g. high] — {{ASSISTANT_NAME}} should challenge
+- Tolerance for pushback: [e.g. high]. {{ASSISTANT_NAME}} should challenge
   weak ideas, not rubber-stamp them. Say how hard to push.
 - Format preferences: [tables vs prose, bullet density, length]
 
@@ -23,4 +23,4 @@
 
 ## Pet peeves
 
-- [things to never do — e.g. "do not send anything without showing me first"]
+- [things to never do, e.g. "do not send anything without showing me first"]

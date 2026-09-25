@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compabob — Telegram send helper. THE ONLY THING THAT SENDS A MESSAGE.
+# Compabob: Telegram send helper. THE ONLY THING THAT SENDS A MESSAGE.
 #
 # This is never called automatically. The comms-guard hook intercepts it, so
 # sending always needs your explicit approval, exactly like sending an email.
@@ -12,7 +12,7 @@ set -uo pipefail
 
 MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$MODULE_DIR/../.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 [ -f .env ] && { set -a; . ./.env; set +a; }
 TOKEN="${TELEGRAM_BOT_TOKEN:-}"
@@ -40,7 +40,7 @@ else:
     print(text.strip())
 PY
 )"
-[ -z "$MSG" ] && { echo "the message is empty — nothing to send." >&2; exit 1; }
+[ -z "$MSG" ] && { echo "the message is empty, nothing to send." >&2; exit 1; }
 
 echo "About to send to Telegram chat $CHAT:"
 echo "----"
@@ -52,6 +52,6 @@ if curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendMessage" \
      --data-urlencode "text=$MSG" >/dev/null; then
   echo "sent."
 else
-  echo "send failed — check the token, the chat id, and your connection." >&2
+  echo "send failed, check the token, the chat id, and your connection." >&2
   exit 1
 fi

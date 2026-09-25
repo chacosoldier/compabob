@@ -37,7 +37,7 @@ engagements, running them, and keeping stakeholders aligned to the outcome.
 ## Explicitly not doing
 
 - [work outside your engagement scope, or accounts you have decided to step
-  back from — naming these lets the assistant flag scope creep]
+  back from. Naming these lets the assistant flag scope creep]
 
 ## Where the assistant helps most
 

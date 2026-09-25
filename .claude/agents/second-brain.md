@@ -13,13 +13,13 @@ Manage and retrieve knowledge from the Obsidian vault at `vault/`. Synthesize ac
 
 ## Vault structure
 
-- **Front door**: `vault/00-Home.md` — the map of content.
-- **People**: `vault/People/<Name>.md` — one note per person, Title Case filename.
-- **Meetings**: `vault/Meetings/YYYY-MM-DD-<slug>.md` — date-prefixed.
+- **Front door**: `vault/00-Home.md`, the map of content.
+- **People**: `vault/People/<Name>.md`, one note per person, Title Case filename.
+- **Meetings**: `vault/Meetings/YYYY-MM-DD-<slug>.md`, date-prefixed.
 - **Projects**: `vault/Projects/<Project>.md`.
 - **Daily notes**: `vault/Daily/YYYY-MM-DD.md`.
-- **Decisions**: `vault/Decisions/` — written by the `/log-decision` skill.
-- **Sources**: `vault/Sources/` — imported or reference material.
+- **Decisions**: `vault/Decisions/`, written by the `/log-decision` skill.
+- **Sources**: `vault/Sources/`, imported or reference material.
 
 Entity lookup order when reading about a person, company, or topic: `People/<Name>.md`, then a top-level `<Name>.md`, then `Grep` across the vault.
 

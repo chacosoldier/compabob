@@ -42,11 +42,24 @@
         "hooks": [
           { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/hook-protect-secrets.py\"" }
         ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/hook-plan-premortem.py\"" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/hook-style-gate.py\"" }
+        ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Bash|Read|WebFetch|WebSearch",
+        "matcher": "Bash|Read|WebFetch|WebSearch|mcp__.*",
         "hooks": [
           { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/prompt-injection-defender/post-tool-defender.py\"" }
         ]

@@ -1,4 +1,4 @@
-# dictation glossary — copy to glossary.yaml (gitignored) and make it yours.
+# dictation glossary: copy to glossary.yaml (gitignored) and make it yours.
 # See modules/dictation/README.md "Glossary format" for the full contract.
 #
 #   terms:        canonical spellings the model should PREFER for similar-

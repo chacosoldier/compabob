@@ -29,10 +29,10 @@ Each mode is described below. Editing or removing one mode does not affect the o
 
 1. Scan the inbox (via an integration, or from content the user provides).
 2. Categorize by urgency:
-   - **Urgent** — escalations, time-sensitive requests, anything with a near deadline.
-   - **Action needed** — requires a response or a decision from the user.
-   - **FYI** — status updates, newsletters, CC threads.
-   - **Delegate** — better handled by someone else.
+   - **Urgent**: escalations, time-sensitive requests, anything with a near deadline.
+   - **Action needed**: requires a response or a decision from the user.
+   - **FYI**: status updates, newsletters, CC threads.
+   - **Delegate**: better handled by someone else.
 3. Present a prioritized summary: sender, subject, recommended action. Urgent first.
 4. Offer to draft replies. Never send them.
 
@@ -54,9 +54,9 @@ A daily or weekly briefing covers: today's or the week's meetings with context, 
 
 Track commitments in both directions:
 
-- **Owed to the user** — pending responses, delegated tasks, approval requests.
-- **Owed by the user** — action items from meetings, promised follow-ups.
-- **Overdue** — anything past its expected date.
+- **Owed to the user**: pending responses, delegated tasks, approval requests.
+- **Owed by the user**: action items from meetings, promised follow-ups.
+- **Overdue**: anything past its expected date.
 
 Source these from meeting notes, the interaction logs in `vault/People/`, and (if enabled) email and calendar.
 

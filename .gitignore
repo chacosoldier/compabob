@@ -1,11 +1,11 @@
-# Secrets and credentials — never commit these
+# Secrets and credentials: never commit these
 .secrets/
 .env
 *.env
 !*.env.example
 !*.env.template
 
-# YOUR STUFF — created from the *.example seeds by setup.sh.
+# YOUR STUFF: created from the *.example seeds by setup.sh.
 # These live outside git on purpose: a kit update can never touch them.
 /vault/
 /memory/

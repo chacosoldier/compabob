@@ -4,7 +4,7 @@
 set -u
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; BOLD='\033[1m'; NC='\033[0m'
 WARN=0; FAIL=0
@@ -27,14 +27,14 @@ else
 fi
 command -v claude  >/dev/null 2>&1 && ok "claude CLI found" || warn "claude CLI not found (install: curl -fsSL https://claude.ai/install.sh | bash)"
 
-# 2. Setup has run — your personal files exist
+# 2. Setup has run. Your personal files exist
 if [ -d vault ] && [ -d memory ] && [ -f config/user.config.yaml ]; then
   ok "setup has run (vault/, memory/, config/user.config.yaml present)"
   if MISSING_CFG=$(bash scripts/migrate-config.sh --check 2>/dev/null); then :; else
     warn "$MISSING_CFG. Run: bash scripts/migrate-config.sh"
   fi
 else
-  fail "setup has not run — run ./setup.sh"
+  fail "setup has not run. Run ./setup.sh"
 fi
 
 # 3. Core kit files
@@ -43,7 +43,7 @@ for f in CONSTITUTION.md CLAUDE.md .claude/settings.json; do
 done
 [ -f memory/MEMORY.md ] && ok "present: memory/MEMORY.md" || fail "missing: memory/MEMORY.md (run ./setup.sh)"
 [ -f .claude/settings.local.json ] && ok "present: settings.local.json" \
-  || warn "settings.local.json missing — run ./setup.sh"
+  || warn "settings.local.json missing. Run ./setup.sh"
 
 # 4. Settings JSON is valid
 if [ -f .claude/settings.json ]; then
@@ -90,14 +90,14 @@ SKILLS=$(find .claude/skills -maxdepth 2 -name 'SKILL.md' 2>/dev/null | wc -l | 
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   ok "git: branch $(git branch --show-current 2>/dev/null || echo '?')"
 else
-  warn "not a git clone — './update.sh' will not work (download is not a clone)"
+  warn "not a git clone. './update.sh' will not work (download is not a clone)"
 fi
 
 # 9. Module health (only checks what you have enabled)
 if [ -f config/user.config.yaml ]; then
   if grep -qE '^[[:space:]]*integrations:[[:space:]]*true' config/user.config.yaml; then
     if [ -f .mcp.json ] && python3 -c 'import json; json.load(open(".mcp.json"))' 2>/dev/null; then
-      ok "integrations enabled — .mcp.json is valid JSON"
+      ok "integrations enabled, .mcp.json is valid JSON"
     else
       # Hard fail: config and disk state contradict each other and the assistant
       # cannot use the missing servers. Either run install-integrations.sh, or
@@ -107,7 +107,7 @@ if [ -f config/user.config.yaml ]; then
   fi
   if grep -qE '^[[:space:]]*telegram:[[:space:]]*true' config/user.config.yaml; then
     if [ -f .env ] && grep -qE '^[[:space:]]*TELEGRAM_BOT_TOKEN=.+' .env; then
-      ok "telegram enabled — bot token present in .env"
+      ok "telegram enabled, bot token present in .env"
     else
       warn "telegram enabled but TELEGRAM_BOT_TOKEN is not set in .env"
     fi
@@ -118,7 +118,7 @@ printf "\n"
 if [ "$FAIL" -eq 0 ] && [ "$WARN" -eq 0 ]; then
   printf "${GREEN}${BOLD}All checks passed.${NC} Start the assistant with: claude\n\n"
 elif [ "$FAIL" -eq 0 ]; then
-  printf "${YELLOW}${BOLD}%d warning(s), 0 failures.${NC} Operational — warnings above are optional items, not breakage. Start with: claude\n\n" "$WARN"
+  printf "${YELLOW}${BOLD}%d warning(s), 0 failures.${NC} Operational. Warnings above are optional items, not breakage. Start with: claude\n\n" "$WARN"
 else
   printf "${RED}${BOLD}%d failure(s), %d warning(s).${NC} Fix the failures first.\n\n" "$FAIL" "$WARN"
 fi

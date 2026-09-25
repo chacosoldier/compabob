@@ -19,7 +19,8 @@ SEND_BINARIES = [
     (r"\bmailx\b", "mailx"),
     (r"\bswaks\b", "swaks (SMTP test tool)"),
     (r"\bosascript\b.*\b(Mail|Messages)\b", "AppleScript sending Mail or Messages"),
-    (r"telegram/send\.sh", "the Telegram send helper"),
+    # Running the helper, not reading it: `cat` or `grep` on send.sh stays allowed.
+    (r"(?:^|[;&|(]\s*|\b(?:bash|sh|zsh|exec)\s+)(?:\S*/)?telegram/send\.sh\b", "the Telegram send helper"),
 ]
 
 # curl / wget POSTs to known messaging or email delivery endpoints.

@@ -10,6 +10,8 @@ PROJECT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 # launchd and cron run with a minimal PATH; put common tool dirs on it so the
 # claude and python3 binaries are found when this runs unattended.
 export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+# Tell the assistant nobody is watching (see hooks/hook-inject-now.sh).
+export COMPABOB_RUN_CONTEXT=scheduled
 
 TASK="${1:-}"
 if [ -z "$TASK" ]; then

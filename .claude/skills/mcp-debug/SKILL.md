@@ -1,6 +1,6 @@
 ---
 name: mcp-debug
-description: "MCP server health check, tool tracing, and audit. Use when MCP tools fail silently, to check server status, or for periodic system audits. Trigger: /mcp-debug [status|trace|audit]"
+description: "MCP server health check, tool tracing, and audit. Use when an MCP tool fails silently or errors, to check server status, or to audit the configured servers: /mcp-debug [status|trace|audit]. MCP servers only; the health of the whole setup is /system-audit."
 ---
 
 # MCP Debugger
@@ -8,15 +8,15 @@ description: "MCP server health check, tool tracing, and audit. Use when MCP too
 A diagnostic tool for MCP (Model Context Protocol) server health and tool execution. Helps identify why MCP tools fail, which servers are down, and which servers are unused or redundant.
 
 Reads MCP config from the two standard locations:
-- `~/.claude.json` — user-scope servers.
-- `<project>/.mcp.json` — project-scope servers.
+- `~/.claude.json`: user-scope servers.
+- `<project>/.mcp.json`: project-scope servers.
 
 ## Mode detection
 
 Check the arguments:
-- No args or `status` — health check all configured MCP servers.
-- `trace <tool-name>` — trace a specific tool's configuration and likely failure modes.
-- `audit` — full audit with recommendations (unused servers, error patterns, consolidation candidates).
+- No args or `status`: health check all configured MCP servers.
+- `trace <tool-name>`: trace a specific tool's configuration and likely failure modes.
+- `audit`: full audit with recommendations (unused servers, error patterns, consolidation candidates).
 
 ## Mode 1: Status (default)
 
@@ -29,16 +29,16 @@ Check the arguments:
    If the CLI is unavailable, parse `~/.claude.json` (top-level `mcpServers`) and `./.mcp.json` directly.
 
 2. For each server, run the lightweight connectivity check appropriate to its transport:
-   - **stdio** — confirm the command exists on `$PATH` (`which <bin>`) and the wrapper script is executable.
-   - **http / sse** — `curl -s -o /dev/null -w "%{http_code}"` the URL.
-   - **Authenticated remote** — a `401` or `403` means *reachable*, not *down*. Flag as `auth` rather than `error`.
+   - **stdio**: confirm the command exists on `$PATH` (`which <bin>`) and the wrapper script is executable.
+   - **http / sse**: `curl -s -o /dev/null -w "%{http_code}"` the URL.
+   - **Authenticated remote**: a `401` or `403` means *reachable*, not *down*. Flag as `auth` rather than `error`.
 
 3. Present a status table:
 
    | Server | Transport | Status | Note |
    |---|---|---|---|
    | foo | stdio | ok | |
-   | bar | http | auth | 401 — token may need refresh |
+   | bar | http | auth | 401: token may need refresh |
    | baz | stdio | error | binary not on PATH |
 
 4. For `warning`/`error` rows, propose the next debugging step (install the binary, refresh the token, check the env var).
@@ -69,14 +69,14 @@ Check the arguments:
    - Transport (stdio / http / sse).
    - Command or URL.
    - Args.
-   - Env vars (always **redact secrets** — show `***` instead of values for any key matching `(?i)(token|key|secret|password)`).
+   - Env vars (always **redact secrets**, show `***` instead of values for any key matching `(?i)(token|key|secret|password)`).
 
 4. Classify the likely failure mode:
-   - **Auth expired** — OAuth token needs refresh.
-   - **Schema mismatch** — tool expects different parameters than what was sent.
-   - **Timeout** — server takes too long to respond.
-   - **Server down** — process crashed or port unreachable.
-   - **Config error** — missing env var, wrong path, or stale wrapper script.
+   - **Auth expired**: OAuth token needs refresh.
+   - **Schema mismatch**: tool expects different parameters than what was sent.
+   - **Timeout**: server takes too long to respond.
+   - **Server down**: process crashed or port unreachable.
+   - **Config error**: missing env var, wrong path, or stale wrapper script.
 
 ### Output
 
@@ -89,7 +89,7 @@ Command / URL: <value>
 Status: <from health check>
 
 ### Configuration
-[relevant config — secrets redacted]
+[relevant config, secrets redacted]
 
 ### Likely cause
 <classification + suggested fix>
@@ -107,10 +107,10 @@ Status: <from health check>
    - Most-used and least-used servers.
 
 3. Identify:
-   - **Unused servers** — configured but never called. Candidates for removal (each one adds startup overhead).
-   - **High-error servers** — called often but failing frequently.
-   - **Duplicate capabilities** — multiple servers providing similar tools.
-   - **Missing servers** — tools referenced in agents/skills but no server configured.
+   - **Unused servers**: configured but never called. Candidates for removal (each one adds startup overhead).
+   - **High-error servers**: called often but failing frequently.
+   - **Duplicate capabilities**: multiple servers providing similar tools.
+   - **Missing servers**: tools referenced in agents/skills but no server configured.
 
 ### Output
 

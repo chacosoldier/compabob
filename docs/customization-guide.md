@@ -7,7 +7,7 @@ The kit is built to be changed. This is how. Nothing here is sacred; if a defaul
 Two kinds of thing live side by side, and the difference is what makes updates safe:
 
 - **Your data**: `vault/`, `memory/`, and `config/user.config.yaml` (plus `.mcp.json`, `.env`, and `.claude/settings.local.json`). `setup.sh` creates these from the shipped `*.example` seeds. They are git-ignored: not part of the kit's version control, so a kit update cannot touch them. Your knowledge base, your assistant's memory, and your settings all live here. Customize them however you like.
-- **The kit** — `CONSTITUTION.md`, `.claude/agents/`, `.claude/skills/`, `hooks/`, `modules/`, the scripts, the docs. Version-controlled, and updated from upstream when you run `./update.sh`.
+- **The kit**: `CONSTITUTION.md`, `.claude/agents/`, `.claude/skills/`, `hooks/`, `modules/`, the scripts, the docs. Version-controlled, and updated from upstream when you run `./update.sh`.
 
 `setup.sh` personalizes only your data (it fills your name, role, and language into the seed copies). It never edits a kit file. That is what keeps the kit cleanly updatable.
 

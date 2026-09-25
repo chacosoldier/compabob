@@ -1,6 +1,6 @@
 ---
 name: morning-brief
-description: Assemble a start-of-day briefing — priorities, what is due, what is owed, today's meetings, and anything overdue. Use for "/morning-brief", "what's on my plate", "brief me", or at the start of the first session of the day.
+description: "Start-of-day briefing: priorities, what is due, what is owed, today's meetings, and anything overdue. Use for /morning-brief, \"brief me\", or at the start of the first session of the day. For the full list of open tasks, use /tasks."
 ---
 
 # Morning Brief
@@ -21,7 +21,7 @@ Produce one scannable briefing that tells the user what matters today.
 Lead with the single most important thing about today, in one sentence. Then:
 
 ```
-## Morning Brief — <date>
+## Morning Brief: <date>
 
 **Today's focus**: [the one thing]
 
@@ -32,7 +32,7 @@ Lead with the single most important thing about today, in one sentence. Then:
 - ...
 
 **Meetings**
-- HH:MM  [title] — [one line of context]
+- HH:MM  [title]: [one line of context]
 
 **Owed to you / owed by you**
 - ...

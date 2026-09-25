@@ -22,5 +22,5 @@
 
 ## Explicitly not doing
 
-- [things {{USER_NAME}} has decided to deprioritize — naming these lets
+- [things {{USER_NAME}} has decided to deprioritize. Naming these lets
   {{ASSISTANT_NAME}} push back when a request would pull toward them]

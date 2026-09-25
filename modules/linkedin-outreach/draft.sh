@@ -12,7 +12,7 @@ set -uo pipefail
 
 MODULE_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$MODULE_DIR/../.." && pwd)"
-cd "$PROJECT_DIR"
+cd "$PROJECT_DIR" || exit 1
 
 # launchd and cron run with a minimal PATH; put common tool dirs on it so the
 # claude and python3 binaries are found when this runs unattended.
@@ -25,7 +25,10 @@ for c in claude python3; do
 done
 
 PRE_FLAG=""
-[ "${1:-}" = "--scheduled" ] && PRE_FLAG="--enforce-weekday"
+if [ "${1:-}" = "--scheduled" ]; then
+  PRE_FLAG="--enforce-weekday"
+  export COMPABOB_RUN_CONTEXT=scheduled   # nobody is watching (see hooks/hook-inject-now.sh)
+fi
 
 OUT_DIR="$PROJECT_DIR/reports/linkedin-outreach"
 mkdir -p "$OUT_DIR/cards"

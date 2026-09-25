@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compabob — Telegram poller helper.
+"""Compabob: Telegram poller helper.
 
 Reads a Telegram getUpdates response on stdin, drafts a reply for each text
 message from the allowed chat, and advances the polling offset. It never sends
