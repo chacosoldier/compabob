@@ -17,9 +17,11 @@ PROXY="$MODULE_DIR/proxy.py"
 LEARN="$MODULE_DIR/learn.py"
 mkdir -p "$GEN_DIR" "$LOG_DIR"
 
-PY="$(command -v python3 || true)"
+# Prefer the module venv (see README), which holds pyyaml; fall back to python3.
+PY="$MODULE_DIR/.venv/bin/python"
+[ -x "$PY" ] || PY="$(command -v python3 || true)"
 if [ -z "$PY" ]; then
-  echo "python3 not found on PATH. Install it (and 'pip3 install pyyaml') first."
+  echo "python3 not found on PATH. Install it, then create the module venv (see README)."
   exit 1
 fi
 

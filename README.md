@@ -113,7 +113,7 @@ From here on, every command runs inside this `compabob` folder. If you open a fr
 ./setup.sh
 ```
 
-It asks about you (assistant name, your name, role, working language), then about your work (which of five persona presets best fits you, and one sentence about what you focus on), then offers an optional integrations step you can skip and run later. Seven prompts in total. About a minute.
+It asks about you (assistant name, your name, role, working language), then about your work (which of six persona presets best fits you, and one sentence about what you focus on), then offers an optional integrations step you can skip and run later. Seven prompts in total. About a minute.
 
 ### 7. Start your assistant
 
@@ -140,7 +140,10 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 - **Arch**: `sudo pacman -S git nodejs npm python` works as-is.
 - **`python3` vs `python`**: confirm `python3 --version` returns 3.10+ before running `./setup.sh`.
 - **Permissions**: if `./setup.sh` says "Permission denied," run `chmod +x setup.sh` first.
-- **Windows**: install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
+
+### Windows
+
+- Install [WSL](https://learn.microsoft.com/windows/wsl/install) first (in PowerShell: `wsl --install`, then restart). Open the Ubuntu terminal it gives you and follow the Linux steps. Native Windows (PowerShell/cmd) is not supported.
 
 ## Updating
 
@@ -244,10 +247,9 @@ The core runs with zero external services. Modules add capability when you want 
 | `lead-pipeline` | Available | Builds a ranked outbound list: discover, clean, dedup against your CRM, enrich, score. One CSV per stage |
 | `memory-search` | Available | Real index over `memory/` and `vault/` so retrieval ranks by relevance (FTS5 by default; semantic via Ollama if installed) |
 | `transcribe` | Available — **highly encouraged** | One-hotkey local call recording + transcription (mlx-whisper). Captures both sides, copies to clipboard, files a transcript into `vault/raw/meetings/`. No cloud, no key, audio stays on your machine |
-| `extra-agents` | Roadmap | An agent gallery: designer, evaluator, sales coach, project manager |
-| `whatsapp` | Roadmap | WhatsApp channel — not built (account-ban risk); use Telegram instead |
+| `dictation` | Available | Cleanup endpoint for your dictation app: fixes punctuation and fillers, and a glossary that learns the words it keeps getting wrong |
 
-See [modules/README.md](modules/README.md) to enable one.
+See [modules/README.md](modules/README.md) to enable one, and for what is deliberately not built yet (an agent gallery, team mode, WhatsApp).
 
 ## Feedback
 

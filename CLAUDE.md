@@ -10,4 +10,4 @@ At the start of a session, read `memory/MEMORY.md`. It records the user's name, 
 
 ## Working directory
 
-The knowledge base is `vault/`. Persistent facts are in `memory/`. Your own configuration is in `.claude/` and `config/`. The directories `vault/`, `memory/`, and `config/` are the user's own data and live outside the kit's version control. Everything else is the kit, and updates upstream.
+The knowledge base is `vault/`. Persistent facts are in `memory/`. Your own configuration is in `.claude/` and `config/`. `vault/`, `memory/`, and `config/user.config.yaml` are the user's own data and live outside the kit's version control. Everything else is the kit, and updates upstream.

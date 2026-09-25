@@ -20,7 +20,7 @@ modules/             Opt-in extensions.
 A hard line runs through the directory tree, and it is what makes the kit safe to update:
 
 - **The kit** (version-controlled, updates from upstream): `CONSTITUTION.md`, `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `.claude/output-styles/`, `hooks/`, `modules/`, `scripts/`, `docs/`, and the `*.example` seeds.
-- **Your data** (git-ignored, never touched by an update): `vault/`, `memory/`, `config/`, and `.claude/settings.local.json`. `setup.sh` creates these from the `*.example` seeds on first run.
+- **Your data** (git-ignored, never touched by an update): `vault/`, `memory/`, `config/user.config.yaml`, `.mcp.json`, `.env`, and `.claude/settings.local.json`. `setup.sh` creates these from the `*.example` seeds on first run.
 
 Kit files contain no personal placeholders. `setup.sh` personalizes only the seed copies. `update.sh` pulls new kit versions and physically cannot reach your data, because your data is not in git. This separation is deliberate: it lets the kit improve over time without ever putting a user's knowledge base at risk.
 

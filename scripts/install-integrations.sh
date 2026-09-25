@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compabob — integration installer.
+# Compabob: integration installer.
 #
 # Adds MCP servers to .mcp.json from scripts/integrations-catalog.json.
 # Keyless integrations (web, utility) are configured fully. The keyed one
@@ -21,12 +21,11 @@ MCP_FILE=".mcp.json"
 MCP_SEED=".mcp.json.example"
 CONFIG="config/user.config.yaml"
 
-bold() { printf '\033[1m%s\033[0m\n' "$1"; }
-ok()   { printf '  \033[0;32mok\033[0m   %s\n' "$1"; }
-warn() { printf '  \033[1;33mwarn\033[0m %s\n' "$1"; }
+# shellcheck source=scripts/lib/common.sh
+source scripts/lib/common.sh
 
 if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
-  bold "Compabob — integration installer"
+  bold "Compabob: integration installer"
   echo "Adds MCP servers to .mcp.json. Categories: web, utility, search."
   echo "  install-integrations.sh web utility   configure those categories"
   echo "  install-integrations.sh               interactive picker"
@@ -37,7 +36,7 @@ fi
 command -v python3 >/dev/null 2>&1 || { echo "python3 is required" >&2; exit 1; }
 
 bold ""
-bold "Compabob — integrations"
+bold "Compabob: integrations"
 echo
 
 # --- choose categories -----------------------------------------------------
@@ -73,10 +72,10 @@ echo
 # --- merge .mcp.json + report (Python does the JSON work) -----------------
 # .mcp.json is created only when at least one server is actually added, so an
 # unknown category or an all-skipped run never leaves an empty file behind.
-python3 - "$CATALOG" "$MCP_FILE" "$MCP_SEED" "$CONFIG" "${CHOSEN[@]}" <<'PYEOF'
+python3 - "$CATALOG" "$MCP_FILE" "$MCP_SEED" "${CHOSEN[@]}" <<'PYEOF'
 import json, os, sys
 
-catalog_path, mcp_path, seed_path, config_path, *chosen = sys.argv[1:]
+catalog_path, mcp_path, seed_path, *chosen = sys.argv[1:]
 GREEN, YELLOW, BOLD, NC = "\033[0;32m", "\033[1;33m", "\033[1m", "\033[0m"
 
 catalog = json.load(open(catalog_path))
@@ -135,24 +134,12 @@ if guided:
         print(f"    Walkthrough: modules/integrations/README.md#{cat.get('doc_anchor','')}")
         if cat.get("env_hint"):
             print(f"    Provide {cat['env_hint']} (see .env.example).")
-
-# flip integrations: false -> true in the user config, if it exists
-try:
-    lines = open(config_path).read().splitlines()
-    out, flipped = [], False
-    for ln in lines:
-        if (not flipped and ln.lstrip().startswith("integrations:")
-                and "false" in ln):
-            out.append(ln.replace("false", "true", 1)); flipped = True
-        else:
-            out.append(ln)
-    if flipped:
-        open(config_path, "w").write("\n".join(out) + "\n")
-        print()
-        print(f"  {GREEN}ok{NC}   set integrations: true in {config_path}")
-except FileNotFoundError:
-    pass
 PYEOF
+
+if set_config_flag integrations true "$CONFIG"; then
+  echo
+  ok "set integrations: true in $CONFIG"
+fi
 
 echo
 bold "Done."

@@ -82,7 +82,7 @@ Final summary: X applied, Y skipped, Z marked obsolete, W silent fixes.
 
 - **Never auto-apply.** Always present each item for approval before modifying any file.
 - **Read before writing.** If the content already exists, mark APPLIED silently — never duplicate.
-- **MEMORY.md line cap.** If the constitution sets a limit (commonly ~200 lines), and writing the proposal would breach it, suggest a topic file in `memory/topics/` and a one-line index pointer instead of inlining.
+- **MEMORY.md size cap.** MEMORY.md loads every session, so keep it under about 12KB. If writing the proposal would push it past that, suggest a topic file in `memory/topics/` and a one-line index pointer instead of inlining.
 - **Diary edits are minimal.** Only flip checkboxes and update Memory Debt table status. Never rewrite proposal text.
 - **Oldest first.** Process chronologically so the longest-overdue debt clears first.
 

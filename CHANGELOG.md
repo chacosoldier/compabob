@@ -52,17 +52,6 @@ All notable changes to Compabob are recorded here. Format follows
   as PENDING / STALE / OBSOLETE / APPLIED, then in `apply` mode walks through
   approvals one by one. Closes the loop between `/reflect` (proposes) and
   `memory/`.
-- **Tool-scope-guard hook** (`hooks/hook-tool-scope-guard.sh` +
-  `tool_scope_check.py` + `tool_scopes.yaml`) — a context-scoped PreToolUse
-  guard. Reasoning stays unconstrained; only the outward action surface
-  (sends, mutations, external writes) is bounded per execution context.
-  Pre-wired contexts: `interactive` (allow-all), `pulse` (overnight headless,
-  no sends), `morning-briefing` (read inboxes, write vault), `email-triage`
-  (label only, no send), `news-digest` (fetch + write only). Context is
-  selected via `$CLAUDE_CONTEXT` env var or `/tmp/claude-context-<session>`
-  file. Fail-open by design; blocks are logged to
-  `data/performance/tool-scope-blocks.jsonl`. Opt-in: add the hook entry to
-  `.claude/settings.json` under `PreToolUse` to activate.
 
 ### Documented
 

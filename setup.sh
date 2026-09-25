@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Compabob — one-time setup.
-# Creates your personal files (vault/, memory/, config/) from the shipped *.example
+# Creates your personal files (vault/, memory/, config/user.config.yaml) from the shipped *.example
 # seeds and fills in your details. Those files live outside git, so a kit update can
 # never touch them. Safe to re-run: it never overwrites files you already have.
 set -euo pipefail
@@ -8,9 +8,8 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
-bold() { printf '\033[1m%s\033[0m\n' "$1"; }
-ok()   { printf '  \033[0;32mok\033[0m   %s\n' "$1"; }
-warn() { printf '  \033[1;33mwarn\033[0m %s\n' "$1"; }
+# shellcheck source=scripts/lib/common.sh
+source scripts/lib/common.sh
 
 bold ""
 bold "Compabob — setup"

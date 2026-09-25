@@ -101,7 +101,7 @@ Status: <from health check>
 
 1. Run the status check (Mode 1) for the full server list.
 
-2. If tool-usage telemetry exists (some projects log to `data/performance/session-log.jsonl` or similar), summarise the last 7 days:
+2. If you keep tool-usage telemetry (this kit does not ship any), summarise the last 7 days:
    - Tools called per server.
    - Error rate per server.
    - Most-used and least-used servers.
