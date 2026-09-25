@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compabob — memory-search indexer.
+"""Compabob: memory-search indexer.
 
 Builds a local search index over memory/ and vault/ so the assistant can retrieve
 notes by relevance, not just exact keyword. If Ollama is running with an embedding
@@ -169,7 +169,7 @@ def main() -> int:
     print(f"Backend: {backend}.")
     print(f"Index:   {DB_PATH.relative_to(PROJECT_DIR)}")
     if not use_semantic and not force_keyword:
-        print("Tip: install Ollama for semantic search — see docs/how-to-improve-memory.md")
+        print("Tip: install Ollama for semantic search. See docs/how-to-improve-memory.md")
     return 0
 
 

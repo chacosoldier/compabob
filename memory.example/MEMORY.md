@@ -24,9 +24,9 @@
 ## Topics
 
 > Add a one-line pointer here when you create a topic file. Example:
-> `- [[deadline-conventions]] — the team treats "EOD" as 18:00 local, not midnight.`
+> `- [[deadline-conventions]]: the team treats "EOD" as 18:00 local, not midnight.`
 
-_(none yet — this section grows as {{ASSISTANT_NAME}} learns)_
+_(none yet, this section grows as {{ASSISTANT_NAME}} learns)_
 
 ## Active context
 

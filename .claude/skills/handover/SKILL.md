@@ -17,7 +17,7 @@ Persist session context so the next session starts oriented instead of cold.
 ## Format
 
 ```
-# Handover — <date> <time>
+# Handover: <date> <time>
 
 ## Done this session
 - ...

@@ -36,7 +36,7 @@ and closing deals, and keeping the relationships that drive them.
 
 ## Explicitly not doing
 
-- [accounts or segments you have decided not to chase this quarter — naming
+- [accounts or segments you have decided not to chase this quarter. Naming
   them lets the assistant flag a low-value distraction]
 
 ## Where the assistant helps most

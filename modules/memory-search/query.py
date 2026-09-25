@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compabob — memory-search query.
+"""Compabob: memory-search query.
 
 Searches the index built by index.py and prints the most relevant chunks, best
 match first. The second-brain agent calls this before falling back to Grep.

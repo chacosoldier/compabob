@@ -42,13 +42,13 @@ script stages by hand.
 `pipeline.py dedup` compares each lead against your CRM (the `contacts.json`
 that the `crm-merge` module produces) and tags it:
 
-- **`skip`** — you already know this exact person (email match). Do not
+- **`skip`**: you already know this exact person (email match). Do not
   cold-outreach; they are a relationship, not a lead.
-- **`warm`** — you know *someone else* at this account (matched by corporate
+- **`warm`**: you know *someone else* at this account (matched by corporate
   email domain or company name). Do not cold-email a stranger here; route the
   approach through the contact you already have. The matched contact's name is
   written to the `crm_known_contact` column.
-- **`proceed`** — genuinely cold, no match. Fair game for outbound.
+- **`proceed`**: genuinely cold, no match. Fair game for outbound.
 
 Free webmail domains (gmail, gmx, ...) are ignored as account signals so a
 personal email never fakes a company match.
@@ -71,9 +71,9 @@ personal email never fakes a company match.
 
 3. **Optional, for richer discovery/enrichment**, enable MCP servers via
    `bash scripts/install-integrations.sh`:
-   - **exa** (`search` category) — web/firmographic discovery. Free tier exists.
+   - **exa** (`search` category): web/firmographic discovery. Free tier exists.
      This is the minimum useful add-on.
-   - An enrichment provider (e.g. a Clay MCP) — verified emails and
+   - An enrichment provider (e.g. a Clay MCP): verified emails and
      decision-maker names. Optional; uses your own account/credits.
 
    No MCP at all still works: bring your own raw CSV and the script stages clean,
@@ -131,8 +131,8 @@ accounts get a real, consented intro rather than a cold blast.
 
 ## Pairs with
 
-- **`crm-merge` module** — produces the `contacts.json` this dedups against.
-- **`linkedin-outreach` module** — feed `warm` and high-tier `proceed` rows into
+- **`crm-merge` module**: produces the `contacts.json` this dedups against.
+- **`linkedin-outreach` module**: feed `warm` and high-tier `proceed` rows into
   your connection queue.
-- **`crm-relationships` agent** — for `warm` rows, ask it who your existing
+- **`crm-relationships` agent**: for `warm` rows, ask it who your existing
   contact at the account is and how to route the intro.

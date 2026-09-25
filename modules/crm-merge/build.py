@@ -12,8 +12,8 @@ Design goals:
 - Idempotent: safe to re-run; rebuilds the DB from scratch each time.
 
 Everything is stdlib. Bring your own static exports:
-  - Google Takeout zip (Contacts as vCard) — https://takeout.google.com
-  - LinkedIn data export (Connections.csv, messages.csv) — Settings > Data privacy
+  - Google Takeout zip (Contacts as vCard): https://takeout.google.com
+  - LinkedIn data export (Connections.csv, messages.csv): Settings > Data privacy
   - your vault's People/ notes (optional)
 
 Usage:

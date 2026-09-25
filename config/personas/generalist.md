@@ -34,7 +34,7 @@ label: Generalist / knowledge worker
 
 ## Explicitly not doing
 
-- [something you have decided to deprioritize — naming it lets the assistant
+- [something you have decided to deprioritize. Naming it lets the assistant
   push back when a request would pull you toward it]
 
 ## Where the assistant helps most

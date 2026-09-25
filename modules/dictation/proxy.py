@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""modules/dictation/proxy.py — OpenAI-compatible shim for dictation cleanup.
+"""modules/dictation/proxy.py: OpenAI-compatible shim for dictation cleanup.
 
 A local dictation app (Handy, github.com/cjpais/Handy) posts its raw
 speech-to-text to an OpenAI-compatible LLM post-processing endpoint. This proxy
@@ -8,7 +8,7 @@ is that endpoint. It:
 - exposes `POST /v1/chat/completions` + `GET /health` on 127.0.0.1 only,
 - takes the LAST user message as the transcript and ignores everything else in
   the body (so Handy's `reasoning_effort:"none"`, which some models 400 on
-  — github.com/cjpais/Handy/issues/1342 — is dropped structurally),
+  (github.com/cjpais/Handy/issues/1342) is dropped structurally),
 - builds the cleanup prompt from `prompts/cleanup.md` + the rendered
   `glossary.yaml` (loaded FRESH per request so the learning loop takes effect
   without a restart; missing/empty tolerated) + the transcript,
@@ -227,7 +227,7 @@ def _cleanup(transcript: str, cfg: dict) -> tuple[str, str, float, int, int, boo
 
     Returns (cleaned, model_used, cost_usd, duration_ms, glossary_version, success).
     On upstream failure returns the raw transcript with success=False (fail-open).
-    cost_usd is always 0.0 — we can't price an arbitrary OpenAI-compatible upstream.
+    cost_usd is always 0.0; we can't price an arbitrary OpenAI-compatible upstream.
     """
     prompt_md = _load_prompt()
     glossary_block, version = _load_glossary()
@@ -251,7 +251,7 @@ def _log_row(row: dict) -> None:
         _DATA_DIR.mkdir(parents=True, exist_ok=True)
         with _CALLS_LOG.open("a") as f:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
-    except Exception as exc:  # noqa: BLE001 — logging must never break a call
+    except Exception as exc:  # noqa: BLE001 - logging must never break a call
         print(f"[dictation-proxy] log write failed: {exc}", file=sys.stderr)
 
 
@@ -320,13 +320,13 @@ class Handler(BaseHTTPRequestHandler):
         else:
             self._send_json(200, _openai_response(cleaned, model))
 
-    def do_GET(self):  # noqa: N802 — stdlib naming
+    def do_GET(self):  # noqa: N802 - stdlib naming
         if self.path.rstrip("/") == "/health":
             self._send_json(200, {"status": "ok"})
         else:
             self._send_json(404, {"error": "not found"})
 
-    def do_POST(self):  # noqa: N802 — stdlib naming
+    def do_POST(self):  # noqa: N802 - stdlib naming
         # Parse the body defensively; a bad body must still fail open.
         body: dict = {}
         try:
@@ -372,7 +372,7 @@ class Handler(BaseHTTPRequestHandler):
                 }
             )
             self._respond(cleaned, model_used, stream)
-        except Exception as exc:  # noqa: BLE001 — last-resort fail-open
+        except Exception as exc:  # noqa: BLE001 - last-resort fail-open
             print(f"[dictation-proxy] handler error: {exc}", file=sys.stderr)
             try:
                 self._respond(raw_transcript, "passthrough", stream)

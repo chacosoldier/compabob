@@ -15,10 +15,10 @@ Turn data into decisions. Track KPIs, decompose metrics, spot trends and anomali
 
 Before running a single query or analysis, resolve four things. They determine the entire result; getting them wrong wastes the work and answers the wrong question.
 
-1. **Decision context** — what decision does this support? (a budget call, a board update, diagnosing a drop)
-2. **Audience** — who reads this? (executive, manager, or analyst — sets depth and format)
-3. **Time period and comparison basis** — what date range, compared to what? (prior period, year over year, target)
-4. **Scope** — a snapshot, a trend, a comparison, or a recommendation?
+1. **Decision context**: what decision does this support? (a budget call, a board update, diagnosing a drop)
+2. **Audience**: who reads this? (executive, manager, or analyst, sets depth and format)
+3. **Time period and comparison basis**: what date range, compared to what? (prior period, year over year, target)
+4. **Scope**: a snapshot, a trend, a comparison, or a recommendation?
 
 When to ask: if two or more are missing, ask first. If one is ambiguous but you can state a reasonable assumption, state it explicitly, flag it `[ASSUMPTION]`, and proceed. If all four are clear, proceed. Never ask more than three questions at once; prioritize the ones that most change the framing.
 

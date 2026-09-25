@@ -21,7 +21,7 @@ By default the assistant finds notes with keyword search (`Grep`). That is fine
 for a small vault. As `memory/` and `vault/` grow, enable the **memory-search**
 module for ranked, and optionally semantic, retrieval.
 
-### Step 1 — build the index
+### Step 1: build the index
 
 Run the `/index-memory` skill, or:
 
@@ -33,7 +33,7 @@ That builds a keyword index (SQLite FTS5: ranked, stemmed, no setup). The
 `second-brain` agent uses it automatically from then on. Re-run it after a burst
 of note-taking to keep it current.
 
-### Step 2 — semantic search (optional)
+### Step 2: semantic search (optional)
 
 Keyword search still needs the right word. Semantic search finds a note by
 *meaning*: ask "what did we decide about pricing" and it finds the note even if

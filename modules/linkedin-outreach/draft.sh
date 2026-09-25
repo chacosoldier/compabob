@@ -25,7 +25,10 @@ for c in claude python3; do
 done
 
 PRE_FLAG=""
-[ "${1:-}" = "--scheduled" ] && PRE_FLAG="--enforce-weekday"
+if [ "${1:-}" = "--scheduled" ]; then
+  PRE_FLAG="--enforce-weekday"
+  export COMPABOB_RUN_CONTEXT=scheduled   # nobody is watching (see hooks/hook-inject-now.sh)
+fi
 
 OUT_DIR="$PROJECT_DIR/reports/linkedin-outreach"
 mkdir -p "$OUT_DIR/cards"

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compabob — Telegram module: optional always-on installer.
+# Compabob: Telegram module: optional always-on installer.
 #
 # The default, supported way to run the bot is by hand:
 #     bash modules/telegram/poll.sh
@@ -18,7 +18,7 @@ POLLER="$MODULE_DIR/poll.sh"
 mkdir -p "$GEN_DIR" "$PROJECT_DIR/reports/telegram"
 
 OS="$(uname -s)"
-echo "Telegram module installer — detected OS: $OS"
+echo "Telegram module installer. Detected OS: $OS"
 echo
 
 if [ "$OS" = "Darwin" ]; then
@@ -55,7 +55,7 @@ elif [ "$OS" = "Linux" ]; then
   UNIT="$GEN_DIR/compabob-telegram.service"
   cat > "$UNIT" <<EOF
 [Unit]
-Description=Compabob — Telegram poller
+Description=Compabob: Telegram poller
 After=network-online.target
 
 [Service]

@@ -2,7 +2,7 @@
 
 The full motion is: discover -> clean -> dedup-against-CRM -> enrich -> score.
 Discovery and enrichment are judgement/IO steps your assistant runs with MCP
-tools (web search, an enrichment provider, public registries) — see the
+tools (web search, an enrichment provider, public registries). See the
 /build-list skill. THIS script owns the three deterministic stages, each of
 which reads a CSV and writes the next, so the pipeline is debuggable and
 resumable: you can inspect (or hand-fix) the output of any stage.
@@ -226,7 +226,7 @@ def stage_dedup(args) -> None:
     print(f"  skip (already a known contact):  {counts['skip']:>5}  "
           f"({100*counts['skip']//total}%)  -> do NOT cold-outreach")
     if not (crm["emails"] or crm["companies"]):
-        print("  (CRM was empty — run modules/crm-merge first to make this stage useful.)")
+        print("  (CRM was empty. Run modules/crm-merge first to make this stage useful.)")
     write_csv(rows, fields, out)
 
 

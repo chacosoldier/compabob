@@ -11,7 +11,7 @@ mkdir -p "$GEN_DIR"
 
 # Schedule: morning-brief daily at 07:00, weekly-review Friday at 17:00.
 OS="$(uname -s)"
-echo "Proactive module installer — detected OS: $OS"
+echo "Proactive module installer. Detected OS: $OS"
 echo
 
 if [ "$OS" = "Darwin" ]; then
@@ -59,7 +59,7 @@ EOF
 elif [ "$OS" = "Linux" ]; then
   CRON_FILE="$GEN_DIR/crontab.txt"
   cat > "$CRON_FILE" <<EOF
-# Compabob — proactive tasks. Add these lines to your crontab (crontab -e).
+# Compabob: proactive tasks. Add these lines to your crontab (crontab -e).
 0 7 * * *  cd "$PROJECT_DIR" && bash "$RUNNER" morning-brief
 0 17 * * 5 cd "$PROJECT_DIR" && bash "$RUNNER" weekly-review
 EOF

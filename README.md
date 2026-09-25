@@ -151,7 +151,7 @@ Run `bash scripts/init.sh`. It checks your setup and tells you, in plain languag
 ./update.sh
 ```
 
-Pulls the latest version of the kit. Your data — `vault/`, `memory/`, `config/user.config.yaml`, `.mcp.json`, and `.env` — is git-ignored and never touched by an update, so you can personalize freely and still stay current. (Kit-tracked files like `config/personas/*.md` *do* receive updates; if you change one and the kit changes the same file, `update.sh` will stash, merge, and re-apply your edit, falling back to a merge-conflict prompt only when the lines overlap.) See the [customization guide](docs/customization-guide.md) for how that works.
+Pulls the latest version of the kit. Your data (`vault/`, `memory/`, `config/user.config.yaml`, `.mcp.json`, and `.env`) is git-ignored and never touched by an update, so you can personalize freely and still stay current. (Kit-tracked files like `config/personas/*.md` *do* receive updates; if you change one and the kit changes the same file, `update.sh` will stash, merge, and re-apply your edit, falling back to a merge-conflict prompt only when the lines overlap.) See the [customization guide](docs/customization-guide.md) for how that works.
 
 ## First hour
 
@@ -246,7 +246,7 @@ The core runs with zero external services. Modules add capability when you want 
 | `crm-merge` | Available | Folds Google + LinkedIn + vault contacts into one local CRM (SQLite + offline HTML browser), deduped across sources. No creds |
 | `lead-pipeline` | Available | Builds a ranked outbound list: discover, clean, dedup against your CRM, enrich, score. One CSV per stage |
 | `memory-search` | Available | Real index over `memory/` and `vault/` so retrieval ranks by relevance (FTS5 by default; semantic via Ollama if installed) |
-| `transcribe` | Available — **highly encouraged** | One-hotkey local call recording + transcription (mlx-whisper). Captures both sides, copies to clipboard, files a transcript into `vault/raw/meetings/`. No cloud, no key, audio stays on your machine |
+| `transcribe` | Available, **highly encouraged** | One-hotkey local call recording + transcription (mlx-whisper). Captures both sides, copies to clipboard, files a transcript into `vault/raw/meetings/`. No cloud, no key, audio stays on your machine |
 | `dictation` | Available | Cleanup endpoint for your dictation app: fixes punctuation and fillers, and a glossary that learns the words it keeps getting wrong |
 
 See [modules/README.md](modules/README.md) to enable one, and for what is deliberately not built yet (an agent gallery, team mode, WhatsApp).

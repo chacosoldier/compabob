@@ -44,7 +44,7 @@ works.
 An upstream cleanup model. Two good options:
 
 - **Groq** (default): free API key at <https://console.groq.com>. Fast and
-  high quality. Cloud — see Privacy below.
+  high quality. Cloud: see Privacy below.
 - **Ollama** (local, no key, text never leaves your machine):
   `ollama pull llama3.1:8b`, then point the upstream at
   `http://localhost:11434/v1`.
@@ -74,7 +74,7 @@ that field structurally, so it just works.
 
 ## Glossary format
 
-`glossary.yaml` (gitignored — it is your personal vocabulary) has three keys:
+`glossary.yaml` (gitignored, it is your personal vocabulary) has three keys:
 
 ```yaml
 version: 0              # int, bumped by learn.py on every promotion
@@ -131,7 +131,7 @@ proxy as a background service.
 
 - **Cleanup looks like it did nothing.** That is the fail-open path: a missing
   key or an unreachable upstream returns the raw transcript at HTTP 200. Check
-  `data/dictation/calls.jsonl` — a `"success": false` row tells you the upstream
+  `data/dictation/calls.jsonl`: a `"success": false` row tells you the upstream
   failed. The proxy logs the upstream error to stderr (`reports/dictation/proxy.err`
   if scheduled).
 - **Turn cleanup off without uninstalling.** Set `DICTATION_ENABLED=0` in `.env`;
@@ -147,5 +147,5 @@ proxy as a background service.
 than `LEARN_RETENTION_DAYS` (30 by default). The cleanup text **is** sent to
 whatever upstream you configure: the default Groq is a cloud service, so your
 dictation passes through it. If that matters, use the Ollama option and nothing
-leaves your machine. Your `glossary.yaml` is also gitignored — treat the names
+leaves your machine. Your `glossary.yaml` is also gitignored. Treat the names
 and jargon in it as personal data.

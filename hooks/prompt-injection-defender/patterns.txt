@@ -1,6 +1,7 @@
 # Prompt-injection patterns. One pattern per line, treated as a case-insensitive
 # regular expression. Lines starting with # and blank lines are ignored.
-# post-tool-defender.py scans the output of Read / WebFetch / Bash / WebSearch
+# post-tool-defender.py scans the output of Read / WebFetch / Bash / WebSearch and
+# MCP tools (the kit's own files are skipped, see KIT_OWNED in the hook)
 # for these. A match means external content is trying to issue instructions.
 #
 # Edit freely: add patterns you see in the wild, remove ones that false-positive.

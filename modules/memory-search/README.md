@@ -10,9 +10,9 @@ notes with keyword `Grep`. This module adds a real index so it can retrieve by
 
 - An index over every note in `memory/` and `vault/`, built by a skill you run.
 - Two backends, chosen automatically:
-  - **Keyword (FTS5)** — the default. Ranked, stemmed full-text search. Zero
+  - **Keyword (FTS5)**: the default. Ranked, stemmed full-text search. Zero
     setup, no dependencies, ships with Python.
-  - **Semantic** — if [Ollama](https://ollama.com) is running with an embedding
+  - **Semantic**: if [Ollama](https://ollama.com) is running with an embedding
     model, retrieval works by meaning: "what did we decide about pricing" finds
     the right note even if it never used the word "pricing".
 - The `second-brain` agent queries the index automatically once it exists.
@@ -44,7 +44,7 @@ The model runs locally; nothing leaves your machine. Full walkthrough:
 ## Keep it fresh
 
 The index is a snapshot. Re-run `/index-memory` after a burst of note-taking.
-To refresh it automatically, schedule the indexer — for example a daily cron
+To refresh it automatically, schedule the indexer, for example a daily cron
 line:
 
 ```text

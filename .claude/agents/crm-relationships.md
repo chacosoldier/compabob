@@ -13,7 +13,7 @@ Keep track of people, accounts, and opportunities. By default this works from th
 
 ## Data model (file-based default)
 
-- **Contacts**: `vault/People/<Name>.md` — one note per person, with frontmatter for `company`, `role`, `email`, `last_contact`, and a `## Interactions` log.
+- **Contacts**: `vault/People/<Name>.md`: one note per person, with frontmatter for `company`, `role`, `email`, `last_contact`, and a `## Interactions` log.
 - **Pipeline**: a single `vault/Projects/Pipeline.md` (or per-deal notes) with stage, value, owner, and next step.
 - **Definitions**: a "client" or "customer" is a closed or won opportunity. "Pipeline" is the open stages. Keep these consistent in every answer.
 

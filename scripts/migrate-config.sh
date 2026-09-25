@@ -52,7 +52,12 @@ inserts = []   # (after_line_index, [lines], label)
 appends = []   # ([lines], label)
 for key, (ts, te) in tpl_blocks.items():
     if key not in cfg_blocks:
-        appends.append((tpl[ts:te + 1], key))
+        # Carry the comment lines directly above the key, so the new setting
+        # arrives with its explanation.
+        head = ts
+        while head > 0 and tpl[head - 1].startswith("#"):
+            head -= 1
+        appends.append((tpl[head:te + 1], key))
         continue
     cs, ce = cfg_blocks[key]
     have = {CHILD.match(l).group(1) for l in cfg[cs + 1:ce + 1] if CHILD.match(l)}

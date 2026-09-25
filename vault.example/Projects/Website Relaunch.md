@@ -25,12 +25,12 @@ Active. Kickoff done 2026-01-15. Waiting on the statement of work from the vendo
 
 ## People
 
-- [[Sam Rivera]] — vendor account lead (Brightline Studio)
-- [[Dana Okafor]] — internal engineering lead
+- [[Sam Rivera]]: vendor account lead (Brightline Studio)
+- [[Dana Okafor]]: internal engineering lead
 
 ## Key decisions
 
-- [[2026-01-12-analytics-tool]] — analytics approach chosen.
+- [[2026-01-12-analytics-tool]]: analytics approach chosen.
 
 ## Open items
 
@@ -39,5 +39,5 @@ Active. Kickoff done 2026-01-15. Waiting on the statement of work from the vendo
 
 ## Log
 
-- **2026-01-15** — [[2026-01-15-website-relaunch-kickoff|Kickoff]] held. Two-phase plan agreed.
-- **2026-01-08** — Project opened after the vendor intro call.
+- **2026-01-15**: [[2026-01-15-website-relaunch-kickoff|Kickoff]] held. Two-phase plan agreed.
+- **2026-01-08**: Project opened after the vendor intro call.

@@ -36,7 +36,7 @@ technical calls in your area.
 
 ## Explicitly not doing
 
-- [work you have consciously deferred — a rewrite, a nice-to-have — so the
+- [work you have consciously deferred (a rewrite, a nice-to-have) so the
   assistant can push back when a request quietly revives it]
 
 ## Where the assistant helps most

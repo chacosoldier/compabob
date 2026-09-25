@@ -36,7 +36,7 @@ lists them all. Personas and the other skills are unchanged.
   inside the right block, with a `.bak`; never changes a value you set.
   `update.sh` runs it, and `scripts/init.sh` warns when keys are missing.
 - **`scripts/lib/common.sh`**: shared output helpers and `set_config_flag`.
-- **`transcribe` module (highly encouraged)** — one-hotkey local call recording +
+- **`transcribe` module (highly encouraged)**: one-hotkey local call recording +
   transcription. A toggle script drives `ffmpeg` to capture audio and
   `mlx-whisper` to transcribe it on-device: first run records, second run stops,
   transcribes, copies the text to your clipboard, and files a markdown transcript
@@ -45,7 +45,7 @@ lists them all. Personas and the other skills are unchanged.
   no API key, audio never leaves the machine. Device names are overridable via
   `TRANSCRIBE_DEVICE_*` env vars (`record.py devices` lists yours); optional
   Hammerspoon/Raycast hotkey binding documented. Opt-in via `transcribe: true`.
-- **`crm-merge` module + `/merge-contacts` skill** — folds Google Contacts (Takeout
+- **`crm-merge` module + `/merge-contacts` skill**: folds Google Contacts (Takeout
   vCards), a LinkedIn data export (Connections + messages), and your vault
   `People/` notes into one local source of truth: a SQLite DB, a JSON file, and a
   self-contained offline HTML browser. Identity resolution uses union-find on
@@ -53,7 +53,7 @@ lists them all. Personas and the other skills are unchanged.
   collision guard, so duplicates collapse without over-merging generic names.
   Relationship strength (LinkedIn message count) ranks records. No credentials,
   all stdlib, idempotent. Outputs are git-ignored.
-- **`lead-pipeline` module + `/build-list` skill** — turns a raw candidate list
+- **`lead-pipeline` module + `/build-list` skill**: turns a raw candidate list
   into a ranked, CRM-aware outbound list through staged steps that write one CSV
   per stage (discover → clean → **dedup-against-CRM** → enrich → score → top-N).
   The deterministic stages (`clean`, `dedup`, `score`) run as a stdlib script;
@@ -62,19 +62,19 @@ lists them all. Personas and the other skills are unchanged.
   `proceed` (cold), `warm` (you already know someone at the account, route the
   intro), or `skip` (already a known contact), so you never enrich or cold-email
   a relationship. ICP scoring is a tunable JSON rubric (`icp.example.json`).
-- **`/chart-tufte` skill** — self-grade rubric for any quantitative chart,
+- **`/chart-tufte` skill**: self-grade rubric for any quantitative chart,
   grounded in Edward Tufte's *Visual Display of Quantitative Information*.
   Nine criteria, ten genres, seven remedies, plus a 114-line
   `references/vdqi-catalogue.md` with named failures (NYT MPG 14.8, TIME
   barrel 59.4) and named exemplars (Minard, Marey, Snow, Playfair). Designed
   to run as the final pass inside `/visual-explainer` whenever the output is
   a chart.
-- **`/mcp-debug` skill** — health-check, trace, or audit your configured MCP
+- **`/mcp-debug` skill**: health-check, trace, or audit your configured MCP
   servers when tools fail silently. Three modes: `status` (per-server
   reachability), `trace <tool>` (likely failure mode for one tool), `audit`
   (recommendations for unused / high-error / duplicate servers). Reads
   `~/.claude.json` and `./.mcp.json`; redacts secrets in every output.
-- **`/memory-debt` skill** — review and apply memory updates that earlier
+- **`/memory-debt` skill**: review and apply memory updates that earlier
   sessions proposed but never wrote. Scans `vault/Daily/`, `vault/Reflections/`,
   and `vault/Journal/` for `- [ ]` proposals from `/reflect`, classifies each
   as PENDING / STALE / OBSOLETE / APPLIED, then in `apply` mode walks through
@@ -135,7 +135,7 @@ lists them all. Personas and the other skills are unchanged.
 - **Telegram README** said the hook "blocks until you approve"; the hook always
   blocks, and you send with `send.sh` yourself.
 
-## [1.1.1] — 2026-05-24
+## [1.1.1] - 2026-05-24
 
 Bug-fix release from the same-day QA pass. 5 personas × 10 input edge
 cases × idempotency × `update.sh` × integrations × `init.sh` × a
@@ -147,8 +147,8 @@ all fixed in this release. Full QA report:
 
 - **`setup.sh` re-run silently overwrites `memory/topics/role-and-priorities.md`**
   (P1). The "untouched template" guard treated `[the most important thing]`
-  as a marker, but that string also lived in `config/personas/generalist.md` —
-  so users who started with `generalist`, edited the file, and re-ran
+  as a marker, but that string also lived in `config/personas/generalist.md`.
+  So users who started with `generalist`, edited the file, and re-ran
   setup lost their edits. Marker tightened to `[fill in]`, which only
   appears in the shipped template. Spawned
   [`feedback-protective-marker-needs-uniqueness`](https://github.com/chacosoldier/compabob)
@@ -169,7 +169,7 @@ all fixed in this release. Full QA report:
   selected, leaving an empty file. Creation deferred until at least one
   integration writes to it.
 - **`init.sh` warned instead of failing** when integrations were
-  enabled but `.mcp.json` was missing. Now fails loud — a missing MCP
+  enabled but `.mcp.json` was missing. Now fails loud. A missing MCP
   config with integrations on is a setup bug, not a soft warning.
 
 ### Changed
@@ -177,26 +177,26 @@ all fixed in this release. Full QA report:
 - **`update.sh` output**: now shows the list of pulled commits and a
   clearer "your data lives here" banner, so users see exactly what
   changed and what was preserved.
-- **README** — clarified which paths are "yours" (`vault/`, `memory/`,
+- **README**: clarified which paths are "yours" (`vault/`, `memory/`,
   `config/user.config.yaml`, `.mcp.json`, `.env`) vs. tracked kit
   content; corrected the walkthrough prompt count; added a YAML-escape
   note for names containing apostrophes.
 
-## [1.1.0] — 2026-05-24
+## [1.1.0] - 2026-05-24
 
 Post-launch hygiene: visible maintenance signals + bit-rot CI.
 
 ### Added
 
-- `.github/workflows/smoke.yml` — weekly fresh-clone CI smoke test
+- `.github/workflows/smoke.yml`: weekly fresh-clone CI smoke test
   (push, PR, Monday 06:00 UTC, manual). Runs `bash -n` on every shell
   script, executes `setup.sh` non-interactively, then `init.sh`, then
   validates the integrations catalog JSON.
-- `.github/FUNDING.yml` — surfaces a Sponsor button (LinkedIn, no
+- `.github/FUNDING.yml`: surfaces a Sponsor button (LinkedIn, no
   Sponsors listing); a maintenance signal more than a funding ask.
 - README badges row: CI, License, Stars, Last commit.
 - README section "How this differs from the other Claude Code things
-  you have seen" — short comparison vs. raw Claude Code, awesome lists,
+  you have seen": short comparison vs. raw Claude Code, awesome lists,
   multi-agent dev-team frameworks, and DIY.
 - `CHANGELOG.md` itself (this file).
 - Community seeding: 5 `good first issue` tickets (#7–#11), a pinned
@@ -207,29 +207,29 @@ Post-launch hygiene: visible maintenance signals + bit-rot CI.
 - README modules table claimed `memory-search` was Roadmap; the module
   ships as available. Row rewritten to match `modules/memory-search/README.md`.
 
-## [1.0.0] — 2026-05-20
+## [1.0.0] - 2026-05-20
 
 Initial public release at [github.com/chacosoldier/compabob](https://github.com/chacosoldier/compabob).
 
 ### Core
 
-- `CONSTITUTION.md` — the rules every session loads.
-- `CLAUDE.md` — project entry point.
-- `.claude/agents/` — 8 specialized agents: `daily-copilot`,
+- `CONSTITUTION.md`: the rules every session loads.
+- `CLAUDE.md`: project entry point.
+- `.claude/agents/`: 8 specialized agents: `daily-copilot`,
   `second-brain`, `analyst`, `crm-relationships`, `comms-meetings`,
   `strategy-advisor`, `principal-engineer`, `first-principles`.
-- `.claude/skills/` — slash-command workflows: `/morning-brief`,
+- `.claude/skills/`: slash-command workflows: `/morning-brief`,
   `/meeting-prep`, `/post-call`, `/handover`, `/log-decision`, `/tasks`,
   `/reflect`, `/index-memory`, `/add-agent`, `/system-audit`,
   `/visual-explainer`, `/document-export`.
-- `.claude/output-styles/` — the answer-first response style.
-- `hooks/` — safety guards (prompt-injection defender, etc.) and
+- `.claude/output-styles/`: the answer-first response style.
+- `hooks/`: safety guards (prompt-injection defender, etc.) and
   lifecycle automation.
 
 ### User-data layer
 
 - `vault.example/`, `memory.example/`, `config/user.config.yaml.template`,
-  `.claude/settings.local.json.template` — seeds that `setup.sh` copies
+  `.claude/settings.local.json.template`: seeds that `setup.sh` copies
   into git-ignored `vault/`, `memory/`, `config/` on first run. Updates
   via `./update.sh` cannot touch user data.
 - Five persona presets: `generalist`, `consultant`, `engineer`, `sales`,
@@ -237,23 +237,23 @@ Initial public release at [github.com/chacosoldier/compabob](https://github.com/
 
 ### Modules
 
-- `proactive` (available) — scheduled morning brief + weekly review.
-- `telegram` (available) — Telegram bot that drafts inbound messages
+- `proactive` (available): scheduled morning brief + weekly review.
+- `telegram` (available): Telegram bot that drafts inbound messages
   for approval; never auto-sends.
-- `integrations` (available) — MCP servers via a pinned catalog at
+- `integrations` (available): MCP servers via a pinned catalog at
   `scripts/integrations-catalog.json`.
-- `linkedin-outreach` (available, added day 1 via PR #1) — one
+- `linkedin-outreach` (available, added day 1 via PR #1): one
   invitation card per day from a queue, manual send.
-- `memory-search` (available) — keyword (FTS5) index by default,
+- `memory-search` (available): keyword (FTS5) index by default,
   semantic via Ollama embeddings if installed.
 - `extra-agents` (planned), `team` (deferred), `whatsapp` (won't build).
 
 ### Tooling
 
-- `setup.sh` — interactive first-run, idempotent, never overwrites.
-- `update.sh` — pulls latest, preserves user data.
-- `scripts/init.sh` — per-session health check.
-- `scripts/install-integrations.sh` — MCP picker.
+- `setup.sh`: interactive first-run, idempotent, never overwrites.
+- `update.sh`: pulls latest, preserves user data.
+- `scripts/init.sh`: per-session health check.
+- `scripts/install-integrations.sh`: MCP picker.
 
 ### Day-1 PRs merged
 

@@ -38,7 +38,7 @@ publishing findings.
 
 ## Explicitly not doing
 
-- [projects, collaborations, or tangents you have decided to pause — naming
+- [projects, collaborations, or tangents you have decided to pause. Naming
   them lets the assistant flag a scope creep risk]
 
 ## Where the assistant helps most

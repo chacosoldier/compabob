@@ -80,10 +80,10 @@ blocked from doing something, that is a guard doing its job, not a bug. See
 
 Fill in memory as the assistant asks, or in one sitting:
 
-- `memory/topics/role-and-priorities.md` — already pre-filled from your persona;
+- `memory/topics/role-and-priorities.md`: already pre-filled from your persona;
   refine it to your real situation.
-- `memory/topics/working-style.md` — how you like to work and be challenged.
-- `memory/topics/stakeholders.md` — who you work with, in what language.
+- `memory/topics/working-style.md`: how you like to work and be challenged.
+- `memory/topics/stakeholders.md`: who you work with, in what language.
 
 The more honest these are, the less generic the assistant is. None of them block
 anything: leave a field blank and the assistant will ask if it needs it.

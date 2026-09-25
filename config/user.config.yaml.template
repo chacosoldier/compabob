@@ -20,6 +20,13 @@ assistant:
 persona:
   preset: ""             # generalist | consultant | engineer | sales | founder | researcher
 
+# Style check on every reply (hooks/hook-style-gate.py): em dashes used as
+# connectors, and paragraphs over ~700 characters in long replies.
+#   warn  = show a one-line note, keep the reply (default)
+#   block = ask the assistant to rewrite just the flagged sentences
+#   off   = no check
+style_gate: warn
+
 # Opt-in modules. To enable one, set it to true and follow modules/<name>/README.md.
 # Setting a flag here does not install anything on its own; each module has its
 # own enable step.

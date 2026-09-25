@@ -26,8 +26,8 @@ The same person shows up as `j.smith@acme.com` in Google, `linkedin.com/in/jsmit
 on LinkedIn, and `John Smith.md` in your notes. Naive dedup either misses these
 (three rows for one person) or over-merges (every "John Smith" fused into one).
 
-This module uses **union-find on three identity keys** — verified email,
-LinkedIn slug, and normalized name — so any shared key links records
+This module uses **union-find on three identity keys** (verified email,
+LinkedIn slug, and normalized name) so any shared key links records
 transitively into one person. A **common-name guard** stops it merging on a name
 that too many records share (the generic-name trap), while exact keys (email,
 slug) always merge. This is the entity-resolution problem every CRM-hygiene
@@ -41,14 +41,14 @@ know well.
 
 No credentials. You supply two self-service exports:
 
-1. **Google Takeout** — https://takeout.google.com → select **Contacts**
+1. **Google Takeout**: https://takeout.google.com → select **Contacts**
    (vCard format) → download the zip. Leave it in `~/Downloads` and the script
    finds it, or pass `--takeout-zip <path>`.
-2. **LinkedIn export** — LinkedIn → Settings & Privacy → Data privacy →
+2. **LinkedIn export**: LinkedIn → Settings & Privacy → Data privacy →
    *Get a copy of your data* → include **Connections** and **Messages**. Unzip
    it into a folder and pass `--linkedin-dir <folder>`. (LinkedIn emails the
    archive; it can take minutes to a day.)
-3. **Vault notes** — optional; defaults to `vault/People/`.
+3. **Vault notes**: optional; defaults to `vault/People/`.
 
 Either source alone works; you do not need all three.
 
@@ -68,10 +68,10 @@ exactly as they appear in the export, comma-separated if you have more than one.
 
 Outputs land in `data/crm-merge/` (git-ignored):
 
-- `contacts.db` — query it with any SQLite tool, or let the `crm-relationships`
+- `contacts.db`: query it with any SQLite tool, or let the `crm-relationships`
   agent read it.
-- `contacts.json` — what the `lead-pipeline` module dedups against.
-- `browser.html` — open in a browser: search, filter by source, click a person
+- `contacts.json`: what the `lead-pipeline` module dedups against.
+- `browser.html`: open in a browser: search, filter by source, click a person
   for full detail. Fully offline, all data inlined.
 
 Re-run any time. It is idempotent: it rebuilds from scratch, so re-exporting and
@@ -91,9 +91,9 @@ names differ; add the missing identifier to one source and re-run.
 
 ## Pairs with
 
-- **`crm-relationships` agent** — reads `contacts.db` to answer "who do I know
+- **`crm-relationships` agent**: reads `contacts.db` to answer "who do I know
   at X" and to track interactions.
-- **`lead-pipeline` module** — dedups new prospect lists against `contacts.json`
+- **`lead-pipeline` module**: dedups new prospect lists against `contacts.json`
   so you never enrich or cold-email someone you already know.
 
 ## A note on privacy

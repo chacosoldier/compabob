@@ -17,8 +17,8 @@ tags: [decision, example]
 
 **Alternatives considered**:
 
-- The incumbent suite — rejected: more power than needed, slower, and it would need an owner the team does not have.
-- No analytics until phase two — rejected: phase one needs at least a baseline to judge the relaunch against.
+- The incumbent suite: rejected: more power than needed, slower, and it would need an owner the team does not have.
+- No analytics until phase two: rejected: phase one needs at least a baseline to judge the relaunch against.
 
 **Expected outcome**: by the phase-one launch, the team can see traffic, top sources, and signup conversion on one screen, with no ongoing maintenance burden.
 

@@ -1,6 +1,6 @@
 ---
 name: system-audit
-description: Health check of the assistant's own setup — agents, hooks, skills, settings, memory, and vault structure. Use for "/system-audit", "is everything wired up", or after changing the configuration.
+description: Health check of the assistant's own setup, agents, hooks, skills, settings, memory, and vault structure. Use for "/system-audit", "is everything wired up", or after changing the configuration.
 ---
 
 # System Audit

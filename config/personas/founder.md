@@ -38,7 +38,7 @@ calls nobody else can make.
 
 ## Explicitly not doing
 
-- [the tempting work you are consciously not doing this quarter — naming it
+- [the tempting work you are consciously not doing this quarter. Naming it
   lets the assistant push back hard when you drift toward it]
 
 ## Where the assistant helps most

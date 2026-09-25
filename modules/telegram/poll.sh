@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compabob — Telegram poller.
+# Compabob: Telegram poller.
 #
 # Long-polls Telegram for inbound messages. For each text message from your
 # allowed chat it asks the assistant for a reply and saves that reply as a DRAFT
@@ -16,6 +16,8 @@ cd "$PROJECT_DIR"
 # launchd and cron run with a minimal PATH; put common tool dirs on it so the
 # claude and python3 binaries are found when this runs unattended.
 export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+# Tell the assistant nobody is watching (see hooks/hook-inject-now.sh).
+export COMPABOB_RUN_CONTEXT=scheduled
 
 # --- secrets ---------------------------------------------------------------
 [ -f .env ] && { set -a; . ./.env; set +a; }
@@ -32,7 +34,7 @@ if [ -z "$ALLOWED" ]; then
   exit 1
 fi
 for c in claude curl python3; do
-  command -v "$c" >/dev/null 2>&1 || { echo "$c not found — it is required." >&2; exit 1; }
+  command -v "$c" >/dev/null 2>&1 || { echo "$c not found; it is required." >&2; exit 1; }
 done
 
 API="https://api.telegram.org/bot$TOKEN"

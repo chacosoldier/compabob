@@ -32,7 +32,7 @@ if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
   exit 0
 fi
 
-[ -f "$CATALOG" ] || { echo "missing $CATALOG — run this from inside the kit" >&2; exit 1; }
+[ -f "$CATALOG" ] || { echo "missing $CATALOG. Run this from inside the kit" >&2; exit 1; }
 command -v python3 >/dev/null 2>&1 || { echo "python3 is required" >&2; exit 1; }
 
 bold ""
@@ -58,15 +58,15 @@ else
 fi
 
 if [ "${#CHOSEN[@]}" -eq 0 ]; then
-  warn "nothing chosen — no changes made"
+  warn "nothing chosen, no changes made"
   exit 0
 fi
 
 # --- preflight: runtimes (warn only, never block) -------------------------
 command -v npx >/dev/null 2>&1 && ok "npx found" \
-  || warn "npx not found — install Node.js; npx-based servers stay registered but will not run until you do"
+  || warn "npx not found. Install Node.js; npx-based servers stay registered but will not run until you do"
 command -v uvx >/dev/null 2>&1 && ok "uvx found" \
-  || warn "uvx not found — install uv (https://docs.astral.sh/uv/); uvx-based servers stay registered but will not run until you do"
+  || warn "uvx not found. Install uv (https://docs.astral.sh/uv/); uvx-based servers stay registered but will not run until you do"
 echo
 
 # --- merge .mcp.json + report (Python does the JSON work) -----------------

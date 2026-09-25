@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compabob — one-time setup.
+# Compabob: one-time setup.
 # Creates your personal files (vault/, memory/, config/user.config.yaml) from the shipped *.example
 # seeds and fills in your details. Those files live outside git, so a kit update can
 # never touch them. Safe to re-run: it never overwrites files you already have.
@@ -12,12 +12,12 @@ cd "$PROJECT_DIR"
 source scripts/lib/common.sh
 
 bold ""
-bold "Compabob — setup"
+bold "Compabob: setup"
 echo "Creates your personal workspace and fills in your details. About a minute."
 echo
 
 # --- 1. Prerequisites (warn only, never block) -----------------------------
-command -v python3 >/dev/null 2>&1 && ok "python3 found" || warn "python3 not found — install Python 3.10+"
+command -v python3 >/dev/null 2>&1 && ok "python3 found" || warn "python3 not found. Install Python 3.10+"
 command -v git     >/dev/null 2>&1 && ok "git found"     || warn "git not found"
 command -v claude  >/dev/null 2>&1 && ok "claude CLI found" \
   || warn "claude CLI not found. Install: curl -fsSL https://claude.ai/install.sh | bash"
@@ -41,7 +41,7 @@ ask ASSISTANT_NAME   "What should the assistant be called" "Aide"
 # into personalized files for users who just press Enter. Empty is handled below.
 ask USER_NAME        "Your name (used in your assistant's memory)" ""
 if [ -z "$USER_NAME" ]; then
-  warn "no name given — using '_YOUR_NAME_HERE_' as a placeholder; edit memory/MEMORY.md to fix"
+  warn "no name given, using '_YOUR_NAME_HERE_' as a placeholder; edit memory/MEMORY.md to fix"
   USER_NAME="_YOUR_NAME_HERE_"
 fi
 ask USER_ROLE        "Your role / job title"               "Knowledge Worker"
@@ -58,7 +58,7 @@ case "$PERSONA_PICK" in
   4|sales)       PERSONA=sales;;
   5|founder)     PERSONA=founder;;
   6|researcher)  PERSONA=researcher;;
-  *)             warn "did not recognize \"$PERSONA_PICK\" — using generalist"; PERSONA=generalist;;
+  *)             warn "did not recognize \"$PERSONA_PICK\", using generalist"; PERSONA=generalist;;
 esac
 ask WORK_ON "In a sentence or two, what do you work on" ""
 echo
@@ -68,7 +68,7 @@ CREATED=()
 seed() {  # seed SRC DEST
   local src="$1" dest="$2"
   if [ -e "$dest" ]; then
-    warn "$dest already exists — keeping your version"
+    warn "$dest already exists, keeping your version"
   elif [ -e "$src" ]; then
     cp -R "$src" "$dest"
     ok "created $dest"
@@ -87,7 +87,7 @@ seed ".claude/settings.local.json.template" ".claude/settings.local.json"
 # themselves, so this swap is otherwise a no-op for them).
 # shellcheck source=scripts/lib/personas.sh
 source scripts/lib/personas.sh
-apply_persona "$PERSONA" "$WORK_ON" || warn "persona step skipped — role-and-priorities.md left as the template"
+apply_persona "$PERSONA" "$WORK_ON" || warn "persona step skipped, role-and-priorities.md left as the template"
 
 # --- 5. Fill your details into the files just created (all git-ignored) ----
 if [ ${#CREATED[@]} -gt 0 ]; then
@@ -130,7 +130,7 @@ for arg in sys.argv[1:]:
 print(f"  ok   personalized {n} file(s)")
 PYEOF
 else
-  warn "nothing new created — your existing files were kept (your data is safe)"
+  warn "nothing new created, your existing files were kept (your data is safe)"
 fi
 
 # --- 6. Permissions and runtime dirs --------------------------------------
@@ -145,8 +145,8 @@ bold "Integrations (optional): web + browser tools, web search, Google Workspace
 echo "These add MCP servers your assistant can use. You can also do this later."
 ask DO_INT "Set them up now? (y/N)" "n"
 case "$DO_INT" in
-  [Yy]*) bash scripts/install-integrations.sh || warn "integration setup did not finish — run it again later" ;;
-  *)     echo "  skipped — run  bash scripts/install-integrations.sh  any time" ;;
+  [Yy]*) bash scripts/install-integrations.sh || warn "integration setup did not finish. Run it again later" ;;
+  *)     echo "  skipped, run  bash scripts/install-integrations.sh  any time" ;;
 esac
 
 # --- 8. Done ---------------------------------------------------------------
@@ -156,9 +156,9 @@ echo "Your assistant is called \"$ASSISTANT_NAME\". Persona: $PERSONA."
 echo
 echo "Next:"
 echo "  1. Start it:        claude"
-echo "  2. Refine memory:   memory/topics/role-and-priorities.md is pre-filled — edit it"
+echo "  2. Refine memory:   memory/topics/role-and-priorities.md is pre-filled. Edit it"
 echo "  3. Optional checks: bash scripts/init.sh"
 echo "  4. Opt-in modules:  see modules/README.md"
 echo
 echo "Your data (vault/, memory/, config/user.config.yaml, .mcp.json, .env) is git-ignored."
-echo "Update the kit any time with ./update.sh — it never touches those files."
+echo "Update the kit any time with ./update.sh. It never touches those files."

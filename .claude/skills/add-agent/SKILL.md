@@ -10,9 +10,9 @@ Create a new agent so the assistant grows with the user's work. This is the main
 ## Steps
 
 1. **Ask four things** (one short round of questions, not an interrogation):
-   - **Name** — kebab-case, e.g. `recruiting` or `product-research`.
-   - **Purpose and triggers** — what it owns, and the phrases or domains that should route to it. This becomes the `description`, which is what actually drives routing.
-   - **Tools** — the minimum it needs (4 to 6). Advice-only agents get read tools only: `Read, Glob, Grep, WebFetch, WebSearch`.
+   - **Name**: kebab-case, e.g. `recruiting` or `product-research`.
+   - **Purpose and triggers**: what it owns, and the phrases or domains that should route to it. This becomes the `description`, which is what actually drives routing.
+   - **Tools**: the minimum it needs (4 to 6). Advice-only agents get read tools only: `Read, Glob, Grep, WebFetch, WebSearch`.
    - **Model**: `inherit` is the default (the agent follows the session's model); pin `sonnet` for a cheap, high-volume agent or `opus` for one that always needs hard reasoning.
 2. **Check for overlap.** Read the existing agents in `.claude/agents/`. If the new agent overlaps an existing one, say so and suggest either editing the existing agent or sharpening both descriptions so routing stays clean.
 3. **Scaffold.** Copy `.claude/agents/_agent-template.md.template` to `.claude/agents/<name>.md` and fill it in: frontmatter, Purpose, When to use / when not to, Output format, Safety.

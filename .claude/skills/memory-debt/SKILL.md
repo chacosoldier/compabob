@@ -12,8 +12,8 @@ Pairs with `/reflect`: `/reflect` proposes memory writes; `/memory-debt` collect
 ## Mode detection
 
 Check args:
-- No args or `review` — Review Mode (show pending items).
-- `apply` — Apply Mode (resolve all pending items interactively).
+- No args or `review`: Review Mode (show pending items).
+- `apply`: Apply Mode (resolve all pending items interactively).
 
 ## Review Mode (default)
 
@@ -21,9 +21,9 @@ Check args:
 
 Read in this order, stopping when at least one returns content:
 
-1. `vault/Daily/*.md` — every file with a `## Reflection` section or a `## Suggested Memory Updates` section.
-2. `vault/Reflections/*.md` — older convention.
-3. `vault/Journal/*.md` — alternate convention.
+1. `vault/Daily/*.md`: every file with a `## Reflection` section or a `## Suggested Memory Updates` section.
+2. `vault/Reflections/*.md`: older convention.
+3. `vault/Journal/*.md`: alternate convention.
 
 For each file, extract:
 - "Suggested Memory Updates" entries (each starts with `- [ ]` or `- [x]`).
@@ -33,12 +33,12 @@ For each file, extract:
 
 For every `- [ ]` entry:
 1. Read the target file mentioned in the proposal. If no target is named, default to `memory/topics/<slug>.md` derived from the proposal title.
-2. Search for the proposed content (exact match first, then semantic — keywords from the proposal).
+2. Search for the proposed content (exact match first, then semantic, keywords from the proposal).
 3. Classify as:
-   - **APPLIED** — content already exists in the target file. Tick the diary entry to `- [x]` silently.
-   - **PENDING** — content not found, proposal is < 3 days old.
-   - **STALE** — content not found, proposal is 3+ days old.
-   - **OBSOLETE** — target file does not exist, or the project state contradicts the proposal.
+   - **APPLIED**: content already exists in the target file. Tick the diary entry to `- [x]` silently.
+   - **PENDING**: content not found, proposal is < 3 days old.
+   - **STALE**: content not found, proposal is 3+ days old.
+   - **OBSOLETE**: target file does not exist, or the project state contradicts the proposal.
 
 ### 3. Present summary
 
@@ -81,7 +81,7 @@ Final summary: X applied, Y skipped, Z marked obsolete, W silent fixes.
 ## Constraints
 
 - **Never auto-apply.** Always present each item for approval before modifying any file.
-- **Read before writing.** If the content already exists, mark APPLIED silently — never duplicate.
+- **Read before writing.** If the content already exists, mark APPLIED silently. Never duplicate.
 - **MEMORY.md size cap.** MEMORY.md loads every session, so keep it under about 12KB. If writing the proposal would push it past that, suggest a topic file in `memory/topics/` and a one-line index pointer instead of inlining.
 - **Diary edits are minimal.** Only flip checkboxes and update Memory Debt table status. Never rewrite proposal text.
 - **Oldest first.** Process chronologically so the longest-overdue debt clears first.
