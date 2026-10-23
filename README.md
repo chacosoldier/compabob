@@ -32,11 +32,15 @@ Every path has the same four stages: **install Claude Code, get the Compabob fol
 ### Path A: the Claude desktop app
 
 1. **Install the app.** [Download Claude for Mac](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect), install it, open it, and sign in with your Pro or Max account. Claude Code lives in the **Code** tab at the top of the app's sidebar. (On Windows, see [Windows](#windows) first.)
-2. **Get the Compabob folder.** In the Code tab, look at the row of controls under the prompt box. Click the first one (the environment) and pick **Local**. Click the one next to it (the project folder), choose **Open folder…**, and pick your home folder (the one with your name, where Documents and Downloads live). Then type:
+2. **Get the Compabob folder.** In the Code tab, look at the row of controls under the prompt box. Click the first one (the environment) and pick **Local**. Click the one next to it (the project folder), choose **Open folder…**, and pick your home folder (the one with your name, where Documents and Downloads live). First give your Mac the free developer tools Compabob needs (they include git and Python). Type:
+
+   > Please install Apple's developer tools with xcode-select --install.
+
+   Claude asks permission to run the command: choose **Yes** (some windows call it **Allow**). A window from Apple opens, possibly behind the Claude window: click **Install**, accept the license, and wait until it says the software was installed (5 to 30 minutes). If Claude says the tools are already installed, that is fine. Then type:
 
    > Download https://github.com/chacosoldier/compabob into a new folder called compabob here, using git clone.
 
-   Claude asks permission to run the command: choose **Yes** (some windows call it **Allow**). On a Mac that has never used developer tools, a window may pop up offering to install the "command line developer tools". Click **Install**, wait for it to finish (a few minutes), then ask Claude to try again. These tools also give Compabob the Python it needs.
+   Choose **Yes** again.
 
    _Prefer a download? On the [GitHub page](https://github.com/chacosoldier/compabob) click the green **Code** button, then **Download ZIP**. Open the ZIP from Downloads, rename the folder to `compabob`, and drag it into your home folder (in Finder: **Go > Home**). It works the same, but a ZIP copy cannot pull updates later._
 3. **Start a new session in the compabob folder.** The folder is fixed once a session has started, so start a new session from the sidebar. Before typing anything, use the project folder control again: **Open folder…**, then the new `compabob` folder.
@@ -118,7 +122,7 @@ Skip Homebrew. Install the tools with your package manager, then follow Path C f
 
 - Ubuntu, Debian: `sudo apt install git python3 curl nodejs npm`, plus [uv](https://docs.astral.sh/uv/) for the optional integrations.
 - Fedora: `sudo dnf install git python3 nodejs`. Arch: `sudo pacman -S git python nodejs npm`.
-- Check `python3 --version` shows 3.10 or newer before running setup.
+- Check `python3 --version` shows 3.9 or newer before running setup.
 - If `./setup.sh` says "Permission denied", run `chmod +x setup.sh` first.
 
 ### Windows
