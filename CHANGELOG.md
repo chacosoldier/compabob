@@ -6,6 +6,23 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- **"Remember this" was filed as a one-off reminder.** The `daily-copilot`
+  agent put every "remember ..." into the morning-brief queue, which the next
+  `/morning-brief` clears, so a lasting preference ("I sign donor emails with
+  ...") was forgotten. Lasting facts now go to memory; only "add to tomorrow's
+  brief" style items go to the queue.
+- **The health check alarmed desktop-app users.** It warned that Python 3.9
+  (what Apple's developer tools install) is too old, and that the `claude`
+  command is missing, although the core runs on 3.9 and the desktop app and
+  VS Code need no `claude` command. Both are now reported as fine.
+- **Excel and Word export asked for permission up to three times.** The skill
+  wrote its temporary spec to `/tmp` and then deleted it; it now uses the
+  kit's own `.tmp/`, so one prompt (running the writer) remains.
+- README Path A installs Apple's developer tools before cloning, so the kit's
+  Python hooks never meet a Mac without Python.
+
 ## [1.4.0] - 2026-10-23
 
 Built for people who have never opened a terminal. Compabob now installs and

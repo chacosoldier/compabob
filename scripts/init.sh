@@ -19,13 +19,22 @@ printf "%s\n\n" "$(date '+%Y-%m-%d %H:%M')"
 if command -v python3 >/dev/null 2>&1; then
   if python3 -c 'import sys; sys.exit(sys.version_info < (3, 10))' 2>/dev/null; then
     ok "python3 ($(python3 --version 2>&1))"
+  elif python3 -c 'import sys; sys.exit(sys.version_info < (3, 9))' 2>/dev/null; then
+    # 3.9 is what Apple's developer tools install: the core kit runs on it.
+    ok "python3 ($(python3 --version 2>&1)), enough for the core; a few optional modules want 3.10+"
   else
-    warn "$(python3 --version 2>&1) is older than 3.10; some modules need 3.10+ (brew install python)"
+    warn "$(python3 --version 2>&1) is older than 3.9; the kit needs 3.9+ (brew install python)"
   fi
 else
   fail "python3 not found"
 fi
-command -v claude  >/dev/null 2>&1 && ok "claude CLI found" || warn "claude CLI not found (install: curl -fsSL https://claude.ai/install.sh | bash)"
+if command -v claude >/dev/null 2>&1; then
+  ok "claude command found"
+elif [ -n "${CLAUDECODE:-}" ]; then
+  ok "running inside Claude Code (the desktop app or VS Code), no separate claude command needed"
+else
+  warn "claude command not found. Not needed for the desktop app or VS Code; for the terminal: curl -fsSL https://claude.ai/install.sh | bash"
+fi
 
 # 2. Setup has run. Your personal files exist
 if [ -d vault ] && [ -d memory ] && [ -f config/user.config.yaml ]; then
@@ -115,10 +124,12 @@ if [ -f config/user.config.yaml ]; then
 fi
 
 printf "\n"
+START="Start the assistant with: claude"
+[ -n "${CLAUDECODE:-}" ] && START="You are already in Claude Code."
 if [ "$FAIL" -eq 0 ] && [ "$WARN" -eq 0 ]; then
-  printf "${GREEN}${BOLD}All checks passed.${NC} Start the assistant with: claude\n\n"
+  printf "${GREEN}${BOLD}All checks passed.${NC} %s\n\n" "$START"
 elif [ "$FAIL" -eq 0 ]; then
-  printf "${YELLOW}${BOLD}%d warning(s), 0 failures.${NC} Operational. Warnings above are optional items, not breakage. Start with: claude\n\n" "$WARN"
+  printf "${YELLOW}${BOLD}%d warning(s), 0 failures.${NC} Operational. Warnings above are optional items, not breakage. %s\n\n" "$WARN" "$START"
 else
   printf "${RED}${BOLD}%d failure(s), %d warning(s).${NC} Fix the failures first.\n\n" "$FAIL" "$WARN"
 fi

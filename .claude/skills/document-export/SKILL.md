@@ -54,7 +54,7 @@ around it.
 
 ## Excel (.xlsx)
 
-Build a JSON spec, write it to a temporary file, and run the writer.
+Build a JSON spec, write it to `.tmp/export-spec.json` (inside the kit, so saving it needs no permission prompt), and run the writer.
 
 Spec shape:
 
@@ -79,7 +79,7 @@ Spec shape:
 Run it:
 
 ```bash
-python3 .claude/skills/document-export/to_xlsx.py /tmp/export-spec.json reports/<YYYY-MM-DD>-<slug>.xlsx
+python3 .claude/skills/document-export/to_xlsx.py .tmp/export-spec.json reports/<YYYY-MM-DD>-<slug>.xlsx
 ```
 
 You can also pipe the spec on stdin by passing `-` instead of a file path.
@@ -115,12 +115,12 @@ Spec shape:
 Run it:
 
 ```bash
-python3 .claude/skills/document-export/to_docx.py /tmp/export-spec.json reports/<YYYY-MM-DD>-<slug>.docx
+python3 .claude/skills/document-export/to_docx.py .tmp/export-spec.json reports/<YYYY-MM-DD>-<slug>.docx
 ```
 
 ## After exporting
 
-- Delete any temporary spec file you created.
+- Leave `.tmp/export-spec.json` in place: `.tmp/` is git-ignored scratch space and the next export overwrites it, so deleting it would only cost the user another permission prompt.
 - Give the user the exact path of the file.
 - If the user wants to share the file, that is an outward action: hand it over,
   do not send it anywhere yourself.

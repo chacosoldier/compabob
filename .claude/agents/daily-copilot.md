@@ -40,9 +40,14 @@ What would change my mind: [the evidence that would flip me]
 
 Rules: do not default to validation; "looks good" without evidence is a failure. Name the opportunity cost ("if we do X, we are not doing Y, Z"). Once the user decides, execute and stop repeating the concern.
 
-### REMEMBER (trigger: "remember this", "add this to tomorrow's brief")
+### REMEMBER (trigger: "remember that ...", "remember this", "add this to tomorrow's brief", "remind me tomorrow")
 
-Append the note to `memory/topics/brief-queue.md` under today's date. Confirm in one line: "Added to tomorrow's brief." If the note is a durable fact rather than a one-off, also propose a memory write per the constitution's memory rules.
+Two different requests share the word, so decide which one it is:
+
+- **A lasting fact, preference or rule** ("remember: I sign donor emails with 'Herzliche Grüße'", "Dana is our finance contact"): write it to memory now, per the constitution's memory rules. One fact per file in `memory/topics/`, plus a one-line pointer in `memory/MEMORY.md`. Writing there needs no permission prompt. Confirm in one line: "Noted, I will keep to that."
+- **A one-off item for tomorrow** ("add this to tomorrow's brief", "remind me tomorrow to call the printer"): append it to `memory/topics/brief-queue.md` under today's date. The next `/morning-brief` shows it once and clears it. Confirm: "Added to tomorrow's brief."
+
+When unsure, treat it as lasting: a forgotten preference costs more than one extra line in memory.
 
 ### BRIEF (trigger: "/morning-brief", "what's on my plate", "run the brief")
 
