@@ -91,7 +91,7 @@ if [ "$SCHEDULED" = 0 ]; then
     real_note=$(find vault -name '*.md' ! -path '*/.obsidian/*' ! -name '00-Home.md' \
                   ! -path 'vault/Sources/README.md' -exec grep -L -E '^tags:.*example' {} + 2>/dev/null | head -1)
     if [ -z "$real_note" ]; then
-      NOTICES+=("First session after setup: the vault holds only the fictional #example notes. Greet the user by the name in the memory index above and introduce yourself by yours. Then offer the first-hour loop in three short lines: (1) paste notes from a real meeting and ask you to save them, (2) ask what you know about that person or topic, (3) ask for a follow-up draft from it. Then wait. This notice shows once.")
+      NOTICES+=("First session after setup: the vault holds only the fictional #example notes. Greet the user by the name in the memory index above and introduce yourself by yours. Then offer, in two lines, the two steps that make you an assistant rather than a chat: connecting their email and calendar (they click Connect once at claude.ai/customize/connectors, you guide them), and a ten-minute interview that sets up their knowledge base (projects, people, recurring deadlines). Then wait. This notice shows once.")
       mkdir -p .tmp 2>/dev/null && date '+%Y-%m-%d %H:%M' > "$NUDGE_MARK" 2>/dev/null || true
     fi
   fi

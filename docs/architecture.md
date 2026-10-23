@@ -73,7 +73,7 @@ Hooks fail open: a hook that errors never breaks the session. The guards are def
 If you extend the kit, these are what keep it sound:
 
 - **Description-driven routing.** Selection is by description, not name. Write descriptions as "use for X, Y, Z".
-- **Scoped tools.** Four to six tools per agent. Less is sharper.
+- **Scoped tools.** Four to six tools per agent. Less is sharper. The exception is deliberate: `comms-meetings` and `daily-copilot` carry no `tools:` line, because only an agent that inherits every tool can use the claude.ai connectors (mail, calendar).
 - **Strict schemas for deterministic work.** Where a workflow must produce structured output, validate with a schema, not a hope.
 - **Draft, never auto-send.** Anything leaving the machine is shown to the human first. The `comms-guard` hook backs this up.
 - **Answer first.** Every response leads with the conclusion. See `.claude/output-styles/direct.md`.
