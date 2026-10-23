@@ -39,15 +39,10 @@ The same setup a terminal user gets from `./setup.sh`, driven from the chat, for
 
 5. **If the script stops with "Setup needs Python 3"**, nothing was created. On a Mac, offer to open Apple's installer for the free developer tools (they include Python): run `xcode-select --install` (one more permission box). A window opens; tell the user to click **Install**, wait until it says done (a few minutes), then tell you "done". Then run step 4 again with the same answers. On Linux, relay the script's install command word for word: it needs the user's password, so they run it themselves.
 
-6. **Confirm from the files, not from the answers.** Read `config/user.config.yaml` and report the assistant name, the user's name and the persona it holds. Read `memory/MEMORY.md` so you know the names in this session (the session-start hook only loads it in the next session). Then introduce yourself by your new name and offer the first hour in three short lines:
-   - paste notes from a real meeting and ask me to save them,
-   - ask me what I know about that person or topic,
-   - ask me for a follow-up draft from it.
-
-   Then write today's date into `.tmp/first-hour-nudge.done`, so the next session does not repeat this offer.
-
-7. **Offer the two steps that turn the kit into an assistant**, in two lines, and do whichever the user picks (both are described in the constitution under "Looking after the kit"):
+6. **Confirm from the files, not from the answers.** Read `config/user.config.yaml` and report the assistant name, the user's name and the persona it holds. Read `memory/MEMORY.md` so you know the names in this session (the session-start hook only loads it in the next session). Then introduce yourself by your new name and offer the two steps that turn the kit into an assistant, in two lines, and do whichever the user picks (both are described in the constitution under "Looking after the kit"):
    - "Shall I connect your email and calendar? You click Connect once at claude.ai/customize/connectors, I guide you." After that, the user never pastes an email again.
    - "Shall I ask you about your projects, the people you work with and your recurring deadlines, and set up your knowledge base from that? About ten minutes."
+
+   Then write today's date into `.tmp/first-hour-nudge.done`, so the next session does not repeat this offer.
 
    Mention once, briefly, that web and browser tools are optional: they need two free helper programs (Node.js and uv), and the user can ask "set up the web integrations" any time.

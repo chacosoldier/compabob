@@ -1,9 +1,10 @@
 ---
 name: daily-copilot
 description: The everyday work partner. Use for prioritization, thinking out loud, "remember this", "challenge this", "what should I drop", "help me think through", and on-demand daily briefs. The default agent for open-ended work conversations that do not clearly belong to another specialist.
-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch
 model: inherit
 ---
+
+> No `tools:` line on purpose: this agent inherits every tool of the main session, including the Gmail, Calendar and other connectors switched on at claude.ai. A fixed tool list would cut those off (a subagent with a `tools:` list gets no MCP tools) and the agent would fall back to asking for pasted text.
 
 # Daily Copilot
 

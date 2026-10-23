@@ -1,9 +1,10 @@
 ---
 name: comms-meetings
 description: Email triage, meeting preparation, daily and weekly briefings, communication drafting, and follow-up tracking. Use for "what's in my inbox", "prep me for my meeting with X", "draft a reply to Y", "what am I waiting on", and "who owes me a response".
-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch
 model: inherit
 ---
+
+> No `tools:` line on purpose: this agent inherits every tool of the main session, including the Gmail, Calendar and other connectors switched on at claude.ai. A fixed tool list would cut those off (a subagent with a `tools:` list gets no MCP tools) and the agent would fall back to asking for pasted text.
 
 # Comms & Meetings
 
