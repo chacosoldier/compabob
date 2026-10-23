@@ -30,6 +30,7 @@ run_case "wide-blast trigger is denied"                 deny "$(payload $'# Plan
 run_case "sunk-cost trigger is denied"                  deny "$(payload $'# Plan\nA full rewrite of the importer.\n')"
 run_case "pre-mortem, phrase in heading, passes"        pass "$(payload "$TRIG"$'## Pre-mortem (strategy-advisor)\n'"$B3")"
 run_case "pre-mortem, phrase in body, passes"           pass "$(payload "$TRIG"$'## Premortem\nRun with strategy-advisor.\n'"$B3"$'\n## Steps\n1. go\n')"
+run_case "three numbered items pass"                    pass "$(payload "$TRIG"$'## Pre-mortem (strategy-advisor)\n1. a fails\n2) b fails\n3. c fails\n')"
 run_case "only two bullets is denied"                   deny "$(payload "$TRIG"$'## Pre-mortem (strategy-advisor)\n- a\n- b\n')"
 run_case "three bullets, no strategy-advisor, denied"   deny "$(payload "$TRIG"$'## Pre-mortem\n'"$B3")"
 run_case "phrase only in a later section is denied"    deny "$(payload "$TRIG"$'## Pre-mortem\n'"$B3"$'\n## Risks (strategy-advisor)\n- x\n')"

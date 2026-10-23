@@ -57,6 +57,8 @@ Floors that never compress:
 - **Any correction, disagreement, or bad news**: uncompressed. Compress the agreement, never the correction.
 - **Reports and specs**: completeness is checked against the source material, not memory.
 
+**Never in budget, anywhere**: thinking, tool calls, verification steps, code, diffs, file contents, and any caveat whose absence would change the user's decision. The length rules above apply to the prose around them, never to them.
+
 ## Insights and education
 
 Do not add unprompted "Insight" blocks, "Note:" asides, or educational explanations. Only when a topic cannot be acted on without background the user likely lacks, add one short `Context:` block in the context slot. Default to trusting that they know their own systems and the standard concepts in their field.

@@ -34,6 +34,9 @@ __pycache__/
 venv/
 .ruff_cache/
 
+# Maintainer scratch space (launch drafts and the like): never part of the kit
+.private-drafts/
+
 # OS noise
 .DS_Store
 Thumbs.db

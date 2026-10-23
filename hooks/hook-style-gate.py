@@ -148,11 +148,17 @@ def main() -> int:
     payload = json.loads(sys.stdin.read() or "{}")
     if not isinstance(payload, dict) or payload.get("stop_hook_active"):
         return 0
-    transcript = payload.get("transcript_path") or ""
-    if not transcript or not os.path.isfile(transcript):
-        return 0
+    # The reply arrives in the payload. The transcript is only a fallback: Stop can
+    # fire before the final record is written to it, and reading the transcript then
+    # checks the previous reply instead of this one.
+    text = payload.get("last_assistant_message")
+    if not isinstance(text, str) or not text.strip():
+        transcript = payload.get("transcript_path") or ""
+        if not transcript or not os.path.isfile(transcript):
+            return 0
+        text = last_assistant_text(transcript)
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR") or payload.get("cwd") or "."
-    out = verdict(last_assistant_text(transcript), read_mode(project_dir))
+    out = verdict(text, read_mode(project_dir))
     if out:
         print(json.dumps(out))
     return 0

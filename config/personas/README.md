@@ -34,4 +34,4 @@ Copy any file in this directory, rename it `<your-id>.md`, set the `id` and
 `label` in the frontmatter, and rewrite the body. The body becomes
 `role-and-priorities.md` verbatim, with one substitution: `<WHAT_YOU_WORK_ON>`
 is replaced by the free-text answer setup collects. Then add your id to the
-persona prompt in `setup.sh`.
+persona list in `setup.sh` (one line with its description, plus one arm in the `case` below it), and to the options in `.claude/skills/setup/SKILL.md`.

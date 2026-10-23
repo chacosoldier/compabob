@@ -30,3 +30,26 @@ for i, line in enumerate(lines):
 sys.exit(1)
 PY
 }
+
+# cfg_get <section> <key> [config-file]
+# Prints the value of   section:  /  key: "value"   from the user config, for
+# example  cfg_get user name  prints  Maya. Plain awk, so it works without python3.
+cfg_get() {
+  local cfg="${3:-config/user.config.yaml}"
+  [ -f "$cfg" ] || return 1
+  awk -v sec="$1:" -v key="$2:" '
+    /^[A-Za-z_]/ { cur = $1 }
+    cur == sec && $1 == key {
+      v = $0
+      sub(/^[^:]*:[ \t]*/, "", v)
+      sub(/"[ \t]*#[^"]*$/, "\"", v)
+      gsub(/^"|"$/, "", v)
+      print v
+      exit
+    }' "$cfg"
+}
+
+# Setup placeholders: the {{...}} tokens the seed files ship with, plus the stand-in
+# setup writes when no name was given. A file that still holds one is unfinished.
+# shellcheck disable=SC2034  # used by setup.sh and hooks/hook-session-start.sh
+SETUP_TOKENS='\{\{(ASSISTANT_NAME|USER_NAME|USER_ROLE|PRIMARY_LANGUAGE)\}\}|_YOUR_NAME_HERE_'

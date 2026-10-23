@@ -62,3 +62,28 @@ or schedule it. A daily cron line:
 
 memory-search stays opt-in and lightweight on purpose: it is a skill you run,
 not a daemon the kit forces on you.
+
+## What a memory worth keeping looks like
+
+The best memories are lessons that would otherwise be learned twice. A few from the
+setup this kit is distilled from, each one paid for with a real mistake. They are
+good examples of the shape (one fact, the reason, when it applies), and worth
+knowing if you write your own hooks:
+
+- **An empty search result is a question, not an answer.** "No note about X" first
+  means "check the folder, the spelling, and whether the index is current", and only
+  then "X never happened".
+- **A check that should never fire needs proof it can fire.** Before trusting "zero
+  blocked", feed the guard one case it must block and watch it block.
+- **A Stop hook reads the reply from its input, not the transcript.** The hook can
+  run before the transcript has the final reply written, so reading the transcript
+  checks the previous reply. `hooks/hook-style-gate.py` reads `last_assistant_message`.
+- **A hook's `systemMessage` is shown to you, never to the assistant.** To tell the
+  assistant something, print it (SessionStart and UserPromptSubmit hooks), or use
+  `additionalContext` or a block reason.
+- **A hook added to `.claude/settings.json` applies in the session that is already
+  running.** Test a new guard in a fresh session before relying on it, but do not
+  assume the current one is unaffected.
+
+When the assistant finishes a hard problem, ask: "is there a lesson here that would
+save us from repeating this?" If yes, that is a topic file.

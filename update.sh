@@ -59,16 +59,24 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
   fi
 fi
 
-if git merge --no-edit "origin/$BRANCH" >/dev/null 2>&1; then
+MERGE_LOG="$(mktemp)"
+if git merge --no-edit "origin/$BRANCH" >"$MERGE_LOG" 2>&1; then
+  rm -f "$MERGE_LOG"
   say "Pulled the latest kit:"
   # Show what changed so the user does not need a separate `git log`. Capped
   # at 10 lines so a big merge does not flood the terminal.
   git log --no-merges --oneline "$LOCAL..HEAD" 2>/dev/null | head -10 | sed 's/^/    /'
 else
   echo
-  echo "The update needs a manual merge. Run 'git status' to see which files."
-  echo "Your vault/, memory/, and config/user.config.yaml are safe regardless."
-  [ "$STASHED" = 1 ] && echo "Your set-aside edits are saved: restore them with 'git stash pop'."
+  echo "The update could not be applied automatically. git said:"
+  sed 's/^/    /' "$MERGE_LOG" | head -15
+  rm -f "$MERGE_LOG"
+  echo
+  echo "Nothing is lost. Your vault/, memory/, and config/user.config.yaml are safe regardless."
+  echo "To put the kit back exactly as it was before this update, run:"
+  echo "    git merge --abort"
+  [ "$STASHED" = 1 ] && echo "    git stash pop        (brings back your own kit edits)"
+  echo "Or ask your assistant: \"the kit update stopped, help me finish it\"."
   exit 1
 fi
 
@@ -77,8 +85,12 @@ if [ "$STASHED" = 1 ]; then
     say "Re-applied your own kit edits on top of the update."
   else
     echo
-    echo "Your edits overlap with the update. Run 'git status', open the marked files,"
-    echo "resolve the conflicts, then 'git add' them. Your vault/memory/config are untouched."
+    echo "The update is in, but some of your own kit edits change the same lines as the update."
+    echo "These files need a decision (git marks both versions inside them with <<<<<<< and >>>>>>>):"
+    git diff --name-only --diff-filter=U 2>/dev/null | sed 's/^/    /'
+    echo "Keep the version you want in each, then run:  git add <file>"
+    echo "Your edits are also still saved in 'git stash list'. Your vault/memory/config are untouched."
+    echo "Or ask your assistant: \"the kit update has conflicts, help me resolve them\"."
     exit 1
   fi
 fi

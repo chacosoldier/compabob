@@ -47,8 +47,14 @@ Specialized agents live in `.claude/agents/`. Requests route automatically by ma
 - Architecture, code, or technical-design review → **principal-engineer**
 - Reasoning under deep uncertainty, scenario analysis → **first-principles**
 - Everyday prioritization, sparring, the daily brief → **daily-copilot**
+- Checking a claim, a finding, or another agent's report before acting on it → **skeptic**
 
-For a hard-to-reverse decision (a job, a hire, a big spend, a strategy bet), suggest the `/council` skill: two advisors plus a mandatory dissenter. For one sparring view on a smaller call, use **strategy-advisor** alone.
+**When two rules seem to apply:**
+
+1. **A specific trigger beats generic decision language.** "Run a pre-mortem on this" goes to the pre-mortem, even though it also reads as "should I"; "review this code" goes to **principal-engineer** even when it ends in "is this a good idea".
+2. **Stakes decide the depth.** A hard-to-reverse decision (a job, a hire, a big spend, a strategy bet) gets the `/council` skill: two advisors plus a mandatory dissenter. A small or reversible "should I" gets **strategy-advisor** alone; do not convene a panel for it.
+
+Before acting on a finding that would delete something, send something, or change many files, have **skeptic** check it first. The finding that looks most convincing is the one most worth checking.
 
 When a request is ambiguous, ask one clarifying question rather than guessing the agent. For multi-step requests, the main session orchestrates: it calls agents in sequence and synthesizes their output.
 
@@ -80,7 +86,9 @@ Skills are slash-command workflows in `.claude/skills/` (for example `/morning-b
 - Any action that is hard to reverse.
 - Acting on data that is not clearly the user's to use.
 
-Approval in one context does not extend to the next. Confirm again.
+Approval in one context does not extend to the next. Confirm again. An approved plan that contains a draft message is approval of the plan, not of sending the draft: show the final draft and ask before it goes out.
+
+When a permission prompt is declined or a guard blocks an action, do not look for another way to do the same thing. Say what was blocked, offer the narrower options (a smaller scope, a draft instead of a send, a step the user runs themselves), and let the user choose.
 
 ## Memory System
 
@@ -93,6 +101,16 @@ Persistent memory lives in `memory/`. `MEMORY.md` is the index, loaded every ses
 ## Error Handling
 
 When something fails: classify it as transient (retry once) or permanent (stop and explain). Understand the root cause before retrying. Express uncertainty rather than presenting bad data as fact. When a fix works, say so plainly; when a step was skipped or a test failed, say that too.
+
+## Looking after the kit
+
+The user may never open a terminal, so these plain requests map to the kit's own scripts. Run them (each asks for permission once) and explain the result in plain words:
+
+- "Set me up", or the session-start notice says setup is pending: the `/setup` skill.
+- "Run the health check", "is everything working": `bash scripts/init.sh`. A warning is an optional item, not a breakage.
+- "Update the kit": `./update.sh`. If it stops, read its message and walk the user through the one command it prints; never discard their edits.
+- "Set up the web integrations": `bash scripts/install-integrations.sh web utility`. Web search needs a key, see `modules/integrations/README.md`.
+- "Turn off the style notes": set `style_gate: off` in `config/user.config.yaml`.
 
 ## Customization
 

@@ -67,44 +67,46 @@ Creates your personal workspace and fills in your details. About a minute.
 
   <span class="ok">ok</span>   python3 found
   <span class="ok">ok</span>   git found
-  <span class="ok">ok</span>   claude CLI found
+  <span class="ok">ok</span>   claude command found
 
 <span class="b">Tell me about you and your assistant:</span>
 What should the assistant be called <span class="dim">[Aide]</span>: <span class="in">Maya</span>
-Your name <span class="dim">[philippwenger]</span>: <span class="in">Sam Rivera</span>
+Your name (used in your assistant's memory): <span class="in">Sam Rivera</span>
 Your role / job title <span class="dim">[Knowledge Worker]</span>: <span class="in">Product Manager</span>
 Your main working language <span class="dim">[English]</span>: <span class="in">English</span>
 
 <span class="b">Which best describes your work?</span>
-  1) generalist   2) consultant   3) engineer   4) sales   5) founder
-Pick 1-5 (or the name) <span class="dim">[1]</span>: <span class="in">1</span>
+  1) generalist   knowledge work broadly, the neutral default
+  2) consultant   client-facing delivery, proposals, stakeholder work
+  3) engineer     shipping software and owning technical decisions
+  4) sales        pipeline, deals, accounts, quota
+  5) founder      running a business: strategy, fundraising, hiring, product
+  6) researcher   academia and R&amp;D: literature, paper drafting, experiments
+Pick 1-6 (or the name) <span class="dim">[1]</span>: <span class="in">1</span>
 In a sentence or two, what do you work on: <span class="in">Roadmap and discovery for a B2B analytics product</span>
 
   <span class="ok">ok</span>   created vault
   <span class="ok">ok</span>   created memory
   <span class="ok">ok</span>   created config/user.config.yaml
   <span class="ok">ok</span>   created .claude/settings.local.json
-  <span class="ok">ok</span>   personalized 7 file(s)
   <span class="ok">ok</span>   seeded role-and-priorities.md from the generalist persona
   <span class="ok">ok</span>   recorded persona "generalist" in config/user.config.yaml
+  <span class="ok">ok</span>   personalized 6 file(s)
   <span class="ok">ok</span>   made scripts executable and created runtime directories
 
-<span class="b">Integrations (optional): web + browser tools, web search, Google Workspace.</span>
-These add MCP servers your assistant can use. You can also do this later.
+<span class="b">Integrations (optional): web and browser tools, web search.</span>
+These add tools your assistant can use. You can also do this later.
 Set them up now? (y/N) <span class="dim">[n]</span>: <span class="in">n</span>
-  skipped, run  bash scripts/install-integrations.sh  any time
+  skipped. Run  bash scripts/install-integrations.sh  any time
 
 <span class="b">Setup complete.</span>
-Your assistant is called "Maya". Persona: generalist.
+Your assistant is called "Maya" and knows you as "Sam Rivera". Persona: generalist.
+  <span class="ok">ok</span>   health check passed
 
 Next:
-  1. Start it:        claude
+  1. Start it:        claude   (or open this folder in the Claude desktop app or VS Code)
   2. Refine memory:   memory/topics/role-and-priorities.md is pre-filled. Edit it
-  3. Optional checks: bash scripts/init.sh
-  4. Opt-in modules:  see modules/README.md
-
-vault/, memory/, and config/ are yours and live outside git.
-Update the kit any time with ./update.sh. It never touches them.</pre>
+  3. Opt-in modules:  see modules/README.md</pre>
 </div>
 </body>
 </html>

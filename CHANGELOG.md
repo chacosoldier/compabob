@@ -6,6 +6,72 @@ All notable changes to Compabob are recorded here. Format follows
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-23
+
+Built for people who have never opened a terminal. Compabob now installs and
+sets up entirely from the Claude desktop app or VS Code, the README walks each
+path step by step, and setup can no longer leave a half-finished workspace behind.
+
+**Before you update**: `.claude/settings.json` changes in two small ways (saving
+to `vault/`, `memory/` and `.tmp/` no longer asks for permission; a skill-listing
+budget key). If you edited that file, `update.sh` will ask you to merge it.
+Setup now stops before creating anything when Python 3 is missing.
+
+### Added
+
+- **`/setup` skill**: the whole setup from inside the chat. It asks the questions
+  in plain words, runs `setup.sh` with the answers (one permission box), and
+  confirms from the files it wrote. No terminal needed.
+- **`setup.sh` options**: `--assistant`, `--user`, `--role`, `--language`,
+  `--persona`, `--focus`, `--integrations` / `--no-integrations`,
+  `--non-interactive`, `--help`. Without options it asks the same seven questions
+  as before. CI now uses the options instead of piped newlines.
+- **Session-start notices**: when setup has not run or did not finish, the
+  assistant says so and offers `/setup`; once after setup it greets you by name and
+  suggests a first task; it notes when the kit was updated since the last session
+  and which kit files you have edited.
+- **`skeptic` agent**: checks a claim or finding against the files before anyone
+  acts on it; read-only, never edits or sends.
+- **`/design-precheck` skill**: the pre-mortem the plan gate asks for, run by three
+  advisors in parallel and folded into the plan. The plan gate's message now
+  points to it, and it accepts numbered lists as well as bullets.
+- **Constitution**: the plain requests a non-technical user will make ("update the
+  kit", "run the health check") mapped to the kit's scripts; two routing rules for
+  when two agents seem to apply; an approved plan is not approval to send its
+  draft; a declined permission gets narrower options, never a workaround.
+- **README**: rebuilt around three paths (desktop app, VS Code, terminal) with
+  exact clicks, a "what you will see the first time" section (trust question,
+  permission boxes, style notes, where your files live), and one honest time budget.
+- `tests/test-setup-noninteractive.sh` (38 cases) and `tests/test-session-start.sh`
+  (17 cases).
+
+### Fixed
+
+- **Setup left placeholders behind forever when Python was missing**: it copied
+  the seed files, failed while filling them in, and a re-run then skipped them as
+  "already exists". It now stops before creating anything, and a re-run fills any
+  blank it finds, so an older half-finished setup repairs itself.
+- **Re-running setup printed the name you just typed**, not the one on disk. It
+  now says "Already set up" and shows what is stored.
+- **The style check read the previous reply.** Claude Code can run the Stop hook
+  before the transcript holds the final reply; the hook now reads the reply from
+  its input (`last_assistant_message`).
+- **Every fresh clone showed a modified kit file**: `modules/dictation/install.sh`
+  was tracked without its executable bit, so setup's `chmod` changed it and
+  `update.sh` had to set it aside on every run.
+- **`update.sh` on a conflict** told you to run `git stash pop` in the middle of a
+  merge, which fails. It now shows git's message, the files that need a decision,
+  and `git merge --abort` to put everything back.
+- The walkthrough never installed `uv`, which two of the integrations need.
+- The demo image showed five personas and a username default that no longer exist.
+- Docs: the update description, the pre-mortem hook listed as "optional" although it
+  ships, and a stale model ID example (`claude-sonnet-5-5`).
+
+### Removed
+
+- `docs/qa-findings-2026-05-24.md`, the May QA log (every item was fixed in 1.1.1;
+  it stays in the git history).
+
 ## [1.3.0] - 2026-09-25
 
 The style system, a test suite, and three features from the setup this kit is
@@ -205,7 +271,7 @@ Bug-fix release from the same-day QA pass. 5 personas × 10 input edge
 cases × idempotency × `update.sh` × integrations × `init.sh` × a
 pristine Docker Ubuntu run × a headless `claude -p` smoke. 11 findings,
 all fixed in this release. Full QA report:
-[`docs/qa-findings-2026-05-24.md`](docs/qa-findings-2026-05-24.md).
+`docs/qa-findings-2026-05-24.md` (removed in 1.4.0, still in the git history).
 
 ### Fixed
 
@@ -330,7 +396,8 @@ Initial public release at [github.com/chacosoldier/compabob](https://github.com/
 - `docs/architecture.md`, `docs/onboarding.md`, `docs/customization-guide.md`,
   `docs/how-to-improve-memory.md`.
 
-[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/chacosoldier/compabob/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/chacosoldier/compabob/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/chacosoldier/compabob/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/chacosoldier/compabob/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/chacosoldier/compabob/compare/v1.1.0...v1.1.1
