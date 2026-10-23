@@ -46,4 +46,8 @@ The same setup a terminal user gets from `./setup.sh`, driven from the chat, for
 
    Then write today's date into `.tmp/first-hour-nudge.done`, so the next session does not repeat this offer.
 
+7. **Offer the two steps that turn the kit into an assistant**, in two lines, and do whichever the user picks (both are described in the constitution under "Looking after the kit"):
+   - "Shall I connect your email and calendar? You click Connect once at claude.ai/customize/connectors, I guide you." After that, the user never pastes an email again.
+   - "Shall I ask you about your projects, the people you work with and your recurring deadlines, and set up your knowledge base from that? About ten minutes."
+
    Mention once, briefly, that web and browser tools are optional: they need two free helper programs (Node.js and uv), and the user can ask "set up the web integrations" any time.
