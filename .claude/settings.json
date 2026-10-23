@@ -11,7 +11,8 @@
       "WebFetch",
       "Edit(/vault/**)",
       "Edit(/memory/**)",
-      "Edit(/.tmp/**)"
+      "Edit(/.tmp/**)",
+      "Edit(/config/user.config.yaml)"
     ],
     "ask": [
       "Bash"

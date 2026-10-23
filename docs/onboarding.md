@@ -42,8 +42,8 @@ optional item is not set up, not that something is broken.
 
 ## Permission boxes
 
-Before running a command, Claude asks. Saving to `vault/` and `memory/` does not
-ask. Choose **Yes** for an action you understand, **No** when unsure, and ask what
+Before running a command, Claude asks. Saving to `vault/`, `memory/` and your
+settings file does not ask. Choose **Yes** for an action you understand, **No** when unsure, and ask what
 the command would do. The README has [the full explanation](../README.md#what-you-will-see-the-first-time).
 
 ## The first hour
@@ -114,7 +114,8 @@ Also in the first week:
 
 ## Staying up to date
 
-Run `./update.sh` whenever you want the latest version of the kit. Your `vault/`,
-`memory/`, `config/`, `.env`, and `.mcp.json` are git-ignored and are never
+Ask your assistant to "update the kit" (or run `./update.sh`) whenever you want the
+latest version. Your `vault/`, `memory/`, `config/user.config.yaml`, `.env`, and
+`.mcp.json` are git-ignored and are never
 touched by an update, so personalizing the kit and keeping it current are not in
 tension. The [customization guide](customization-guide.md) explains the detail.

@@ -16,7 +16,7 @@ Two kinds of thing live side by side, and the difference is what makes updates s
 Run `./update.sh` to pull the latest kit. It sets aside any kit edits you have made, pulls, and re-applies them. Your `vault/`, `memory/`, and `config/user.config.yaml` are git-ignored, so they are never at risk, whatever happens. If the new kit adds a config key (a new module flag, say), `update.sh` adds it to your config with its default and leaves every value you set alone.
 
 - **Adding** your own agents, skills, or hooks never conflicts: upstream does not have those files.
-- **Editing a kit file** (an agent, the constitution) can produce a conflict on that one file when you update, if the update changes the same lines. `update.sh` then stops, lists the files that need a decision, and prints the command that puts everything back as it was (`git merge --abort`, then `git stash pop` for your edits). Or ask your assistant to walk you through it. Your data is untouched throughout.
+- **Editing a kit file** (an agent, the constitution) can produce a conflict on that one file when you update, if the update changes the same lines. `update.sh` then stops and lists the files that need a decision; git marks both versions inside each file. Keep the version you want, then `git add` the file. Your own edits also stay saved in `git stash list` until you drop them. If the update itself could not be applied, it prints `git merge --abort`, which puts the kit back exactly as it was. Or ask your assistant to walk you through either case. Your data is untouched throughout.
 
 ## Placeholders
 
@@ -63,7 +63,7 @@ Context-injection hooks (SessionStart, UserPromptSubmit) write to stdout. Guard 
 
 ## Permissions
 
-`.claude/settings.json` lists what may run without asking (`allow`) and what always asks (`ask`). By default, writes inside `vault/`, `memory/` and `.tmp/` are allowed and every shell command asks. To stop being asked for a command you run often, add a rule such as `"Bash(python3 modules/memory-search/query.py *)"` to `allow` in `.claude/settings.local.json` (yours, git-ignored). A path rule for file writes is written `Edit(/folder/**)`; it covers creating files too.
+`.claude/settings.json` lists what may run without asking (`allow`) and what always asks (`ask`). By default, writes inside `vault/`, `memory/`, `.tmp/` and to `config/user.config.yaml` are allowed and every shell command asks. Because `ask` wins over `allow`, a command keeps asking even after "Yes, and don't ask again"; remove `"Bash"` from `ask` if you want that button to stick. To stop being asked for a command you run often, add a rule such as `"Bash(python3 modules/memory-search/query.py *)"` to `allow` in `.claude/settings.local.json` (yours, git-ignored). A path rule for file writes is written `Edit(/folder/**)`; it covers creating files too.
 
 ## Adding a tool or integration
 

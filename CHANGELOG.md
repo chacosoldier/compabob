@@ -13,8 +13,8 @@ sets up entirely from the Claude desktop app or VS Code, the README walks each
 path step by step, and setup can no longer leave a half-finished workspace behind.
 
 **Before you update**: `.claude/settings.json` changes in two small ways (saving
-to `vault/`, `memory/` and `.tmp/` no longer asks for permission; a skill-listing
-budget key). If you edited that file, `update.sh` will ask you to merge it.
+to `vault/`, `memory/`, `.tmp/` and `config/user.config.yaml` no longer asks for
+permission; a skill-listing budget key). If you edited that file, `update.sh` will ask you to merge it.
 Setup now stops before creating anything when Python 3 is missing.
 
 ### Added

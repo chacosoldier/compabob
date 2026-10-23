@@ -31,16 +31,16 @@ Every path has the same four stages: **install Claude Code, get the Compabob fol
 
 ### Path A: the Claude desktop app
 
-1. **Install the app.** Download Claude for [Mac](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect) or [Windows](https://claude.ai/api/desktop/win32/x64/setup/latest/redirect), install it, open it, and sign in with your Pro or Max account. Claude Code lives in the **Code** tab at the top of the app's sidebar. Nothing else to install.
-2. **Get the Compabob folder.** In the Code tab, click the project folder control under the prompt box, choose **Open folder…**, and pick your home folder (the one with your name, where Documents and Downloads live). Then type:
+1. **Install the app.** [Download Claude for Mac](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect), install it, open it, and sign in with your Pro or Max account. Claude Code lives in the **Code** tab at the top of the app's sidebar. (On Windows, see [Windows](#windows) first.)
+2. **Get the Compabob folder.** In the Code tab, look at the row of controls under the prompt box. Click the first one (the environment) and pick **Local**. Click the one next to it (the project folder), choose **Open folder…**, and pick your home folder (the one with your name, where Documents and Downloads live). Then type:
 
    > Download https://github.com/chacosoldier/compabob into a new folder called compabob here, using git clone.
 
-   Claude asks permission to run the command: choose **Allow**. On a Mac that has never used developer tools, a window may pop up offering to install the "command line developer tools". Click **Install**, wait for it to finish (a few minutes), then ask Claude to try again.
+   Claude asks permission to run the command: choose **Yes** (some windows call it **Allow**). On a Mac that has never used developer tools, a window may pop up offering to install the "command line developer tools". Click **Install**, wait for it to finish (a few minutes), then ask Claude to try again. These tools also give Compabob the Python it needs.
 
-   _No git? Download a ZIP instead: on the [GitHub page](https://github.com/chacosoldier/compabob) click the green **Code** button, then **Download ZIP**, unzip it, rename the folder to `compabob` and move it into your home folder. Everything works, but a ZIP copy cannot pull updates later._
-3. **Open the folder and run setup.** Click the project folder control again, choose **Open folder…**, and pick the new `compabob` folder. Then type `/setup` and press Enter. Your assistant asks a few questions right in the chat (its name, your name, your role, your language, the kind of work you do). Answer in plain words. One permission box appears for the setup script: choose **Allow**.
-4. **Start talking.** Your assistant introduces itself by its new name and suggests a first task. From the next session on, it loads its memory automatically.
+   _Prefer a download? On the [GitHub page](https://github.com/chacosoldier/compabob) click the green **Code** button, then **Download ZIP**. Open the ZIP from Downloads, rename the folder to `compabob`, and drag it into your home folder (in Finder: **Go > Home**). It works the same, but a ZIP copy cannot pull updates later._
+3. **Start a new session in the compabob folder.** The folder is fixed once a session has started, so start a new session from the sidebar. Before typing anything, use the project folder control again: **Open folder…**, then the new `compabob` folder.
+4. **Run setup.** Type `/setup` and press Enter. Your assistant asks a few questions right in the chat (its name, your name, your role, your language, the kind of work you do). Answer in plain words. One permission box appears for the setup script: choose **Yes**. When it finishes, your assistant introduces itself by its new name and suggests a first task. From the next session on, it loads its memory automatically.
 
 **Coming back tomorrow:** open the Claude app, go to the Code tab, and pick a session in the `compabob` folder from the sidebar, or start a new one there.
 
@@ -48,7 +48,7 @@ Every path has the same four stages: **install Claude Code, get the Compabob fol
 
 1. **Install VS Code and the extension.** Download [VS Code](https://code.visualstudio.com) and open it. Press `Cmd+Shift+X` (Mac) or `Ctrl+Shift+X` (Linux), search for **Claude Code** (publisher: Anthropic), and click **Install**. The extension includes Claude Code itself.
 2. **Get the Compabob folder.** Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Linux) to open the Command Palette, type **Git: Clone**, press Enter, and paste `https://github.com/chacosoldier/compabob.git`. Choose your home folder as the location, then click **Open** when VS Code offers to open the cloned folder. If VS Code says git is missing, accept its offer to install it (on a Mac: the "command line developer tools"), then repeat this step.
-3. **Open Claude and run setup.** Click **✻ Claude Code** in the bottom-right corner of the window (or the Spark icon in the left sidebar). The first time, click **Sign in** and finish in your browser. Then type `/setup` and press Enter, answer the questions, and choose **Allow** on the one permission box for the setup script.
+3. **Open Claude and run setup.** Click **✻ Claude Code** in the bottom-right corner of the window (or the Spark icon in the left sidebar). The first time, click **Sign in** and finish in your browser. Then type `/setup` and press Enter, answer the questions, and choose **Yes** on the one permission box for the setup script.
 4. **Start talking.** Your assistant introduces itself by its new name and suggests a first task. From the next conversation on, it loads its memory automatically.
 
 **Coming back tomorrow:** open VS Code. It reopens the `compabob` folder; if not, use **File > Open Recent**. Click **✻ Claude Code** to continue.
@@ -60,13 +60,13 @@ Tip: in VS Code you can also open `vault/` in the file list on the left and read
 Every step: paste the command, press Enter, wait for it to finish.
 
 1. **Open the Terminal.** On a Mac press `Cmd + Space`, type `Terminal`, press Enter.
-2. **Install Homebrew** (it installs the other tools). Your Mac account must be an administrator.
+2. **Install Homebrew** (it installs the other tools). It needs an administrator account on the Mac; if it says you are not one, ask whoever set up the computer.
 
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    ```
 
-   It asks for your Mac password (nothing appears as you type, that is normal). When it finishes, it prints "Next steps" with two lines to run so your terminal can find Homebrew. On most Macs they are these:
+   It asks for your Mac password (nothing appears as you type, that is normal). When it finishes, it prints "Next steps" with two lines to run so your terminal can find Homebrew. Copy those exact lines. On Macs from 2020 onward they look like this:
 
    ```bash
    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
@@ -85,7 +85,7 @@ Every step: paste the command, press Enter, wait for it to finish.
    curl -fsSL https://claude.ai/install.sh | bash
    ```
 
-   If the next step says `claude: command not found`, close the Terminal window, open a new one, and try again. The [official install guide](https://code.claude.com/docs/en/setup) covers anything else.
+   The [official install guide](https://code.claude.com/docs/en/setup) covers anything unusual.
 5. **Download Compabob into your home folder.**
 
    ```bash
@@ -94,7 +94,7 @@ Every step: paste the command, press Enter, wait for it to finish.
    cd ~/compabob
    ```
 
-6. **Run setup.** It asks seven short questions. Press Enter to accept the suggestion in brackets.
+6. **Run setup.** It asks a few short questions. Press Enter to accept the suggestion in brackets.
 
    ```bash
    ./setup.sh
@@ -106,7 +106,9 @@ Every step: paste the command, press Enter, wait for it to finish.
    claude
    ```
 
-   The first time, it opens your browser to sign in. If the browser does not open, press `c` to copy the link and paste it into your browser.
+   The first time, it opens your browser to sign in. If the browser does not open, press `c` to copy the link and paste it into your browser. Then type `hi` and press Enter: your assistant greets you by name and suggests a first task.
+
+   If it says `claude: command not found`, close the Terminal window, open a new one, run `cd ~/compabob`, and try again.
 
 **Coming back tomorrow:** open the Terminal and run `cd ~/compabob`, then `claude` (a new conversation, with memory loaded) or `claude --continue` (pick up the last conversation).
 
@@ -121,19 +123,20 @@ Skip Homebrew. Install the tools with your package manager, then follow Path C f
 
 ### Windows
 
-Install [WSL](https://learn.microsoft.com/windows/wsl/install) (in PowerShell: `wsl --install`, then restart), open the Ubuntu app it adds, and follow the Linux steps. Claude Code also installs natively on Windows (`irm https://claude.ai/install.ps1 | iex` in PowerShell), but Compabob's safety checks are bash and Python scripts that are only tested under WSL.
+Install [WSL](https://learn.microsoft.com/windows/wsl/install) (in PowerShell: `wsl --install`, then restart), open the Ubuntu app it adds, and follow the Linux steps. Claude Code also installs natively on Windows, and the Windows desktop app can run sessions inside WSL, but Compabob's safety checks are bash and Python scripts that are only tested in a WSL terminal.
 
 ## What you will see the first time
 
 - **A question about trusting this folder.** Choose yes. It is your own copy of Compabob, and the trust is what lets its settings and safety checks load.
-- **A greeting.** If setup has not run yet, your assistant says so and offers `/setup`. After setup, it greets you by name and suggests a first task.
-- **Permission boxes.** Before Claude runs a command or changes a file, it can ask you first. Compabob is set up so that saving notes into your knowledge base (`vault/`) and its memory (`memory/`) never asks, while running commands always asks. Your options in the box:
-  - **Yes**: allow this one action.
-  - **Yes, and don't ask again**: allow this kind of action from now on (for file edits, until the session ends).
+- **Claude waits for you to type first.** Say `hi`. If setup has not run yet, your assistant says so and offers `/setup`. After setup, it greets you by name and suggests a first task.
+- **Permission boxes.** Before Claude runs a command or changes a file, it can ask you first. Compabob is set up so that saving notes into your knowledge base (`vault/`), its memory (`memory/`) and your settings file never asks, while running a command always asks. The buttons:
+  - **Yes** (sometimes **Allow**): allow this one action.
+  - **Yes, and don't ask again**: for file edits, stop asking until the session ends. Commands still ask every time in Compabob; that is on purpose.
+  - **Yes, and switch to auto mode**: let Claude decide which routine actions need no box. Commands still ask.
   - **No**: Claude stops and asks what to do instead.
 
   If you are unsure what a command does, choose **No** and ask "what would that command do?"
-- **A "Style note" line after some replies.** Compabob checks that answers stay readable. To turn the note off, set `style_gate: off` in `config/user.config.yaml` (or ask your assistant to).
+- **A "Style note" line after some replies.** Compabob checks that answers stay readable. To turn the note off, say "turn off the style notes".
 - **Your files.** Everything lives in the `compabob` folder in your home folder: `vault/` holds your notes, `memory/` what the assistant remembers about you. Both are plain text files you can open and edit. To browse the notes as a linked map, open `vault/` in [Obsidian](https://obsidian.md) (**Open folder as vault**).
 - **Leaving.** Close the window, or type `/exit` in the terminal. Nothing is lost: notes and memory are saved as you go.
 
@@ -151,7 +154,7 @@ Then try `/morning-brief` or `/meeting-prep`. The [onboarding guide](docs/onboar
 
 ## Updating
 
-Ask your assistant "update the kit", or run `./update.sh` in the `compabob` folder. Your data (`vault/`, `memory/`, `config/user.config.yaml`, `.mcp.json`, `.env`) is never touched by an update. If you changed one of the kit's own files and the update changes the same lines, the update stops, shows which files need a decision, and prints the one command that puts everything back as it was. See the [customization guide](docs/customization-guide.md).
+Ask your assistant "update the kit" (in a terminal: `./update.sh` in the `compabob` folder). Your data (`vault/`, `memory/`, `config/user.config.yaml`, `.mcp.json`, `.env`) is never touched by an update. If you changed one of the kit's own files and the update changes the same lines, the update stops, names the files that need a decision, and keeps a copy of your changes. Your assistant walks you through it. See the [customization guide](docs/customization-guide.md).
 
 ## What is inside
 

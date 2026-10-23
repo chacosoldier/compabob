@@ -62,7 +62,7 @@ Hooks fail open: a hook that errors never breaks the session. The guards are def
 
 ## Permissions
 
-`.claude/settings.json` decides what asks first. Reading is free. Writing inside `vault/`, `memory/` and `.tmp/` (the user's own notes, the assistant's memory, the handover note) is allowed without a prompt, so the core loop of saving and finding notes runs smoothly. Every shell command asks, and so does editing any kit file. The guard hooks run regardless of these rules: a send or a secret read is blocked even if a prompt was approved.
+`.claude/settings.json` decides what asks first. Reading is free. Writing inside `vault/`, `memory/` and `.tmp/` (the user's own notes, the assistant's memory, the handover note) and to `config/user.config.yaml` is allowed without a prompt, so the core loop of saving and finding notes runs smoothly. Every shell command asks, in every permission mode, because `ask` rules win over `allow`. Editing a kit file asks in Manual mode; in Auto mode Claude Code's classifier decides. The guard hooks run regardless of these rules: a send or a secret read is blocked even if a prompt was approved.
 
 ## Memory
 

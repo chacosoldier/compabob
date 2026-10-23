@@ -9,11 +9,11 @@ The same setup a terminal user gets from `./setup.sh`, driven from the chat, for
 
 ## Steps
 
-1. **Check whether setup already ran.** Read `memory/MEMORY.md`.
-   - Missing: go to step 2.
-   - Present and contains `{{`: an earlier run stopped early. Say so in one line, then go to step 2 (the script fills only the blanks it finds).
-   - Present, no `{{`, but contains `_YOUR_NAME_HERE_`: ask only for the user's name, then run step 4 with just `--user '<name>' --non-interactive`.
-   - Present and complete: **stop here.** Say: "Setup already ran. I am <your name from the memory index>. To change your name, role or language, edit `config/user.config.yaml` and `memory/MEMORY.md`; to change what I know about your work, edit `memory/topics/role-and-priorities.md`. Tell me what to change and I will do it." Do not run the script.
+1. **Check whether setup already ran**, the same way `setup.sh` does. Look at `vault/`, `memory/` and `config/user.config.yaml`, and Grep all three for `{{ASSISTANT_NAME}}`, `{{USER_NAME}}`, `{{USER_ROLE}}`, `{{PRIMARY_LANGUAGE}}` and `_YOUR_NAME_HERE_`.
+   - Any of the three missing: a first setup. Go to step 2.
+   - All three exist and one of the four `{{...}}` tokens is left: an earlier run stopped early. Say so in one line, then go to step 2 (the script fills only the blanks it finds).
+   - Only `_YOUR_NAME_HERE_` is left: ask only for the user's name, then run step 4 with just `--user '<name>' --non-interactive`.
+   - None left: **stop here.** Say: "Setup already ran. I am <the assistant name in `config/user.config.yaml`>. To change your name, role or language, or what I know about your work, just tell me what to change and I will edit `config/user.config.yaml` and `memory/` for you." Do not run the script.
 
 2. **Ask about the user in one short message**, numbered, defaults in brackets. They may answer "defaults" for any of them:
    1. What should I be called? [Aide]
@@ -37,11 +37,13 @@ The same setup a terminal user gets from `./setup.sh`, driven from the chat, for
 
    Always pass `--no-integrations`: the integrations installer asks its own questions, which cannot be answered from here. Integrations are optional; offer them in step 6.
 
-5. **If the script stops with "Setup needs Python 3"**, relay its message word for word and stop. Do not try to install Python yourself: it needs the user's password and a window only they can click. Offer to continue once they have done it and say "done".
+5. **If the script stops with "Setup needs Python 3"**, nothing was created. On a Mac, offer to open Apple's installer for the free developer tools (they include Python): run `xcode-select --install` (one more permission box). A window opens; tell the user to click **Install**, wait until it says done (a few minutes), then tell you "done". Then run step 4 again with the same answers. On Linux, relay the script's install command word for word: it needs the user's password, so they run it themselves.
 
 6. **Confirm from the files, not from the answers.** Read `config/user.config.yaml` and report the assistant name, the user's name and the persona it holds. Read `memory/MEMORY.md` so you know the names in this session (the session-start hook only loads it in the next session). Then introduce yourself by your new name and offer the first hour in three short lines:
    - paste notes from a real meeting and ask me to save them,
    - ask me what I know about that person or topic,
    - ask me for a follow-up draft from it.
 
-   Mention once, briefly, that web and browser tools are optional and can be added any time by asking "set up the web integrations" (you would run `bash scripts/install-integrations.sh web utility`).
+   Then write today's date into `.tmp/first-hour-nudge.done`, so the next session does not repeat this offer.
+
+   Mention once, briefly, that web and browser tools are optional: they need two free helper programs (Node.js and uv), and the user can ask "set up the web integrations" any time.
