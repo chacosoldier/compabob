@@ -16,7 +16,7 @@ Two kinds of thing live side by side, and the difference is what makes updates s
 Run `./update.sh` to pull the latest kit. It sets aside any kit edits you have made, pulls, and re-applies them. Your `vault/`, `memory/`, and `config/user.config.yaml` are git-ignored, so they are never at risk, whatever happens. If the new kit adds a config key (a new module flag, say), `update.sh` adds it to your config with its default and leaves every value you set alone.
 
 - **Adding** your own agents, skills, or hooks never conflicts: upstream does not have those files.
-- **Editing a kit file** (an agent, the constitution) can produce a merge conflict on that one file when you update. That is normal git: `update.sh` names the file, you resolve it, done. Your data is untouched throughout.
+- **Editing a kit file** (an agent, the constitution) can produce a conflict on that one file when you update, if the update changes the same lines. `update.sh` then stops and lists the files that need a decision; git marks both versions inside each file. Keep the version you want, then `git add` the file. Your own edits also stay saved in `git stash list` until you drop them. If the update itself could not be applied, it prints `git merge --abort`, which puts the kit back exactly as it was. Or ask your assistant to walk you through either case. Your data is untouched throughout.
 
 ## Placeholders
 
@@ -57,9 +57,13 @@ Each directory in `.claude/skills/` is one slash command, defined by its `SKILL.
 
 - **To add a hook:** write the script, then add an entry under the right event in `settings.json`. Hooks should fail open: an error must never break the session.
 - **To disable a hook:** remove its entry from `settings.json` (leave the script in place, or delete it).
-- **Optional hooks worth considering:** a pre-mortem reminder on plan-mode exit; a redundant-read deduplicator; a Python linter on file writes. The core ships lean on purpose; add what your work needs.
+- **Optional hooks worth considering:** a redundant-read deduplicator; a Python linter on file writes. The core ships lean on purpose; add what your work needs.
 
 Context-injection hooks (SessionStart, UserPromptSubmit) write to stdout. Guard hooks (PreToolUse) exit `2` to block with a reason. See the existing hooks for the pattern.
+
+## Permissions
+
+`.claude/settings.json` lists what may run without asking (`allow`) and what always asks (`ask`). By default, writes inside `vault/`, `memory/`, `.tmp/` and to `config/user.config.yaml` are allowed and every shell command asks. Because `ask` wins over `allow`, a command keeps asking even after "Yes, and don't ask again"; remove `"Bash"` from `ask` if you want that button to stick. To stop being asked for a command you run often, add a rule such as `"Bash(python3 modules/memory-search/query.py *)"` to `allow` in `.claude/settings.local.json` (yours, git-ignored). A path rule for file writes is written `Edit(/folder/**)`; it covers creating files too.
 
 ## Adding a tool or integration
 

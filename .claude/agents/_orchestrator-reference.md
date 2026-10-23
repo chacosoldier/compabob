@@ -34,6 +34,7 @@ The rule: agents produce data, the main session produces insight.
 - When passing data to an output step, provide structured tables, not prose.
 - Include the query or source used so a downstream agent can verify.
 - Advice-only agents (`strategy-advisor`, `principal-engineer`, `first-principles`) never write files. When their output should persist, the main session hands it to `second-brain`.
+- Verification goes to `skeptic`, never back to the agent that produced the finding. Give it the claims and the files, not your conclusion, so its check is independent.
 
 ## Error handling
 

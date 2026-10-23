@@ -6,8 +6,8 @@ configure everything at once.
 
 ## Honest expectations on time
 
-- **Setup itself is about two minutes.** `setup.sh` asks a handful of questions
-  and creates your files.
+- **Setup itself is about a minute.** It asks a handful of questions and creates
+  your files.
 - **A genuinely useful assistant is about the first hour**, working through the
   loop below.
 - **The real payoff is the first month**, as memory fills in and you add an
@@ -18,15 +18,12 @@ by design: the structure is generic so your version does not have to be.
 
 ## Setup
 
-```bash
-git clone https://github.com/chacosoldier/compabob.git
-cd compabob
-./setup.sh
-```
+The [README](../README.md#choose-how-you-want-to-use-it) walks through installing
+everything, with or without a terminal. In short: open the `compabob` folder in
+Claude Code (the desktop app, VS Code, or the terminal) and type `/setup`, or run
+`./setup.sh` in a terminal. Both ask the same questions.
 
-New to the terminal? The [README walkthrough](../README.md#full-walkthrough-no-terminal-experience-needed) covers installing everything from scratch.
-
-`setup.sh` asks for your assistant's name, your name, role, and language, and
+Setup asks for your assistant's name, your name, role, and language, and
 which **persona** best fits your work (consultant, engineer, sales, founder,
 researcher, or generalist). The persona pre-fills `memory/topics/role-and-priorities.md` with
 role-appropriate starter content so the assistant has something real to reason
@@ -35,14 +32,19 @@ about on day one. It then creates your personal `vault/`, `memory/`, and
 
 At the end it offers to set up integrations. You can skip that and do it later.
 
-Start the assistant:
+If setup stops with "Setup needs Python 3", follow the fix it prints (on a Mac:
+`xcode-select --install`, then click Install) and run it again. Nothing is created
+until Python is there, so there is nothing to clean up.
 
-```bash
-claude
-```
+Setup ends with a health check. Run it again any time by asking your assistant
+"run the health check" (or `bash scripts/init.sh`). A warning there means an
+optional item is not set up, not that something is broken.
 
-Optional, any time: `bash scripts/init.sh` confirms everything is wired. A
-warning there means an optional item is not set up, not that something is broken.
+## Permission boxes
+
+Before running a command, Claude asks. Saving to `vault/`, `memory/` and your
+settings file does not ask. Choose **Yes** for an action you understand, **No** when unsure, and ask what
+the command would do. The README has [the full explanation](../README.md#what-you-will-see-the-first-time).
 
 ## The first hour
 
@@ -62,7 +64,7 @@ expected on day one, the system is working, it just has nothing stored yet.
 
 ### First-hour checklist
 
-- [ ] `./setup.sh` run, `claude` starts and uses your assistant's name
+- [ ] Setup run (`/setup` or `./setup.sh`), and the assistant greets you by its name
 - [ ] One real note saved to the vault
 - [ ] That note retrieved and summarized back to you
 - [ ] One draft produced from it
@@ -112,7 +114,8 @@ Also in the first week:
 
 ## Staying up to date
 
-Run `./update.sh` whenever you want the latest version of the kit. Your `vault/`,
-`memory/`, `config/`, `.env`, and `.mcp.json` are git-ignored and are never
+Ask your assistant to "update the kit" (or run `./update.sh`) whenever you want the
+latest version. Your `vault/`, `memory/`, `config/user.config.yaml`, `.env`, and
+`.mcp.json` are git-ignored and are never
 touched by an update, so personalizing the kit and keeping it current are not in
 tension. The [customization guide](customization-guide.md) explains the detail.

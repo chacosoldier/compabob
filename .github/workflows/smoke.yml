@@ -27,13 +27,14 @@ jobs:
       - name: Kit checks (syntax, shellcheck, hooks, frontmatter, docs vs tree)
         run: bash tests/run-all.sh
 
-      - name: Run setup.sh non-interactively (default answers)
+      - name: Run setup.sh non-interactively (the path the /setup skill uses)
         run: |
           set -euo pipefail
-          # setup.sh asks seven questions. Six newlines take the defaults for the
-          # first six; the seventh (optional integrations) reads end of input and
-          # takes its default, "no".
-          printf '\n\n\n\n\n\n' | ./setup.sh
+          ./setup.sh --assistant Aide --user "CI Runner" --role "Knowledge Worker" \
+            --language English --persona generalist --focus "smoke test" --no-integrations --non-interactive
+          if grep -rqE '\{\{|_YOUR_NAME_HERE_' memory vault config/user.config.yaml; then
+            echo "::error::setup left placeholders behind"; exit 1
+          fi
 
       - name: Run init.sh (must exit 0; warnings tolerated)
         run: |
@@ -49,8 +50,10 @@ jobs:
 
       - name: Re-running setup keeps existing files
         run: |
-          printf '\n\n\n\n\n\n' | ./setup.sh > rerun.out
-          grep -q "already exists, keeping your version" rerun.out
+          set -euo pipefail
+          ./setup.sh --user Someone --non-interactive > rerun.out
+          grep -q "Already set up" rerun.out
+          grep -q 'name: "CI Runner"' config/user.config.yaml
 
   macos:
     # The primary platform: macOS ships bash 3.2 as /bin/bash, and launchd
@@ -68,7 +71,7 @@ jobs:
 
       - name: Setup and health check
         run: |
-          printf '\n\n\n\n\n\n' | ./setup.sh
+          ./setup.sh --user "CI Runner" --no-integrations --non-interactive
           bash scripts/init.sh
 
       - name: Generated launchd plists are valid

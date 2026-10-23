@@ -37,4 +37,6 @@ cd compabob
 ./setup.sh
 ```
 
+Luego ejecuta `claude` en esa misma carpeta. ¿Prefieres no usar la terminal? La aplicación de escritorio de Claude y VS Code también funcionan: abre la carpeta `compabob` y escribe `/setup`. Los pasos detallados están en el [README en inglés](../../README.md#choose-how-you-want-to-use-it).
+
 > Esta es una traducción parcial de la introducción del [README en inglés](../../README.md); la sección de comparación ("How this differs") no está traducida. Para la guía completa, incluyendo el tutorial paso a paso, las skills, los módulos y el resto, sigue el documento original. Traducción inicial aportada por [@MD-Mushfiqur123](https://github.com/MD-Mushfiqur123) en [#17](https://github.com/chacosoldier/compabob/pull/17).

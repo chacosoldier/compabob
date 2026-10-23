@@ -13,8 +13,9 @@ Triggers (any one):
   wide blast     shared systems, all users or customers, company-wide
   sunk cost      multi-week work, major refactor, full rewrite
 
-Passes when the plan has "## Pre-mortem" with at least 3 bullets and the word
-"strategy-advisor" in that section (heading included).
+Passes when the plan has "## Pre-mortem" with at least 3 list items (- or *
+bullets, or 1. / 1) numbered items) and the word "strategy-advisor" in that
+section (heading included).
 
 Where the plan comes from: tool_input.plan when Claude Code sends it; otherwise
 the newest plan file under ~/.claude/plans/ that THIS session's transcript
@@ -56,7 +57,7 @@ def has_premortem(plan: str) -> bool:
     if not m:
         return False
     section = m.group(0)
-    bullets = len(re.findall(r"^\s*[-*]\s+\S", section, re.MULTILINE))
+    bullets = len(re.findall(r"^\s*(?:[-*]|\d+[.)])\s+\S", section, re.MULTILINE))
     return bullets >= 3 and "strategy-advisor" in section.lower()
 
 
@@ -72,11 +73,13 @@ def main() -> int:
     if not fired or has_premortem(plan):
         return 0
     reason = (
-        f"This plan looks high-stakes ({', '.join(fired)}). Before approval: (1) run the strategy-advisor agent with "
-        "the plan and the prompt 'Run a pre-mortem: six months from now this plan failed. List the top failure "
-        "modes and what we would wish we had done differently.' (2) Add a '## Pre-mortem' section to the plan with "
-        "at least three failure modes, one bullet each, naming strategy-advisor as the source, and fold any fixes "
-        "into the plan. (3) Call ExitPlanMode again."
+        f"This plan looks high-stakes ({', '.join(fired)}). Before approval, run the /design-precheck skill: it "
+        "puts the plan to strategy-advisor, principal-engineer and a skeptic dissenter in parallel, folds the serious "
+        "findings into the plan and writes the '## Pre-mortem' section. Without the skill: (1) run the "
+        "strategy-advisor agent with the plan and the prompt 'Run a pre-mortem: six months from now this plan "
+        "failed. List the top failure modes and what we would wish we had done differently.' (2) Add a "
+        "'## Pre-mortem' section with at least three failure modes, one bullet each, naming strategy-advisor as "
+        "the source, and fold any fixes into the plan. Either way, call ExitPlanMode again once the edit is saved."
     )
     print(json.dumps({"hookSpecificOutput": {
         "hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": reason}}))

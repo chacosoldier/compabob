@@ -1,13 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "outputStyle": "Direct",
+  "skillListingBudgetFraction": 0.02,
   "permissions": {
     "allow": [
       "Read",
       "Glob",
       "Grep",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "Edit(/vault/**)",
+      "Edit(/memory/**)",
+      "Edit(/.tmp/**)",
+      "Edit(/config/user.config.yaml)"
     ],
     "ask": [
       "Bash"

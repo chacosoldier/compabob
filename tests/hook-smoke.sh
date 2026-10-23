@@ -53,6 +53,12 @@ check "connector dash blocks, dialogue and quote do not" 'Found 1 em dash' "$(ga
 check "warn mode only notes"              '"systemMessage"'         "$(gate "$T/dash" warn)"
 check "off mode is silent"                ""                        "$(gate "$T/dash" off)"
 check "paragraph wall is caught"          '750-character paragraph' "$(gate "$T/wall" block)"
+# The reply comes from the Stop payload, not the transcript, which can lag one reply behind.
+STALE="$T/stale.jsonl"; printf '{"type":"assistant","message":{"content":[{"type":"text","text":"All clear."}]}}\n' > "$STALE"
+mkdir -p "$T/proj/config"; printf 'style_gate: block\n' > "$T/proj/config/user.config.yaml"
+stop_payload() { python3 -c 'import json,sys; print(json.dumps({"transcript_path":sys.argv[1],"last_assistant_message":sys.argv[2]}))' "$1" "$2"; }
+check "payload reply is checked, not the transcript" 'Found 1 em dash' "$(stop_payload "$STALE" "It works $D mostly." | CLAUDE_PROJECT_DIR="$T/proj" python3 hooks/hook-style-gate.py)"
+check "clean payload reply passes"        ""                        "$(stop_payload "$STALE" "All clear." | CLAUDE_PROJECT_DIR="$T/proj" python3 hooks/hook-style-gate.py)"
 check "retry after a block passes"        ""                        "$(echo '{"stop_hook_active":true}' | python3 hooks/hook-style-gate.py)"
 check "garbage input fails open"          ""                        "$(echo 'garbage' | python3 hooks/hook-style-gate.py)"
 
